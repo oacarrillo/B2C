@@ -78,6 +78,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 			});
 
+
 		</script>
 
 
@@ -101,37 +102,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	     	</div>
 	     	<div class="clear"></div>
 	     </div>	     
-	       <div class="header_slide">
-    			<div class="header_bottom_left">				
-    				<div class="categories">
-    				  <ul>
-    				  	<h3>Categorias</h3>
-    				      <div id= "lista">
-    				      	<!--
-    						Carga linea de productos
-    						-->
-    				      </div>				
-    				  </ul>
-    				</div>					
-    	 	    </div>
-
-
-            	<div class="header_bottom_right">					 
-            	 	<div class="slider">					     
-            			<div id="slider">
-                            <div id="mover">
-                            <!--
-                            Carga Campañas
-                            -->
-                            </div>		
-                        </div>
-            	        <div class="clear"></div>					       
-                    </div>
-                </div>
-
-
-		   <div class="clear"></div>
-		</div>
    </div>
 
 
@@ -182,45 +152,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
     <script type="text/javascript">
 		$(document).ready(function() {	
-        	//Carga Categorias
-			$().UItoTop({ easingType: 'easeOutQuart' });
-			var texto="";
-				$.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Lineas", function(datos){
-					$.each(datos, function(i,item){
-						texto+="<li><a href=a>";
-						texto+=""+datos[i].lin_nombre+"";
-						texto+="</a></li>";
-					});
-					$("#lista").html(texto);
-                });    
-
-            //Carga Campañas    
-            var texto1="";
-                $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/CampañaActiva", function(datos1){
-                    $.each(datos1.pro_campaña, function(i,item){
-                        if(i==0){//para cargar solo un producto de la campaña
-                            if(i==0){texto1+="<div id='slide-1' class='slide'>";}//El primer prod tiene id
-                            else{texto1+="<div class='slide'>";}//los de mas no tienen id
-                            texto1+="<div class='slider-img'>";
-                            texto1+="<a href='preview.html'><img src='"+item.producto.prod_imagen+"' alt='learn more'/></a>";
-                            texto1+="</div>";
-                            texto1+="<div class='slider-text'>";
-                            texto1+="<h1>Oferta!!!<br></h1>";
-                            texto1+="<h2>"+item.prca_descuento+"% de Descuento </h2>";
-                            texto1+="<div class='features_list'>";
-                            texto1+="<h4>"+item.producto.prod_descripcion+"</h4>";
-                            texto1+="</div>";
-                            texto1+="<a href='preview.html?prod_id="+item.producto.prod_id+"' class='button' >Comprar Ya!!</a>";
-                            //texto1+="<input type='button' value='Comprar ya' onClick='hola()'>";
-                            //texto1+="<button type='button' class='button' onClick='hola()'>Click Me!</button>";
-                            texto1+="</div>";
-                            texto1+="<div class='clear'></div>"
-                            texto1+="</div>";
-                        }
-                    });
-                    $("#mover").html(texto1);
-		      });
-
             //Carga 10 Productos, pero solo muetra 8
             var texto2="";
                 $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Productos", function(datos2){

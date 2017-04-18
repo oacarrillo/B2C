@@ -21,7 +21,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		$(function(){
 			$('#products').slides({
 				preload: true,
-				preloadImage: 'img/loading.gif',
+				preloadImage: 'images/loading.gif',
 				effect: 'slide, fade',
 				crossfade: true,
 				slideSpeed: 350,
@@ -86,6 +86,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 			});
 
+
+
 		</script>
 	 <div class="clear"></div>
   </div>
@@ -143,11 +145,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 				</div>
 				<div class="desc span_3_of_2">
-					<h2>Lorem Ipsum is simply dummy text </h2>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>					
-					<div class="price">
-						<p>Price: <span>$500</span></p>
+					<div id="price">
+
+						<h2>Lorem Ipsum is simply dummy text </h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore.</p>					
+						<div class="price">
+							<p>Price: <span>$500</span></p>
+						</div>
+
 					</div>
+
 					<div class="available">
 						<p>Available Options :</p>
 					<ul>
@@ -249,7 +256,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 		 </div>
 	 </div>
-	    <script type="text/javascript">
+	<script type="text/javascript">
     $(document).ready(function () {
         $('#horizontalTab').easyResponsiveTabs({
             type: 'default', //Types: default, vertical, accordion           
@@ -307,64 +314,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
         </div>
 				<div class="rightsidebar span_3_of_1">
-					<h2>CATEGORIES</h2>
-					<ul>
-				      <li><a href="#">Mobile Phones</a></li>
-				      <li><a href="#">Desktop</a></li>
-				      <li><a href="#">Laptop</a></li>
-				      <li><a href="#">Accessories</a></li>
-				      <li><a href="#">Software</a></li>
-				       <li><a href="#">Sports &amp; Fitness</a></li>
-				       <li><a href="#">Footwear</a></li>
-				       <li><a href="#">Jewellery</a></li>
-				       <li><a href="#">Clothing</a></li>
-				       <li><a href="#">Home Decor &amp; Kitchen</a></li>
-				       <li><a href="#">Beauty &amp; Healthcare</a></li>
-				       <li><a href="#">Toys, Kids &amp; Babies</a></li>
-    				</ul>
-    				<div class="subscribe">
-    					<h2>Newsletters Signup</h2>
-    						<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.......</p>
-						    <div class="signup">
-							    <form>
-							    	<input type="text" value="E-mail address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'E-mail address';"><input type="submit" value="Sign up">
-							    </form>
-						    </div>
-      				</div>
-      				 <div class="community-poll">
-      				 	<h2>Community POll</h2>
-      				 	<p>What is the main reason for you to purchase products online?</p>
-      				 	<div class="poll">
-      				 		<form>
-      				 			<ul>
-									<li>
-									<input type="radio" name="vote" class="radio" value="1">
-									<span class="label"><label>More convenient shipping and delivery </label></span>
-									</li>
-									<li>
-									<input type="radio" name="vote" class="radio" value="2">
-									<span class="label"><label for="vote_2">Lower price</label></span>
-									</li>
-									<li>
-									<input type="radio" name="vote" class="radio" value="3">
-									<span class="label"><label for="vote_3">Bigger choice</label></span>
-									</li>
-									<li>
-									<input type="radio" name="vote" class="radio" value="5">
-									<span class="label"><label for="vote_5">Payments security </label></span>
-									</li>
-									<li>
-									<input type="radio" name="vote" class="radio" value="6">
-									<span class="label"><label for="vote_6">30-day Money Back Guarantee </label></span>
-									</li>
-									<li>
-									<input type="radio" name="vote" class="radio" value="7">
-									<span class="label"><label for="vote_7">Other.</label></span>
-									</li>
-									</ul>
-      				 		</form>
-      				 	</div>
-      				 </div>
+				<h2>CATEGORIES</h2>
+				<div id="categorias">
+		    		<!--
+					Carga linea de productos o categorias
+					-->
  				</div>
  		</div>
  	</div>
@@ -394,6 +348,49 @@ License URL: http://creativecommons.org/licenses/by/3.0/
    <script type="text/javascript">
 		$(document).ready(function() {			
 			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+			
+			query=window.location.search.substring(1);
+			q=query.split("&");
+			var prodId=0;
+			vars=[];
+			for(i=0;i<q.length;i++){
+			    x=q[i].split("=");
+			    k=x[0];
+			    v=x[1];
+			    vars[k]=v;
+			    prodId=v;
+			    //alert(vars[k]);
+			}
+
+			//carga categorias
+			var texto="";
+			$.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Lineas", function(datos){
+				$.each(datos, function(i,item){
+				//	alert(datos[i].lin_nombre);
+					texto+="<ul>";
+					texto+="<li><a href=a>";
+					texto+=""+datos[i].lin_nombre+"";
+					texto+="</a></li>";
+					texto+="</ul>";
+				});
+				$("#categorias").html(texto);
+            });
+
+            //Carga productos
+			
+			var texto1="";
+			$.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Productos/"+prodId, function(datos1){
+					//alert(datos1["prod_nombre"]);
+					texto1+="<h2>"+datos1["prod_nombre"]+"</h2>";
+					texto1+="<p>"+datos1["prod_descripcion"]+"</p>";
+					texto1+="<div class='price'>";
+					texto1+="<p>Price: <span>"+datos1["prod_valor"]+"</span></p>";
+					texto1+="</div>";
+				//});
+				$("#price").html(texto1);
+            });
+
 			
 		});
 	</script>
