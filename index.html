@@ -15,6 +15,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> 
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript" src="js/utilerias.js"></script>
 <script type="text/javascript" src="js/startstop-slider.js"></script>
 <style>
 .mySlides {display:none;}
@@ -42,45 +43,37 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<a href="index.html"><img src="images/logo.png" alt="" /></a>
 			</div>
 			  <div class="cart">
-			  	   <p>Bienvenido a nuestra tienda Virtual - <span>Carrito:</span><div id="dd" class="wrapper-dropdown-2"> 0 item(s) - $0.00
+			  	   <p>Bienvenido a kallsony's - <span>Carrito:</span><div id="dd" class="wrapper-dropdown-2"> 0 item(s) - $0.00
 			  	   	<ul class="dropdown">
 							<li>Usted no tiene productos en su carro de compras</li>
 					</ul></div></p>
-			  </div>
-		<script type="text/javascript">
-
-
-			
+			 </div>
+    		<script type="text/javascript">
             function DropDown(el) {
-				this.dd = el;
-				this.initEvents();
-			}
-			
+    			this.dd = el;
+    			this.initEvents();
+    		}
+    		
             DropDown.prototype = {
-				initEvents : function() {
-					var obj = this;
+    			initEvents : function() {
+    				var obj = this;
 
-					obj.dd.on('click', function(event){
-						$(this).toggleClass('active');
-						event.stopPropagation();
-					});	
-				}
-			}
+    				obj.dd.on('click', function(event){
+    					$(this).toggleClass('active');
+    					event.stopPropagation();
+    				});	
+    			}
+    		}
 
-			$(function() {
+    		$(function() {
+    			var dd = new DropDown( $('#dd') );
+    			$(document).click(function() {
+    				// all dropdowns
+    				$('.wrapper-dropdown-2').removeClass('active');
+    			});
 
-				var dd = new DropDown( $('#dd') );
-
-				$(document).click(function() {
-					// all dropdowns
-					$('.wrapper-dropdown-2').removeClass('active');
-				});
-
-			});
-
-		</script>
-
-
+    		});
+    		</script>
 
 	 <div class="clear"></div>
   </div>
@@ -116,25 +109,35 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     	 	    </div>
 
 
-            	<div class="header_bottom_right">					 
-            	 	<div class="slider">					     
-            			<div id="slider">
-                            <div id="mover">
-                            <!--
-                            Carga Campañas
-                            -->
-                            </div>		
+
+
+
+
+
+                     <div class="header_bottom_right">                   
+                         <div class="slider">                        
+                             <div id="slider">
+                                <div id="mover">
+
+
+
+
+
+
+                                             
+                             </div>     
                         </div>
-            	        <div class="clear"></div>					       
-                    </div>
-                </div>
+                     <div class="clear"></div>                         
+                 </div>
+              </div>
+
+
+
 
 
 		   <div class="clear"></div>
 		</div>
    </div>
-
-
 
          <div class="main">
             <div class="content">
@@ -195,24 +198,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 });    
 
             //Carga Campañas    
+            
             var texto1="";
-                $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/CampañaActiva", function(datos1){
-                    $.each(datos1.pro_campaña, function(i,item){
-                        if(i==0){//para cargar solo un producto de la campaña
+            var strIma="";
+                $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Campaña", function(datos1){
+                    //alert("Entre");
+                    $.each(datos1, function(i,item){
+                        if(i==1){//para cargar solo un producto de la campaña
+                            
                             if(i==0){texto1+="<div id='slide-1' class='slide'>";}//El primer prod tiene id
                             else{texto1+="<div class='slide'>";}//los de mas no tienen id
                             texto1+="<div class='slider-img'>";
-                            texto1+="<a href='preview.html'><img src='"+item.producto.prod_imagen+"' alt='learn more'/></a>";
+                            texto1+="<a href='preview.html'><img src='"+datos1[i].cam_imagen+"' alt='learn more'/></a>";
                             texto1+="</div>";
                             texto1+="<div class='slider-text'>";
                             texto1+="<h1>Oferta!!!<br></h1>";
-                            texto1+="<h2>"+item.prca_descuento+"% de Descuento </h2>";
+                            texto1+="<h2> Descuento </h2>";
                             texto1+="<div class='features_list'>";
-                            texto1+="<h4>"+item.producto.prod_descripcion+"</h4>";
+                            texto1+="<h4>"+datos1[i].cam_descripcion+"</h4>";
                             texto1+="</div>";
-                            texto1+="<a href='preview.html?prod_id="+item.producto.prod_id+"' class='button' >Comprar Ya!!</a>";
-                            //texto1+="<input type='button' value='Comprar ya' onClick='hola()'>";
-                            //texto1+="<button type='button' class='button' onClick='hola()'>Click Me!</button>";
+                            texto1+="<a href='preview.html?prod_id=1' class='button' >Comprar Ya!!</a>";
                             texto1+="</div>";
                             texto1+="<div class='clear'></div>"
                             texto1+="</div>";
@@ -229,14 +234,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         if(i==0 || i==4){texto2+="<div class='section group'>";}//Abre los group
                         
                         texto2+="<div class='grid_1_of_4 images_1_of_4'>";
-                        texto2+="<a href='preview.html'><img src='"+datos2[i].prod_imagen+"' alt='' /></a>";
+                        texto2+="<a href='preview.html?prod_id="+datos2[i].prod_id+"'><img src='"+datos2[i].prod_imagen+"' alt='' /></a>";
                         texto2+="<h2>"+datos2[i].prod_nombre+"</h2>";
                         texto2+="<div class='price-details'>";
                         texto2+="<div class='price-number'>";
-                        texto2+="<p><span class='rupees'>"+datos2[i].prod_valor+"</span></p>";
+                        texto2+="<p><span class='rupees'>"+"$"+number_format(datos2[i].prod_valor,0)+"</span></p>";
                         texto2+="</div>";
                         texto2+="<div class='add-cart'>";
-                        texto2+="<h4><a href='preview.html?prod_id="+datos2[i].prod_id+"'>Add to Cart</a></h4>";
+                        texto2+="<h4><a href='preview.html?prod_id="+datos2[i].prod_id+"'>Comprar</a></h4>";
                         texto2+="</div>";
                         texto2+="<div class='clear'></div>";
                         texto2+="</div>";
