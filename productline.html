@@ -43,37 +43,46 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<a href="index.html"><img src="images/logo.png" alt="" /></a>
 			</div>
 			  <div class="cart">
-			  	   <p>Bienvenido a kallsony's - <span>Carrito:</span><div id="dd" class="wrapper-dropdown-2"> 0 item(s) - $0.00
+			  	   <p>Bienvenido a nuestra tienda Virtual - <span>Carrito:</span><div id="dd" class="wrapper-dropdown-2"> 0 item(s) - $0.00
 			  	   	<ul class="dropdown">
 							<li>Usted no tiene productos en su carro de compras</li>
 					</ul></div></p>
-			 </div>
-    		<script type="text/javascript">
+			  </div>
+		<script type="text/javascript">
+
+
+			
             function DropDown(el) {
-    			this.dd = el;
-    			this.initEvents();
-    		}
-    		
+				this.dd = el;
+				this.initEvents();
+			}
+			
             DropDown.prototype = {
-    			initEvents : function() {
-    				var obj = this;
+				initEvents : function() {
+					var obj = this;
 
-    				obj.dd.on('click', function(event){
-    					$(this).toggleClass('active');
-    					event.stopPropagation();
-    				});	
-    			}
-    		}
+					obj.dd.on('click', function(event){
+						$(this).toggleClass('active');
+						event.stopPropagation();
+					});	
+				}
+			}
 
-    		$(function() {
-    			var dd = new DropDown( $('#dd') );
-    			$(document).click(function() {
-    				// all dropdowns
-    				$('.wrapper-dropdown-2').removeClass('active');
-    			});
+			$(function() {
 
-    		});
-    		</script>
+				var dd = new DropDown( $('#dd') );
+
+				$(document).click(function() {
+					// all dropdowns
+					$('.wrapper-dropdown-2').removeClass('active');
+				});
+
+			});
+
+
+		</script>
+
+
 
 	 <div class="clear"></div>
   </div>
@@ -89,52 +98,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	     	</div>
 	     	<div class="search_box">
 	     		<form>
-	     			<input type="text" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
-                    <input type="submit" value="">
+	     			<input type="text" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}"><input type="submit" onClick="buscar()">
 	     		</form>
 	     	</div>
 	     	<div class="clear"></div>
 	     </div>	     
-	       <div class="header_slide">
-    			<div class="header_bottom_left">				
-    				<div class="categories">
-    				  <ul>
-    				  	<h3>Categorias</h3>
-    				      <div id= "lista">
-    				      	<!--
-    						Carga linea de productos
-    						-->
-    				      </div>				
-    				  </ul>
-    				</div>					
-    	 	    </div>
-
-                <div class="header_bottom_right">                   
-                    <div class="slider">                        
-                        <div id="slider">
-                            <div id="mover">
-
-
-                                             
-                             </div>     
-                        </div>
-                        <div class="clear"></div>                         
-                    </div>
-                </div>
-
-
-
-
-
-		   <div class="clear"></div>
-		</div>
    </div>
+
+
 
          <div class="main">
             <div class="content">
             	<div class="content_top">
             		<div class="heading">
-            		<h3>Nuevos Productos</h3>
+            			<div id="titulo">
+            				
+            			</div>
             		</div>
             		<div class="clear"></div>
             	</div>
@@ -176,68 +155,34 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
     <script type="text/javascript">
 		$(document).ready(function() {	
-        	
-            function buscar(){
-                alert("Hola");  
-            }           
 
-
-
-
-            //Carga Categorias
-			$().UItoTop({ easingType: 'easeOutQuart' });
-			var texto="";
-				$.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Lineas", function(datos){
-					$.each(datos, function(i,item){
-						texto+="<li><a href='productline.html?line_id="+datos[i].$id+"'>";
-						texto+=""+datos[i].lin_nombre+"";
-						texto+="</a></li>";
-					});
-					$("#lista").html(texto);
-                });    
-
-            //Carga Campañas    
+			//Util - Captura variable por get
+			var lineId = getVar();
             
-            var texto1="";
-            var strIma="";
-                $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Campaña", function(datos1){
-                    //alert("Entre");
-                    $.each(datos1, function(i,item){
-                        if(i==1){//para cargar solo un producto de la campaña
-                            
-                            if(i==0){texto1+="<div id='slide-1' class='slide'>";}//El primer prod tiene id
-                            else{texto1+="<div class='slide'>";}//los de mas no tienen id
-                            texto1+="<div class='slider-img'>";
-                            texto1+="<a href='preview.html'><img src='"+datos1[i].cam_imagen+"' alt='learn more'/></a>";
-                            texto1+="</div>";
-                            texto1+="<div class='slider-text'>";
-                            texto1+="<h1>Oferta!!!<br></h1>";
-                            texto1+="<h2> Descuento </h2>";
-                            texto1+="<div class='features_list'>";
-                            texto1+="<h4>"+datos1[i].cam_descripcion+"</h4>";
-                            texto1+="</div>";
-                            texto1+="<a href='preview.html?prod_id=1' class='button' >Comprar Ya!!</a>";
-                            texto1+="</div>";
-                            texto1+="<div class='clear'></div>"
-                            texto1+="</div>";
-                        }
-                    });
-                    $("#mover").html(texto1);
-		      });
+			//Toma el nombre de la linea o categoria
+			var texto="";
+			$.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Lineas", function(datos){
+				$.each(datos, function(i,item){
+					if(datos[i].$id==lineId){
+						texto+="<h3>Productos de la linea "+datos[i].lin_nombre+"</h3>";
+					}
+				});
+				$("#titulo").html(texto);
+            });  
 
             //Carga 10 Productos, pero solo muetra 8
             var texto2="";
-                $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Productos", function(datos2){
+                $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Productos/Linea/"+lineId, function(datos2){
                     $.each(datos2, function(i,item){
                      if(i<8){//Solo tomo los 8 primeros productos del servicio   
                         if(i==0 || i==4){texto2+="<div class='section group'>";}//Abre los group
                         
                         texto2+="<div class='grid_1_of_4 images_1_of_4'>";
-                        texto2+="<a href='preview.html?prod_id="+datos2[i].prod_id+"'><img src='"+datos2[i].prod_imagen+"' alt='' /></a>";
+                        texto2+="<a href='preview.html'><img src='"+datos2[i].prod_imagen+"' alt='' /></a>";
                         texto2+="<h2>"+datos2[i].prod_nombre+"</h2>";
                         texto2+="<div class='price-details'>";
                         texto2+="<div class='price-number'>";
-                        texto2+="<p><span class='rupees'>"+"$"+number_format(datos2[i].prod_valor,0)+"</span></p>";
+                        texto2+="<p><span class='rupees'>"+number_format(datos2[i].prod_valor)+"</span></p>";
                         texto2+="</div>";
                         texto2+="<div class='add-cart'>";
                         texto2+="<h4><a href='preview.html?prod_id="+datos2[i].prod_id+"'>Comprar</a></h4>";

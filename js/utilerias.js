@@ -1,3 +1,4 @@
+//OAC - Formato de valores numericos
 function number_format(amount, decimals) {
     amount += ''; // por si pasan un numero en vez de un string
     amount = parseFloat(amount.replace(/[^0-9\.]/g, '')); // elimino cualquier cosa que no sea numero o punto
@@ -13,3 +14,18 @@ function number_format(amount, decimals) {
         amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
     return amount_parts.join('.');
 } 
+function getVar(){
+    query=window.location.search.substring(1);
+    q=query.split("&");
+    var prodId=0;
+    vars=[];
+    for(i=0;i<q.length;i++){
+        x=q[i].split("=");
+        k=x[0];
+        v=x[1];
+        vars[k]=v;
+        prodId=v;
+        return prodId;
+    }
+}
+

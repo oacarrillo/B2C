@@ -124,28 +124,27 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					<div class="grid images_3_of_2">
 						<div id="container">
 						   <div id="products_example">
-							   <div id="products">
+							<div id="products">
 								<div class="slides_container">
-									<a href="#" target="_blank"><img src="images/productslide-1.jpg" alt=" " /></a>
-								</div>
-								<ul class="pagination">
-									<li><a href="#"><img src="images/thumbnailslide-1.jpg" alt=" " /></a></li>
-								</ul>
+									<div id="imapro">
+			    				      	<!--
+			    						Carga imagenes de los productos
+	    								-->
+									</div>
+								</div>								
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="desc span_3_of_2">
 					<div id="price">
-
     				      	<!--
-    						Carga datos del productos
+    						Carga precio de los productos
     						-->
-
 					</div>
 
 				<div>
-					<div class="margin-top: 15px; line-height: 3em;"><span><a href="#">Agregar al Carrito</a></span></div>					
+					<div class="button"><span><a href="#">Agregar al Carrito</a></span></div>					
 					<div class="clear"></div>
 				</div>
 
@@ -263,27 +262,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		$(document).ready(function() {			
 			$().UItoTop({ easingType: 'easeOutQuart' });
 			
+			//Util - Captura variable por get
+			var prodId = getVar();
 			
-			query=window.location.search.substring(1);
-			q=query.split("&");
-			var prodId=0;
-			vars=[];
-			for(i=0;i<q.length;i++){
-			    x=q[i].split("=");
-			    k=x[0];
-			    v=x[1];
-			    vars[k]=v;
-			    prodId=v;
-			    //alert(vars[k]);
-			}
-
 			//carga categorias
 			var texto="";
 			$.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Lineas", function(datos){
 				$.each(datos, function(i,item){
 				//	alert(datos[i].lin_nombre);
 					texto+="<ul>";
-					texto+="<li><a href=a>";
+					texto+="<li><a href='productline.html?line_id="+datos[i].$id+"'>";
 					texto+=""+datos[i].lin_nombre+"";
 					texto+="</a></li>";
 					texto+="</ul>";
@@ -291,20 +279,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				$("#categorias").html(texto);
             });
 
-            //Carga productos
+            //Carga imagenes de los productos y precio
 			
 			var texto1="";
+			var texto2="";
+			var strIma="";
 			$.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Productos/"+prodId, function(datos1){
-					//alert(datos1["prod_nombre"]);
-					texto1+="<h2>"+datos1["prod_nombre"]+"</h2>";
-					//texto1+="<p>"+datos1["prod_descripcion"]+"</p>";
-					texto1+="<div class='price'>";
-					texto1+="<p>Precio: <span>"+"$"+number_format(datos1["prod_valor"],0)+"</span></p>";
-					texto1+="</div>";
-				//});
-				$("#price").html(texto1);
-				$("#desc").html(datos1["prod_descripcion"]);
-				
+				texto1+="<h2>"+datos1["prod_nombre"]+"</h2>";
+				texto1+="<div class='price'>";
+				texto1+="<p>Precio: <span>"+"$"+number_format(datos1["prod_valor"],0)+"</span></p>";
+				texto1+="</div>";
+				texto2+="<a href='#'' target='_blank'><img src='"+datos1["prod_imagen"]+"' alt=' '/></a>";
+				texto2+="<ul class='pagination'>";
+				strIma=datos1["prod_imagen"].replace("h_212","h_45");//Modifica tamaño
+				strIma=strIma.replace("w_212","w_40");
+				texto2+="<li><a href='#'' target='_blank'><img src='"+strIma+"' alt=' '/></a>";
+				texto2+="</li>";
+				texto2+="</ul>";
+			$("#price").html(texto1);
+			$("#desc").html(datos1["prod_descripcion"]);
+			$("#imapro").html(texto2);
             });
 
 			
