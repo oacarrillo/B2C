@@ -12,7 +12,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="css/slider.css" rel="stylesheet" type="text/css" media="all"/>
-<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> 
+<script type="text/javascript" src="js/jquery-3.2.1.js"></script> 
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
 <script type="text/javascript" src="js/utilerias.js"></script>
@@ -173,19 +173,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             //Carga 10 Productos, pero solo muetra 8
             var texto2="";
                 $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Productos/Linea/"+lineId, function(datos2){
-                    $.each(datos2, function(i,item){
+                    $.each(datos2.Productos, function(i,item){
                      if(i<8){//Solo tomo los 8 primeros productos del servicio   
                         if(i==0 || i==4){texto2+="<div class='section group'>";}//Abre los group
-                        
                         texto2+="<div class='grid_1_of_4 images_1_of_4'>";
-                        texto2+="<a href='preview.html'><img src='"+datos2[i].prod_imagen+"' alt='' /></a>";
-                        texto2+="<h2>"+datos2[i].prod_nombre+"</h2>";
+                        texto2+="<a href='preview.html'><img src='"+item.prod_imagen+"' alt='' /></a>";
+                        texto2+="<h2>"+item.prod_nombre+"</h2>";
                         texto2+="<div class='price-details'>";
                         texto2+="<div class='price-number'>";
-                        texto2+="<p><span class='rupees'>"+number_format(datos2[i].prod_valor)+"</span></p>";
+                        texto2+="<p><span class='rupees'>"+number_format(item.prod_valor)+"</span></p>";
                         texto2+="</div>";
                         texto2+="<div class='add-cart'>";
-                        texto2+="<h4><a href='preview.html?prod_id="+datos2[i].prod_id+"'>Comprar</a></h4>";
+                        texto2+="<h4><a href='preview.html?prod_id="+item.prod_id+"'>Comprar</a></h4>";
                         texto2+="</div>";
                         texto2+="<div class='clear'></div>";
                         texto2+="</div>";
