@@ -22,6 +22,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 </style>
 </head>
 <body>
+
   <div class="wrap">
 	<div class="header">
 		<div class="headertop_desc">
@@ -30,7 +31,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<div class="account_desc">
 				<ul>
-					<li><a href="#">Registro</a></li>
+					<li><a href="register.html">Registro</a></li>
 					<li><a data-toggle="modal" href="#login" class="btn btn-primary btn-large">Login</a></li>
                     <li><a href="#">Envios</a></li>
 					<li><a href="#">Mi Cuenta</a></li>
@@ -49,34 +50,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</ul></div></p>
 			 </div>
     		<script type="text/javascript">
-            function DropDown(el) {
-    			this.dd = el;
-    			this.initEvents();
-    		}
+                function DropDown(el) {
+        			this.dd = el;
+        			this.initEvents();
+        		}
 
-            function buscar(){
-                window.location("product.html");
-            }
-    		
-            DropDown.prototype = {
-    			initEvents : function() {
-    				var obj = this;
+                DropDown.prototype = {
+        			initEvents : function() {
+        				var obj = this;
+        				obj.dd.on('click', function(event){
+        					$(this).toggleClass('active');
+        					event.stopPropagation();
+        				});	
+        			}
+        		}
 
-    				obj.dd.on('click', function(event){
-    					$(this).toggleClass('active');
-    					event.stopPropagation();
-    				});	
-    			}
-    		}
+        		$(function() {
+        			var dd = new DropDown( $('#dd') );
+        			$(document).click(function() {
+        				// all dropdowns
+        				$('.wrapper-dropdown-2').removeClass('active');
+        			});
 
-    		$(function() {
-    			var dd = new DropDown( $('#dd') );
-    			$(document).click(function() {
-    				// all dropdowns
-    				$('.wrapper-dropdown-2').removeClass('active');
-    			});
-
-    		});
+        		});
     		</script>
 
 	 <div class="clear"></div>
@@ -94,8 +90,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
      			</ul>
 	     	</div>
 	     	<div class="search_box">
-	     		<form method="get" action="product.html">
-	     			<input type="text" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
+	     		<form action="product.html">
+	     			<input type="text" id="find" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
                     <input type="submit" value="" onclick="buscar()">
 	     		</form>
 	     	</div>
@@ -179,7 +175,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script type="text/javascript">
 		$(document).ready(function() {	
         	
-          
+            sessionStorage.prodLine = "http://kallsonyproducto.azurewebsites.net/kallsony/Productos/Linea/";//Productos*linea paginados
+            sessionStorage.prodCamp = "http://kallsonyproducto.azurewebsites.net/kallsony/Campaña";//productos*campaña paginados
+            sessionStorage.prodFind = "";//productos buscados por demanda
+
 
             //Carga Categorias
 			$().UItoTop({ easingType: 'easeOutQuart' });
@@ -193,14 +192,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					$("#lista").html(texto);
                 });    
 
- 
-
             //Carga Campañas    
-            
             var texto1="";
             var strIma="";
                 $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Campaña", function(datos1){
-                    //alert("Entre");
                     $.each(datos1, function(i,item){
                         if(i==1){//para cargar solo un producto de la campaña
                             

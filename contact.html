@@ -23,7 +23,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<div class="account_desc">
 				<ul>
-					<li><a href="#">Registro</a></li>
+					<li><a href="register.html">Registro</a></li>
 					<li><a href="#">Login</a></li>
 					<li><a href="#">Envios</a></li>
 					<li><a href="#">Mi Cuenta</a></li>
@@ -82,50 +82,52 @@ License URL: http://creativecommons.org/licenses/by/3.0/
      			</ul>
 	     	</div>
 	     	<div class="search_box">
-	     		<form>
-	     			<input type="text" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}"><input type="submit" value="">
+	     		<form action="product.html">
+	     			<input type="text" id="find" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
+                    <input type="submit" value="" onclick="buscar()">
 	     		</form>
 	     	</div>
 	     	<div class="clear"></div>
 	     </div>	     	
    </div>
+
+
  <div class="main">
     <div class="content">
     	<div class="section group">
-				<div class="col span_2_of_3">
-				  <div class="contact-form">
-				  	<h2>Contactenos</h2>
-					    <form method="post" action="contact-post.html">
-					    	<div>
-						    	<span><label>Nombre</label></span>
-						    	<span><input name="userName" type="text" class="textbox" ></span>
-						    </div>
-						    <div>
-						    	<span><label>E-mail</label></span>
-						    	<span><input name="userEmail" type="text" class="textbox"></span>
-						    </div>
-						    <div>
-						     	<span><label>Nombre de empresa</label></span>
-						    	<span><input name="userPhone" type="text" class="textbox"></span>
-						    </div>
-						    <div>
-						    	<span><label>Asunto</label></span>
-						    	<span><textarea name="userMsg"> </textarea></span>
-						    </div>
-						   <div>
-						   		<span><input type="submit" value="Enviar"  class="myButton"></span>
+			<div class="col span_2_of_3">
+			  	<div class="contact-form">
+			  		<h2>Contactenos</h2>
+				    <form method="post" action="contact-post.html">
+				    	<div>
+					    	<span><label>Nombre</label></span>
+					    	<span><input name="userName" type="text" class="textbox" ></span>
+					    </div>
+					    <div>
+					    	<span><label>E-mail</label></span>
+					    	<span><input name="userEmail" type="text" class="textbox"></span>
+					    </div>
+					    <div>
+					     	<span><label>Nombre de empresa</label></span>
+					    	<span><input name="userPhone" type="text" class="textbox"></span>
+					    </div>
+					    <div>
+					    	<span><label>Asunto</label></span>
+					    	<span><textarea name="userMsg"> </textarea></span>
+					    </div>
+					   <div>
+					   		<span><input type="submit" value="Enviar"  class="myButton"></span>
+					  </div>
+				    </form>
+			  	</div>
+			</div>
+			<div class="col span_1_of_3">
+				<div class="contact_info">
+	 				<h3>Encuentrenos Aquí</h3>
+				    	  <div class="map">
+				    	  		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.7971988101776!2d-74.0667621857266!3d4.630239443554948!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a26173614b9%3A0x562eb99d0237f756!2zQ3JhLiA3ICM0My0yLCBCb2dvdMOh!5e0!3m2!1ses!2sco!4v1492121594690" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
 						  </div>
-					    </form>
-				  </div>
-  				</div>
-				<div class="col span_1_of_3">
-					<div class="contact_info">
-    	 				<h3>Encuentrenos Aquí</h3>
-					    	  <div class="map">
-					    	  		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.7971988101776!2d-74.0667621857266!3d4.630239443554948!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a26173614b9%3A0x562eb99d0237f756!2zQ3JhLiA3ICM0My0yLCBCb2dvdMOh!5e0!3m2!1ses!2sco!4v1492121594690" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
-							  </div>
-
-</div>
+				</div>
       			<div class="company_address">
 				     	<h3>Información de la empresa :</h3>
 						    	<p>Carrera 7 # 45 - 02,</p>
@@ -134,9 +136,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				   		<p>Telefono:57-1-3208320</p>
 				   		<p>Email: <span>micorreo.javeriana.edu.co</span></p>
 				   		<p>Follow on: <span>Facebook</span>, <span>Twitter</span></p>
-				   </div>
-				 </div>
-			  </div>		
+				</div>
+			</div>
+		</div>		
          </div> 
     </div>
  </div>

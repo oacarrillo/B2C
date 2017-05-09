@@ -42,7 +42,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<div class="account_desc">
 				<ul>
-					<li><a href="#">Registro</a></li>
+					<li><a href="register.html">Registro</a></li>
 					<li><a href="#">Login</a></li>
 					<li><a href="#">Envios</a></li>
 					<li><a href="#">Mi Cuenta</a></li>
@@ -103,8 +103,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
      			</ul>
 	     	</div>
 	     	<div class="search_box">
-	     		<form>
-	     			<input type="text" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}"><input type="submit" value="">
+	     		<form action="product.html">
+	     			<input type="text" id="find" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
+                    <input type="submit" value="" onclick="buscar()">
 	     		</form>
 	     	</div>
 	     	<div class="clear"></div>
@@ -180,51 +181,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
    </script>		
    <div class="content_bottom">
     		<div class="heading">
-    		<h3>Related Products</h3>
-    		</div>
-    		<div class="see">
-    			<p><a href="#">See all Products</a></p>
+    		<h3>Otros productos que te pueden interesar</h3>
     		</div>
     		<div class="clear"></div>
     	</div>
-   <div class="section group">
-				<div class="grid_1_of_4 images_1_of_4">
-					 <a href="#"><img src="images/new-pic1.jpg" alt=""></a>					
-					<div class="price" style="border:none">
-					       		<div class="add-cart" style="float:none">								
-									<h4><a href="#">Add to Cart</a></h4>
-							     </div>
-							 <div class="clear"></div>
-					</div>
-				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-					<a href="#"><img src="images/new-pic2.jpg" alt=""></a>
-					 <div class="price" style="border:none">
-					       		<div class="add-cart" style="float:none">								
-									<h4><a href="#">Add to Cart</a></h4>
-							     </div>
-							 <div class="clear"></div>
-					</div>
-				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-					<a href="#"><img src="images/new-pic4.jpg" alt=""></a>
-					<div class="price" style="border:none">
-					       		<div class="add-cart" style="float:none">								
-									<h4><a href="#">Add to Cart</a></h4>
-							     </div>
-							 <div class="clear"></div>
-					</div>
-				</div>
-				<div class="grid_1_of_4 images_1_of_4">
-				 <img src="images/new-pic3.jpg" alt="">
-					 <div class="price" style="border:none">
-					       		<div class="add-cart" style="float:none">								
-									<h4><a href="#">Add to Cart</a></h4>
-							     </div>
-							 <div class="clear"></div>
-					</div>
-				</div>
-			</div>
+   			
+
+    			<div id="otrospro">
+
+    			</div>
+
+
         </div>
 				<div class="rightsidebar span_3_of_1">
 				<h2>CATEGORIAS</h2>
@@ -300,6 +267,30 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			$("#desc").html(datos1["prod_descripcion"]);
 			$("#imapro").html(texto2);
             });
+
+            var texto3="";
+                $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Productos", function(datos2){
+                    $.each(datos2, function(i,item){
+                     if(i<4){//Solo tomo los 8 primeros productos del servicio   
+                        if(i==0 || i==4){texto2+="<div class='section group'>";}//Abre los group
+                        texto3+="<div class='grid_1_of_4 images_1_of_4'>";
+                        texto3+="<a href='preview.html?prod_id="+datos2[i].prod_id+"'><img src='"+datos2[i].prod_imagen+"' alt='' /></a>";
+                        texto3+="<h2>"+datos2[i].prod_nombre+"</h2>";
+                        texto3+="<div class='price-details'>";
+                        texto3+="<div class='price-number'>";
+                        texto3+="<p><span class='rupees'>"+"$"+number_format(datos2[i].prod_valor,0)+"</span></p>";
+                        texto3+="</div>";
+                        texto3+="<div class='add-cart'>";
+                        texto3+="<h4><a href='preview.html?prod_id="+datos2[i].prod_id+"'>Comprar</a></h4>";
+                        texto3+="</div>";
+                        texto3+="<div class='clear'></div>";
+                        texto3+="</div>";
+                        texto3+="</div>";
+                        if(i==3 || i==7){texto3+="</div>";}//cierra los group
+                    }    
+                    });
+                    $("#otrospro").html(texto3);
+              });
 
 			
 		});

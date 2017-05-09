@@ -6,7 +6,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <!DOCTYPE HTML>
 <head>
-<title>KALLSONY'S</title>
+<title>KALLSONY'S Registro</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -30,7 +30,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<div class="account_desc">
 				<ul>
-					<li><a href="#">Registro</a></li>
+					<li><a href="register.html">Registro</a></li>
 					<li><a href="#">Login</a></li>
 					<li><a href="#">Envios</a></li>
 					<li><a href="#">Mi Cuenta</a></li>
@@ -92,63 +92,92 @@ License URL: http://creativecommons.org/licenses/by/3.0/
      			</ul>
 	     	</div>
 	     	<div class="search_box">
-	     		<form method="get" action="product.html">
-	     			<input type="text" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
+                <form action="product.html">
+                    <input type="text" id="find" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
                     <input type="submit" value="" onclick="buscar()">
-	     		</form>
+                </form>
 	     	</div>
 	     	<div class="clear"></div>
 	     </div>	     
-	       <div class="header_slide">
-    			<div class="header_bottom_left">				
-    				<div class="categories">
-    				  <ul>
-    				  	<h3>Categorias</h3>
-    				      <div id= "lista">
-    				      	<!--
-    						Carga linea de productos
-    						-->
-    				      </div>				
-    				  </ul>
-    				</div>					
-    	 	    </div>
-
-                <div class="header_bottom_right">                   
-                    <div class="slider">                        
-                        <div id="slider">
-                            <div id="mover">
-
-
-                                             
-                             </div>     
-                        </div>
-                        <div class="clear"></div>                         
-                    </div>
-                </div>
-
-		   <div class="clear"></div>
-		</div>
    </div>
 
          <div class="main">
             <div class="content">
             	<div class="content_top">
             		<div class="heading">
-            		<h3>Nuevos Productos</h3>
+            		<h3>Registro</h3>
             		</div>
             		<div class="clear"></div>
             	</div>
+                <div class="contact-form">
 
-                <div id="productos">
-                <!--
-                Carga Productos
-                -->
-                </div>      
-
+                </div>
 
             </div>
          </div>
+
+
+         <div class="main">
+            <div class="content">
+                <div class="section group">
+                    <div class="col span_2_of_3">
+                        <div class="contact-form">
+                            <form name="f1">
+                                <div>
+                                    <table>
+                                        <tr><td>Nombres</td><td><input type="text" name="username" id="uid"></td></tr>
+                                        <tr><td>Apellidos</td><td><input  type="text" name="username" id="uid"></td></tr>
+                                        <tr><td>Password</td><td><input type="password" name="password" id="pid"></td></tr>
+                                        <tr><td>Repita su Password&nbsp;&nbsp;&nbsp;&nbsp;</td><td><input type="password" name="password2" id="pid2"></td></tr>
+                                        <tr><td>Genero</td><td><input type="radio" name="gender" value="M">Male <input type="radio" name="gender" value="F">Female </td></tr>
+                                        <tr><td>Direccion</td><td><textarea id="taid" name="address"></textarea></td></tr>
+                                        <tr><td>Direccion de Envio</td><td><textarea id="btaid" name="billaddress"></textarea></td></tr>
+                                        <tr><td>Ciudad</td><td>
+                                        <select name="state">
+                                            <option>Bogota</option>
+                                            <option>Medellin</option>
+                                            <option>Cali</option>
+                                        </select>
+                                        </td></tr>
+                                        <tr><td></td><td></td></tr>
+                                        <tr><td></td><td></td></tr>
+                                    </table>
+                                </div>
+                                <br/>
+                                <input type="checkbox" name="agree" value="1"> Acepto los terminos y condiciones.
+                                <br/><br/>
+                                <input class="button" type="button" value="Registrar" onclick="alert('Registered Successfully')">
+                                <input class="button" type="button" value="Cancelar" onclick="window.location.href='index.html'">
+                                
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col span_1_of_3">
+                        <div class="contact_info">
+                            <h3>Encuentrenos Aquí</h3>
+                                  <div class="map">
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.7971988101776!2d-74.0667621857266!3d4.630239443554948!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a26173614b9%3A0x562eb99d0237f756!2zQ3JhLiA3ICM0My0yLCBCb2dvdMOh!5e0!3m2!1ses!2sco!4v1492121594690" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+                                  </div>
+                        </div>
+                        <div class="company_address">
+                                <h3>Información de la empresa :</h3>
+                                        <p>Carrera 7 # 45 - 02,</p>
+                                        <p>Bogota,</p>
+                                        <p>COLOMBIA</p>
+                                <p>Telefono:57-1-3208320</p>
+                                <p>Email: <span>micorreo.javeriana.edu.co</span></p>
+                                <p>Follow on: <span>Facebook</span>, <span>Twitter</span></p>
+                        </div>
+                    </div>
+                </div>      
+            </div> 
+         </div>
+
+
+
 </div>
+
+
    <div class="footer">
    	  <div class="wrap">	
 	     <div class="section group">
@@ -176,8 +205,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
     <script type="text/javascript">
 		$(document).ready(function() {	
-        	
-          
 
             //Carga Categorias
 			$().UItoTop({ easingType: 'easeOutQuart' });
@@ -191,17 +218,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					$("#lista").html(texto);
                 });    
 
- 
-
             //Carga Campañas    
-            
             var texto1="";
             var strIma="";
                 $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Campaña", function(datos1){
-                    //alert("Entre");
                     $.each(datos1, function(i,item){
                         if(i==1){//para cargar solo un producto de la campaña
-                            
                             if(i==0){texto1+="<div id='slide-1' class='slide'>";}//El primer prod tiene id
                             else{texto1+="<div class='slide'>";}//los de mas no tienen id
                             texto1+="<div class='slider-img'>";
@@ -219,7 +241,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             texto1+="</div>";
                         }
                     });
-                    $("#mover").html(texto1);
+                $("#mover").html(texto1);
 		      });
 
             //Carga 10 Productos, pero solo muetra 8

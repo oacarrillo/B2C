@@ -14,6 +14,7 @@ function number_format(amount, decimals) {
         amount_parts[0] = amount_parts[0].replace(regexp, '$1' + ',' + '$2');
     return amount_parts.join('.');
 } 
+//OAC - Captura variables por get
 function getVar(){
     query=window.location.search.substring(1);
     q=query.split("&");
@@ -28,4 +29,12 @@ function getVar(){
         return prodId;
     }
 }
+ //OAC - Busca productos por campo de paginas
+function buscar(){
+    var porId=document.getElementById("find").value;        
+    sessionStorage.prodFind ="http://kallsonyproducto.azurewebsites.net/kallsony/productos/busqueda/descripcion/"+porId;
+}
+
+
+
 

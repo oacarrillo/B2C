@@ -12,9 +12,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="css/slider.css" rel="stylesheet" type="text/css" media="all"/>
-<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> 
+<script type="text/javascript" src="js/jquery-3.2.1.js"></script> 
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript" src="js/utilerias.js"></script>
 <script type="text/javascript" src="js/startstop-slider.js"></script>
 <style>
 .mySlides {display:none;}
@@ -29,7 +30,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<div class="account_desc">
 				<ul>
-					<li><a href="#">Registro</a></li>
+					<li><a href="register.html">Registro</a></li>
 					<li><a href="#">Login</a></li>
 					<li><a href="#">Envios</a></li>
 					<li><a href="#">Mi Cuenta</a></li>
@@ -50,7 +51,35 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<script type="text/javascript">
 
 
-			
+            function paginar(pagina) {
+            	if(pagina==1){
+            		sessionStorage.prodFind=sessionStorage.Primero;
+		       		window.location.assign("product.html")   
+            	}
+            	if(pagina==2){
+            		if(sessionStorage.Anterior!="null"){
+	            		sessionStorage.prodFind=sessionStorage.Anterior;
+			       		window.location.assign("product.html")   
+		       		}
+		       		else{
+		       			alert("No existen paginas anteriores")
+		       		}
+            	}
+            	if(pagina==3){
+            		if(sessionStorage.Siguiente!="null"){
+	            		sessionStorage.prodFind=sessionStorage.Siguiente;
+    		       		window.location.assign("product.html")  
+		       		}
+		       		else{
+		       			alert("No existen paginas siguientes")
+		       		}
+            	}
+            	if(pagina==4){
+            		sessionStorage.prodFind=sessionStorage.Ultimo;
+    		       		window.location.assign("product.html")   
+            	}
+		    }
+
             function DropDown(el) {
 				this.dd = el;
 				this.initEvents();
@@ -79,6 +108,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			});
 
 
+
 		</script>
 
 
@@ -96,8 +126,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
      			</ul>
 	     	</div>
 	     	<div class="search_box">
-	     		<form>
-	     			<input type="text" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}"><input type="submit" value="">
+	     		<form action="product.html">
+	     			<input type="text" id="find" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
+                    <input type="submit" value="" onclick="buscar()">
 	     		</form>
 	     	</div>
 	     	<div class="clear"></div>
@@ -124,6 +155,22 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
             </div>
          </div>
+
+        	<div class="content_top">
+        			<div>
+				    	<tbody> 
+						<tr> 
+							<div id="botones">
+							<input class="button" type="button" value="Primero" onclick="paginar(1)">
+							<input class="button" type="button" value="Anterior" onclick="paginar(2)">
+							<input class="button" type="button" value="Siguiente" onclick="paginar(3)">
+							<input class="button" type="button" value="Ultimo" onclick="paginar(4)">
+							</div>
+						</tr> 
+						</tbody>
+        			</div>
+        		<div class="clear"></div>
+        	</div>         
 </div>
    <div class="footer">
    	  <div class="wrap">	
@@ -153,21 +200,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script type="text/javascript">
 		$(document).ready(function() {	
             //Carga 10 Productos, pero solo muetra 8
-            var texto2="";
-                $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Productos", function(datos2){
-                    $.each(datos2, function(i,item){
+			var texto2="";
+            $.getJSON(sessionStorage.prodFind, function(datos){
+                    $.each(datos.Productos, function(i,item){
                      if(i<8){//Solo tomo los 8 primeros productos del servicio   
                         if(i==0 || i==4){texto2+="<div class='section group'>";}//Abre los group
-                        
                         texto2+="<div class='grid_1_of_4 images_1_of_4'>";
-                        texto2+="<a href='preview.html'><img src='"+datos2[i].prod_imagen+"' alt='' /></a>";
-                        texto2+="<h2>"+datos2[i].prod_nombre+"</h2>";
+                        texto2+="<a href='preview.html'><img src='"+item.prod_imagen+"' alt='' /></a>";
+                        texto2+="<h2>"+item.prod_nombre+"</h2>";
                         texto2+="<div class='price-details'>";
                         texto2+="<div class='price-number'>";
-                        texto2+="<p><span class='rupees'>"+datos2[i].prod_valor+"</span></p>";
+                        texto2+="<p><span class='rupees'>$"+number_format(item.prod_valor)+"</span></p>";
                         texto2+="</div>";
                         texto2+="<div class='add-cart'>";
-                        texto2+="<h4><a href='preview.html?prod_id="+datos2[i].prod_id+"'>Add to Cart</a></h4>";
+                        texto2+="<h4><a href='preview.html?prod_id="+item.prod_id+"'>Comprar</a></h4>";
                         texto2+="</div>";
                         texto2+="<div class='clear'></div>";
                         texto2+="</div>";
@@ -175,10 +221,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         if(i==3 || i==7){texto2+="</div>";}//cierra los group
                     }    
                     });
-                   // texto2+="</div>";
                     $("#productos").html(texto2);
-              });
-
+					//Carga paginacion de los productos
+					sessionStorage.Primero=datos.Paging.First;
+					sessionStorage.Anterior=datos.Paging.Previous;
+					sessionStorage.Siguiente=datos.Paging.Next;
+					sessionStorage.Ultimo=datos.Paging.Last;
+              });            
         });
     </script>
 <a href="#" id="toTop"><span id="toTopHover"> </span></a>

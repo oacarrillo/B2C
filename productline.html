@@ -30,7 +30,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			</div>
 			<div class="account_desc">
 				<ul>
-					<li><a href="#">Registro</a></li>
+					<li><a href="register.html">Registro</a></li>
 					<li><a href="#">Login</a></li>
 					<li><a href="#">Envios</a></li>
 					<li><a href="#">Mi Cuenta</a></li>
@@ -50,17 +50,43 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			  </div>
 		<script type="text/javascript">
 
+            //Gestiona la paginacion del lineas*producto
+            function paginar(pagina) {
+            	if(pagina==1){
+            		sessionStorage.prodLine=sessionStorage.Primero;
+		       		window.location.assign("productline.html")   
+            	}
+            	if(pagina==2){
+            		if(sessionStorage.Anterior!="null"){
+	            		sessionStorage.prodLine=sessionStorage.Anterior;
+			       		window.location.assign("productline.html")   
+		       		}
+		       		else{
+		       			alert("No existen paginas anteriores")
+		       		}
+            	}
+            	if(pagina==3){
+            		if(sessionStorage.Siguiente!="null"){
+	            		sessionStorage.prodLine=sessionStorage.Siguiente;
+    		       		window.location.assign("productline.html")  
+		       		}
+		       		else{
+		       			alert("No existen paginas siguientes")
+		       		}
+            	}
+            	if(pagina==4){
+            		sessionStorage.prodLine=sessionStorage.Ultimo;
+    		       		window.location.assign("productline.html")   
+            	}
+		    }
 
-			
             function DropDown(el) {
 				this.dd = el;
 				this.initEvents();
 			}
-			
             DropDown.prototype = {
 				initEvents : function() {
 					var obj = this;
-
 					obj.dd.on('click', function(event){
 						$(this).toggleClass('active');
 						event.stopPropagation();
@@ -76,10 +102,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					// all dropdowns
 					$('.wrapper-dropdown-2').removeClass('active');
 				});
-
 			});
-
-
 		</script>
 
 
@@ -97,8 +120,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
      			</ul>
 	     	</div>
 	     	<div class="search_box">
-	     		<form>
-	     			<input type="text" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}"><input type="submit" onClick="buscar()">
+	     		<form action="product.html">
+	     			<input type="text" id="find" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
+                    <input type="submit" value="" onclick="buscar()">
 	     		</form>
 	     	</div>
 	     	<div class="clear"></div>
@@ -107,7 +131,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
 
-         <div class="main">
+        <div class="main">
             <div class="content">
             	<div class="content_top">
             		<div class="heading">
@@ -123,10 +147,24 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 Carga Productos
                 -->
                 </div>      
-
-
             </div>
-         </div>
+
+        	<div class="content_top">
+        			<div>
+				    	<tbody> 
+						<tr> 
+							<div id="botones">
+							<input class="button" type="button" value="Primero" onclick="paginar(1)">
+							<input class="button" type="button" value="Anterior" onclick="paginar(2)">
+							<input class="button" type="button" value="Siguiente" onclick="paginar(3)">
+							<input class="button" type="button" value="Ultimo" onclick="paginar(4)">
+							</div>
+						</tr> 
+						</tbody>
+        			</div>
+        		<div class="clear"></div>
+        	</div>
+        </div>
 </div>
    <div class="footer">
    	  <div class="wrap">	
@@ -170,9 +208,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				$("#titulo").html(texto);
             });  
 
-            //Carga 10 Productos, pero solo muetra 8
+            //Carga 10 Productos, pero solo muestra 8
             var texto2="";
-                $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Productos/Linea/"+lineId, function(datos2){
+            var texto3="";
+            //Si es la primera vez que ingresa se busca servicio original + id capturado por get
+            //alert(sessionStorage.prodLine);
+            if(sessionStorage.prodLine=="http://kallsonyproducto.azurewebsites.net/kallsony/Productos/Linea/"){
+            	sessionStorage.prodLine=sessionStorage.prodLine+lineId;
+            }
+            //alert(sessionStorage.prodLine);
+            $.getJSON(sessionStorage.prodLine, function(datos2){
                     $.each(datos2.Productos, function(i,item){
                      if(i<8){//Solo tomo los 8 primeros productos del servicio   
                         if(i==0 || i==4){texto2+="<div class='section group'>";}//Abre los group
@@ -181,7 +226,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         texto2+="<h2>"+item.prod_nombre+"</h2>";
                         texto2+="<div class='price-details'>";
                         texto2+="<div class='price-number'>";
-                        texto2+="<p><span class='rupees'>"+number_format(item.prod_valor)+"</span></p>";
+                        texto2+="<p><span class='rupees'>$"+number_format(item.prod_valor)+"</span></p>";
                         texto2+="</div>";
                         texto2+="<div class='add-cart'>";
                         texto2+="<h4><a href='preview.html?prod_id="+item.prod_id+"'>Comprar</a></h4>";
@@ -192,9 +237,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         if(i==3 || i==7){texto2+="</div>";}//cierra los group
                     }    
                     });
-                   // texto2+="</div>";
                     $("#productos").html(texto2);
+					//Carga paginacion de los productos
+					sessionStorage.Primero=datos2.Paging.First;
+					sessionStorage.Anterior=datos2.Paging.Previous;
+					sessionStorage.Siguiente=datos2.Paging.Next;
+					sessionStorage.Ultimo=datos2.Paging.Last;
               });
+
+
+
 
         });
     </script>
