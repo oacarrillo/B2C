@@ -50,16 +50,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			  </div>
 		<script type="text/javascript">
 
-
+            //Gestiona la paginacion del lineas*producto
             function paginar(pagina) {
             	if(pagina==1){
-            		sessionStorage.prodFind=sessionStorage.Primero;
-		       		window.location.assign("product.html")   
+            		sessionStorage.prodCamp=sessionStorage.Primero;
+		       		window.location.assign("productcamp.html")   
             	}
             	if(pagina==2){
             		if(sessionStorage.Anterior!="null"){
-	            		sessionStorage.prodFind=sessionStorage.Anterior;
-			       		window.location.assign("product.html")   
+	            		sessionStorage.prodCamp=sessionStorage.Anterior;
+			       		window.location.assign("productcamp.html")   
 		       		}
 		       		else{
 		       			alert("No existen paginas anteriores")
@@ -67,16 +67,16 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             	}
             	if(pagina==3){
             		if(sessionStorage.Siguiente!="null"){
-	            		sessionStorage.prodFind=sessionStorage.Siguiente;
-    		       		window.location.assign("product.html")  
+	            		sessionStorage.prodCamp=sessionStorage.Siguiente;
+    		       		window.location.assign("productcamp.html")  
 		       		}
 		       		else{
 		       			alert("No existen paginas siguientes")
 		       		}
             	}
             	if(pagina==4){
-            		sessionStorage.prodFind=sessionStorage.Ultimo;
-    		       		window.location.assign("product.html")   
+            		sessionStorage.prodCamp=sessionStorage.Ultimo;
+    		       		window.location.assign("productcamp.html")   
             	}
 		    }
 
@@ -84,11 +84,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				this.dd = el;
 				this.initEvents();
 			}
-			
             DropDown.prototype = {
 				initEvents : function() {
 					var obj = this;
-
 					obj.dd.on('click', function(event){
 						$(this).toggleClass('active');
 						event.stopPropagation();
@@ -104,11 +102,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					// all dropdowns
 					$('.wrapper-dropdown-2').removeClass('active');
 				});
-
 			});
-
-
-
 		</script>
 
 
@@ -137,11 +131,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 
 
-         <div class="main">
+        <div class="main">
             <div class="content">
             	<div class="content_top">
             		<div class="heading">
-            		<h3>Nuevos Productos</h3>
+            			<div id="titulo">
+            				
+            			</div>
             		</div>
             		<div class="clear"></div>
             	</div>
@@ -151,10 +147,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 Carga Productos
                 -->
                 </div>      
-
-
             </div>
-         </div>
 
         	<div class="content_top">
         			<div>
@@ -170,7 +163,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						</tbody>
         			</div>
         		<div class="clear"></div>
-        	</div>         
+        	</div>
+        </div>
 </div>
    <div class="footer">
    	  <div class="wrap">	
@@ -199,10 +193,32 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
     <script type="text/javascript">
 		$(document).ready(function() {	
-            //Carga 10 Productos, pero solo muetra 8
-			var texto2="";
-            $.getJSON(sessionStorage.prodFind, function(datos){
-                    $.each(datos.Productos, function(i,item){
+
+			//Util - Captura variable por get
+			var lineId = getVar();
+            
+			//Toma el nombre de la linea o categoria
+			var texto="";
+			$.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Lineas", function(datos){
+				$.each(datos, function(i,item){
+					if(datos[i].$id==lineId){
+						texto+="<h3>Productos de la linea "+datos[i].lin_nombre+"</h3>";
+					}
+				});
+				$("#titulo").html(texto);
+            });  
+
+            //Carga 10 Productos, pero solo muestra 8
+            var texto2="";
+            var texto3="";
+            //Si es la primera vez que ingresa se busca servicio original + id capturado por get
+            //alert(sessionStorage.prodCamp);
+            if(sessionStorage.prodCamp=="http://kallsonyproducto.azurewebsites.net/kallsony/Productos/Camp/"){
+            	sessionStorage.prodCamp=sessionStorage.prodCamp+lineId;
+            }
+            //alert(sessionStorage.prodCamp);
+            $.getJSON(sessionStorage.prodCamp, function(datos2){
+                    $.each(datos2.Productos, function(i,item){
                      if(i<8){//Solo tomo los 8 primeros productos del servicio   
                         if(i==0 || i==4){texto2+="<div class='section group'>";}//Abre los group
                         texto2+="<div class='grid_1_of_4 images_1_of_4'>";
@@ -223,11 +239,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     });
                     $("#productos").html(texto2);
 					//Carga paginacion de los productos
-					sessionStorage.Primero=datos.Paging.First;
-					sessionStorage.Anterior=datos.Paging.Previous;
-					sessionStorage.Siguiente=datos.Paging.Next;
-					sessionStorage.Ultimo=datos.Paging.Last;
-              });            
+					sessionStorage.Primero=datos2.Paging.First;
+					sessionStorage.Anterior=datos2.Paging.Previous;
+					sessionStorage.Siguiente=datos2.Paging.Next;
+					sessionStorage.Ultimo=datos2.Paging.Last;
+              });
+
+
+
+
         });
     </script>
 <a href="#" id="toTop"><span id="toTopHover"> </span></a>

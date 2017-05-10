@@ -222,7 +222,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                      if(i<8){//Solo tomo los 8 primeros productos del servicio   
                         if(i==0 || i==4){texto2+="<div class='section group'>";}//Abre los group
                         texto2+="<div class='grid_1_of_4 images_1_of_4'>";
-                        texto2+="<a href='preview.html'><img src='"+item.prod_imagen+"' alt='' /></a>";
+                        texto2+="<a href='preview.html?prod_id="+item.prod_id+"'><img src='"+item.prod_imagen+"' alt='' /></a>";
                         texto2+="<h2>"+item.prod_nombre+"</h2>";
                         texto2+="<div class='price-details'>";
                         texto2+="<div class='price-number'>";

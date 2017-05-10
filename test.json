@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Create Object from JSON String</h2>
+
+<p id="demo"></p>
+
+<script>
+var text = '{"employees":[' +
+'{"firstName":"John","lastName":"Doe" },' +
+'{"firstName":"Anna","lastName":"Smith" },' +
+'{"firstName":"Peter","lastName":"Jones" }]}';
+
+obj = JSON.parse(text);
+document.getElementById("demo").innerHTML =
+obj.employees[1].firstName + " " + obj.employees[1].lastName;
+</script>
+
+</body>
+</html>
+
+-------------Ejemplo---------------------
+
+
+"employees":[
+    {"firstName":"John", "lastName":"Doe"}, 
+    {"firstName":"Anna", "lastName":"Smith"}, 
+    {"firstName":"Peter", "lastName":"Jones"}
+]
+
+var text = '{ "employees" : [' +
+'{ "firstName":"John" , "lastName":"Doe" },' +
+'{ "firstName":"Anna" , "lastName":"Smith" },' +
+'{ "firstName":"Peter" , "lastName":"Jones" } ]}';
+
+var obj = JSON.parse(text);
+
+
+
+{  
+   "token":"8xZ+J8awrx4=",
+   "ordenCiudad":{  
+      "ciudadId":1
+   },
+   "ordenPais":{  
+      "paisId":1
+   },
+   "ordenDireccionEntrega":{  
+      "direccionId":0,
+      "direccionDescripcion":"Calle 33"
+   },
+   "ordenDetalles":[  
+      {  
+         "detOrdenProductoId":1,
+         "detOrdenValorUnitario":51500,
+         "detOrdenCantidad":6
+      },
+      {  
+         "detOrdenProductoId":2,
+         "detOrdenValorUnitario":105000,
+         "detOrdenCantidad":2
+      }
+   ],
+   "tarjetaCredito":{  
+      "numero":11229900,
+      "ano":2017,
+      "mes":12,
+      "franquicia":"VISA",
+      "nombre":"ANDRES LOPEZ",
+      "codigo":123
+   }
+}
