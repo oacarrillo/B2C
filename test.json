@@ -37,6 +37,73 @@ var text = '{ "employees" : [' +
 var obj = JSON.parse(text);
 
 
+- Ejemplos
+
+var properties = new Object();
+properties.version = "1";
+properties.finish = "0";
+properties.number = 3;
+ 
+var arrayProperties = new Array();
+arrayProperties.push(properties);
+ 
+var miObjeto = new Object();
+miObjeto.nombre = "Pedro";
+miObjeto.edad = 12;
+miObjeto.mascota = "Gato";
+miObjeto.properties = arrayProperties;
+ 
+var myString = JSON.stringify(miObjeto);
+
+
+
+
+var text = '{'+  
+   '"token":"8xZ+J8awrx4="',
+   "ordenCiudad":{  
+      "ciudadId":1
+   },
+   "ordenPais":{  
+      "paisId":1
+   },
+   "ordenDireccionEntrega":{  
+      "direccionId":0,
+      "direccionDescripcion":"Calle 33"
+   },
+   "ordenDetalles":[  
+      {  
+         "detOrdenProductoId":1,
+         "detOrdenValorUnitario":51500,
+         "detOrdenCantidad":6
+      },
+      {  
+         "detOrdenProductoId":2,
+         "detOrdenValorUnitario":105000,
+         "detOrdenCantidad":2
+      }
+   ],
+   "tarjetaCredito":{  
+      "numero":11229900,
+      "ano":2017,
+      "mes":12,
+      "franquicia":"VISA",
+      "nombre":"ANDRES LOPEZ",
+      "codigo":123
+   }
+}
+
+
+paola
+123456
+
+
+crear 
+
+
+
+
+crear orden
+
 
 {  
    "token":"8xZ+J8awrx4=",
@@ -71,3 +138,5 @@ var obj = JSON.parse(text);
       "codigo":123
    }
 }
+
+creacion usuarios

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<head>
+<title>KALLSONYS´S - CONTACTO</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> 
+<script type="text/javascript" src="js/move-top.js"></script>
+<script type="text/javascript" src="js/easing.js"></script>
+</head>
+<body>
+	Hola
+
+	<script>
+	var text1 = '{"employees":[' +
+	'{"firstName":"John","lastName":"Doe" },' +
+	'{"firstName":"Anna","lastName":"Smith" },' +
+	'{"firstName":"Peter","lastName":"Jones" }]}';
+
+	
+	//crear usuario
+	//http://35.184.218.7:8080/SERVICES_OMS/clienteService/clientesC 		post
+	var text2 = '{' +
+	'"token":"8xZ+J8awrx4=",' +
+	'"ordenCiudad":{"ciudadId":1},' +
+	'"ordenPais":{"paisId":1},'+
+	'"ordenDireccionEntrega":{"direccionDescripcion":"Calle 33"},' +
+	'"ordenDetalles":[{"detOrdenProductoId":1,"detOrdenValorUnitario":51500,"detOrdenCantidad":6},' +
+	'{"detOrdenProductoId":2,"detOrdenValorUnitario":105000,"detOrdenCantidad":2}],'+
+	'"tarjetaCredito":{"numero":11229900,"ano":2017,"mes":12,"franquicia":"VISA","nombre":"ANDRES LOPEZ","codigo":123}'+
+	'}';
+
+
+	//logeo
+	//http://35.184.218.7:8080//SERVICES_OMS/loginService/validarLogin
+	var text = '{' +
+	'"username": "oscarcarrillo","password": 123456'+
+	'}';
+
+	obj = JSON.parse(text);
+	alert(text);
+	console.log(obj);
+
+
+
+
+// al crear el usuario la direccion es obligatoria
+// al crear el suaurio elimino la seccion de tajeta si no se envia
+// si no hay tarjeta no envio tag
+//si le da a direccion registrada, no envio tag. cuando id direccion es cero, envio direccion
+
+/*
+
+     {
+      "username": "oscarcarrillo","password": 123456
+     }
+}*/
+
+	</script>
+</body>
+</html>
+
