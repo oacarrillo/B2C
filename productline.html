@@ -9,9 +9,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <title>KALLSONY'S</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="css/login.css" rel="stylesheet" type="text/css" media="all"/>
 <script type="text/javascript" src="js/jquery-3.2.1.js"></script> 
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
@@ -28,12 +28,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="call">
 				 <p><span>Necesita Ayuda?</span> Llamenos <span class="number">57-1-3208320</span></span></p>
 			</div>
-			<div class="account_desc">
-				<ul>
-					<li><a href="register.html">Registro</a></li>
-					<li><a href="#">Login</a></li>
-					<li><a href="#">Envios</a></li>
-					<li><a href="#">Mi Cuenta</a></li>
+			<div class="account_desc" id="menusup">
+                <p>Bienvenido, <span id="nameusuario">Por favor ingrese al sistema</span></p>
+				<br>
+                <ul>
+                    <div id="divLogin" style="float: right;">
+
+                    </div>
 				</ul>
 			</div>
 			<div class="clear"></div>
@@ -42,12 +43,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="logo">
 				<a href="index.html"><img src="images/logo.png" alt="" /></a>
 			</div>
-			  <div class="cart">
-			  	   <p>Bienvenido a nuestra tienda Virtual - <span>Carrito:</span><div id="dd" class="wrapper-dropdown-2"> 0 item(s) - $0.00
+			  <div class="cart" id="concar">
+			  	   <p>Bienvenido a kallsony's - <span>Carrito:</span><div id="dd" class="wrapper-dropdown-2"> 0 item(s) - $0.00
 			  	   	<ul class="dropdown">
-							<li>Usted no tiene productos en su carro de compras</li>
+							<div id="carrito"><li>Usted no tiene productos en su carro de compras</li></div>
+                            <button id="envioPeticiona" class="myButtonCar" onclick="pagar()"><b>Pagar</b></button>
 					</ul></div></p>
-			  </div>
+			 </div>
 		<script type="text/javascript">
 
             //Gestiona la paginacion del lineas*producto
@@ -186,7 +188,23 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
         <div class="copy_right">
 				<p>Kallsony´s © Todos los derechos reservados </p>
-		   </div>
+		</div>
+
+	    <div id="id01" class="modal">
+	      <form class="modal-content animate">
+	    <div class="imgcontainer">
+	      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+	    </div>
+	        <div class="container">
+	          <label><b>Usuario</b></label>
+	          <input id="loginuser"class="text1" type="text" placeholder="Ingrese el usuario" required>
+	          <label><b>Password</b></label>
+	          <input id="loginpass" class="text1" type="password" placeholder="Ingrese el password" required>
+	          <button id="envioPeticiona" class="button1" onclick="login()"><b>Login</b></button>
+	        </div>
+	      </form>
+	    </div>
+
     </div>
 
 
@@ -194,6 +212,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script type="text/javascript">
 		$(document).ready(function() {	
 
+            //Carga de variables de entorno
+            load();
+            
 			//Util - Captura variable por get
 			var lineId = getVar();
             

@@ -10,10 +10,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="css/login.css" rel="stylesheet" type="text/css" media="all"/>
 <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> 
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
 <script type="text/javascript" src="js/jquery.accordion.js"></script>
+<script type="text/javascript" src="js/utilerias.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#posts").accordion({ 
@@ -31,12 +33,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="call">
 				 <p><span>Necesita Ayuda?</span> Llamenos <span class="number">57-1-3208320</span></span></p>
 			</div>
-			<div class="account_desc">
-				<ul>
-					<li><a href="register.html">Registro</a></li>
-					<li><a href="#">Login</a></li>
-					<li><a href="#">Envios</a></li>
-					<li><a href="#">Mi Cuenta</a></li>
+			<div class="account_desc" id="menusup">
+                <p>Bienvenido, <span id="nameusuario">Por favor ingrese al sistema</span></p>
+				<br>
+                <ul>
+                    <div id="divLogin" style="float: right;">
+
+                    </div>
 				</ul>
 			</div>
 			<div class="clear"></div>
@@ -45,12 +48,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			<div class="logo">
 				<a href="index.html"><img src="images/logo.png" alt="" /></a>
 			</div>
-			  <div class="cart">
-			  	   <p>Bienvenido a nuestra tienda Virtual - <span>Carrito:</span><div id="dd" class="wrapper-dropdown-2"> 0 item(s) - $0.00
+			  <div class="cart" id="concar">
+			  	   <p>Bienvenido a kallsony's - <span>Carrito:</span><div id="dd" class="wrapper-dropdown-2"> 0 item(s) - $0.00
 			  	   	<ul class="dropdown">
-							<li>Usted no tiene productos en su carro de compras</li>
+							<div id="carrito"><li>Usted no tiene productos en su carro de compras</li></div>
+                            <button id="envioPeticiona" class="myButtonCar" onclick="pagar()"><b>Pagar</b></button>
 					</ul></div></p>
-			  </div>
+			 </div>
 			  <script type="text/javascript">
 			function DropDown(el) {
 				this.dd = el;
@@ -123,61 +127,61 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     	  <h2>Preguntas frecuentes</h2>	          	
             <div id="posts">
 			    <div class="tab bar">
-                    <h4 class="post-title">1.Un sistema postal es privado?</h4>
+                    <h4 class="post-title">1. Un sistema postal es privado?</h4>
                 </div>
 			    <div class="panel margin-lr-7">
             		<p>Un sistema postal puede ser privado o estatal. Los sistemas privados a menudo tienen impuestas restricciones por parte de los gobiernos.</p>
 			    </div>		   
                 <div class="tab bar">
-                     <h4 class="post-title"> 2.Cuando es el dia internacional del correo?</h4>
+                     <h4 class="post-title"> 2. Cuando es el dia internacional del correo?</h4>
                 </div>
 				<div class="panel margin-lr-7">
 	        		 <p>El 9 de octubre se celebra internacionalmente el Día Mundial del Correo, conmemorando la fundación de la Unión Postal Universal (UPU, por sus siglas en inglés) en el año 1874.1.</p>
                 </div>
                 <div class="tab bar">
-                     <h4 class="post-title"> 3.hay rastros de correo en egipto?</h4>
+                     <h4 class="post-title"> 3. hay rastros de correo en egipto?</h4>
                 </div>
 				<div class="panel margin-lr-7">
 	        		 <p>El egiptólogo Gaston Maspero halló, al descifrar ciertos jeroglíficos, que estos eran referencias claras a los correos del faraón. Esta práctica muy probablemente tenga sus raíces en una práctica anterior de mensajería oral..</p>
                 </div>
 				<div class="tab bar">
-                    <h4 class="post-title"> 4.Existio correo en suramerica?</h4>
+                    <h4 class="post-title"> 4. Existio correo en suramerica?</h4>
             	</div>
 			 	<div class="panel margin-lr-7">
 	        		<p>En Sudamérica, entre los quechuas, los mensajeros se turnaban para llevar informaciones y noticias, corriendo por calzadas pavimentadas que unían las principales ciudades del imperio Inca. Asimismo sucedía en Mesoamérica con los mexicas, tanto mensajes como paquetes para el emperador..</p>
              	</div>
                 <div class="tab bar">
-                    <h4 class="post-title"> 5. Y que paso en francia?</h4>
+                    <h4 class="post-title"> 5. ¿Y que paso en francia?</h4>
                 </div>
 			    <div class="panel margin-lr-7">
 	        	     <p>En Francia, la institución de correos se fecha en tiempos de Carlomagno (807); en Alemania, a medianos del siglo XV; en Italia, la administración estatal de correos data de 1697; en Inglaterra, el primer servicio postal fue establecido en 1635; en España, las primeras referencias a la algún servicio postal son de 1213; en los Estados Unidos de América, el servicio de correos aparece en 1639; en Brasil en 1693; en Portugal, la referencia más antigua de correos es de 1520, cuando el rey D. Manuel autoriza el primer sistema de correos. Cuando en el transcurso de los años se fueron constituyendo progresivamente los monopolios de administración estatal, que caracteriza la mayoría de los países modernos.</p>
                 </div>
                 <div class="tab bar">
-                    <h4 class="post-title"> 6.y Roma tambien tenia correo?</h4>
+                    <h4 class="post-title"> 6. ¿Y Roma tambien tenia correo?</h4>
             	</div>
 				<div class="panel margin-lr-7">
                       <p>El primer sistema postal bien documentado es el romano. Fue organizado en su tiempo por César Augusto (62 a. C.-14) y puede haber sido también el primer servicio postal verdadero. El servicio era llamado cursus publicus y estaba provisto de carruajes ligeros llamados redae, tirados por veloces caballos; además existía otro servicio más lento, equipado con carretas de dos ruedas (birolæ) tiradas por bueyes. Este servicio estaba reservado a la correspondencia del gobierno y, posteriormente, se añadió otro servicio más para los ciudadanos.De las estaciones en las cuales el correo era distribuido y por los cuales los mensajeros cruzaban sus rutas, deriva el nombre en latín del correo, posta (originalmente posata o pausata, que significa lugar de descanso), ya que sobre estas estaciones los mensajeros solían descansar durante sus viajes.</p>
                 </div>
                 <div class="tab bar">
-                    <h4 class="post-title"> 7.El la epoca mediaval como se prestaba este servicio?</h4>
+                    <h4 class="post-title"> 7. El la epoca mediaval como se prestaba este servicio?</h4>
             	</div>
 				<div class="panel margin-lr-7">
 	        	     <p>En general, el servicio de correos en los países occidentales era privativo del rey, de la corte y de la iglesia y tan sólo en raras excepciones podían hacer uso de él los particulares. Estos, sobre todo si eran adinerados, se servían de envíos especiales, preferentemente de comerciantes en tránsito. Por lo que se refiere a las grandes organizaciones comerciales como la Hansa o la Liga Hanseática, en el siglo XII disponían de su servicio particular de correos. También la Universidad de París tenía a su alcance un servicio para su uso exclusivo. También Marco Polo, el célebre viajero veneciano, habla con admiración del correo organizado en China por el emperador Kubilai Khan. Pero ya el temido Gengis Khan, abuelo de Kubilai, empleó en sus inmensas conquistas los flechas, correos veloces especiales que partían de Karakorum hacia todos los lugares del mundo.</p>
                 </div>
                 <div class="tab bar">
-                    <h4 class="post-title"> 8.Se presto servicio de correos en inglaterra?</h4>
+                    <h4 class="post-title"> 8. Se presto servicio de correos en inglaterra?</h4>
             	</div>
 				<div class="panel margin-lr-7">
 	        	     <p>El primer servicio postal que se conoce en la historia inglesa corresponde a la época del reinado de Enrique III. En 1481, durante las guerras de Escocia, fue cuando Eduardo IV estableció postas que se relevaban cada treinta kilómetros, lo cual les permitía recorrer en poco tiempo distancias considerables. En Inglaterra el servicio de correos quedó reservado al Estado y a la nobleza hasta el reinado de Carlos I, quien permitió que también los particulares pudieran servirse de él. Pero los modernos servicios postales ingleses puede decirse que derivan de los establecidos por Enrique VIII (1533). La reina Isabel I fue quien dispuso que los mensajes al exterior fueran llevados únicamente por mensajeros reales, lo que hace pensar en un principio de censura del correo. En 1603, Jacobo I incluyó en el servicio la correspondencia de los particulares, pero dando siempre preferencia a los mensajes oficiales procedentes de la corte inglesa.</p>
                 </div>
                 <div class="tab bar">
-                    <h4 class="post-title"> 9.Y como fue el servicio de envios en Mexico?</h4>
+                    <h4 class="post-title"> 9. Y como fue el servicio de envios en Mexico?</h4>
             	</div>
 				<div class="panel margin-lr-7">
                       <p>El correo en la ciudad de México ha existido desde la época prehispánica, donde gente a pie era la encargada de llevar esta información de una localidad a otra, de correr viene correo. Pero no fue sino hasta el 17 de febrero de 1907 que el entonces presidente de México el General Porfirio Díaz, dio por inauguradas las operaciones del emblemático edificio del Servicio Postal Mexicano, depositando en un buzón una tarjeta del artista Leonardo Izaguirre. En la actualidad el edificio sigue en función y es un atractivo turístico de la ciudad.</p>
                 </div>
                 <div class="tab bar">
-                    <h4 class="post-title"> 10.Cuales eran las tarifas para este servicio?</h4>
+                    <h4 class="post-title"> 10. Cuales eran las tarifas para este servicio?</h4>
             	</div>
 				<div class="panel margin-lr-7">
 	        	     <p>En la mayoría de los países hubo una etapa de la evolución del correo en la que el objetivo de las administraciones de correos era el de entregar las cartas lo más rápidamente posible. Para ello unas veces se hacían más cortas las etapas, renovándose con más frecuencia los relevos de caballos, e incluso, en ocasiones, mejorando los caminos. Sin embargo, como al mismo tiempo aumentó el número de trayectos entre localidades que eran servidas por diligencias, se establecieron dos tipos de servicio de correo: el servicio de diligencia y el de postas a caballo, siendo este último más rápido que el primero y, por lo tanto, era más caro. Es evidente que en aquel entonces el servicio postal era bastante costoso y no estaba al alcance de todos.</p>
@@ -206,12 +210,30 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         </div>
         <div class="copy_right">
 				<p>Kallsony´s © Todos los derechos reservados </p>
-		   </div>
+		</div>
+
+		<div id="id01" class="modal">
+	      <form class="modal-content animate">
+	    <div class="imgcontainer">
+	      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+	    </div>
+	        <div class="container">
+	          <label><b>Usuario</b></label>
+	          <input id="loginuser"class="text1" type="text" placeholder="Ingrese el usuario" required>
+	          <label><b>Password</b></label>
+	          <input id="loginpass" class="text1" type="password" placeholder="Ingrese el password" required>
+	          <button id="envioPeticiona" class="button1" onclick="login()"><b>Login</b></button>
+	        </div>
+	      </form>
+	    </div>
+
     </div>
     <script type="text/javascript">
 		$(document).ready(function() {
 			$().UItoTop({ easingType: 'easeOutQuart' });
-			
+            //Carga de variables de entorno
+            load();			
+
 		});
 	</script>
     <a href="#" id="toTop"><span id="toTopHover"> </span></a>

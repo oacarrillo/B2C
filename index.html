@@ -9,9 +9,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <title>KALLSONY'S</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="css/slider.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="css/login.css" rel="stylesheet" type="text/css" media="all"/>
 <script type="text/javascript" src="js/jquery-3.2.1.js"></script> 
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
@@ -19,124 +19,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <script type="text/javascript" src="js/startstop-slider.js"></script>
 <style>
 .mySlides {display:none;}
-
-.text1 {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    box-sizing: border-box;
-}
-.button1 {
-    background-color: #EB1F25;
-    color: white;
-    padding: 14px 20px;
-    font-size: 16px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-}
-
-button:hover {
-    opacity: 0.8;
-}
-/* Extra styles for the cancel button */
-.cancelbtn {
-    width: auto;
-    padding: 10px 18px;
-    background-color: #f44336;
-}
-
-/* Center the image and position the close button */
-.imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-    position: relative;
-}
-
-img.avatar {
-    width: 40%;
-    border-radius: 50%;
-}
-
-.container {
-    padding: 16px;
-}
-
-span.psw {
-    float: right;
-    padding-top: 16px;
-}
-
-/* The Modal (background) */
-.modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    padding-top: 60px;
-}
-
-/* Modal Content/Box */
-.modal-content {
-    background-color: #fefefe;
-    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-    border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
-}
-
-/* The Close Button (x) */
-.close {
-    position: absolute;
-    right: 25px;
-    top: 0;
-    color: #000;
-    font-size: 35px;
-    font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-    color: red;
-    cursor: pointer;
-}
-
-/* Add Zoom Animation */
-.animate {
-    -webkit-animation: animatezoom 0.6s;
-    animation: animatezoom 0.6s
-}
-
-@-webkit-keyframes animatezoom {
-    from {-webkit-transform: scale(0)} 
-    to {-webkit-transform: scale(1)}
-}
-    
-@keyframes animatezoom {
-    from {transform: scale(0)} 
-    to {transform: scale(1)}
-}
-
-/* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 300px) {
-    span.psw {
-       display: block;
-       float: none;
-    }
-    .cancelbtn {
-       width: 100%;
-    }
-}
-}
-
 </style>
 </head>
 <body>
@@ -147,27 +29,84 @@ span.psw {
 			<div class="call">
 				 <p><span>Necesita Ayuda?</span> Llamenos <span class="number">57-1-3208320</span></span></p>
 			</div>
-			<div class="account_desc">
-				<ul>
-					<li><a href="register.html">Registro</a></li>
-					<li><a onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</a></li>
-                    <li><a href="#">Envios</a></li>
-					<li><a href="#">Mi Cuenta</a></li>
+			<div class="account_desc" id="menusup">
+                <p>Bienvenido, <span id="nameusuario">Por favor ingrese al sistema</span></p>
+				<br>
+                <ul>
+                    <div id="divLogin" style="float: right;">
+
+                    </div>
 				</ul>
 			</div>
-			<div class="clear"></div>
 		</div>
-		<div class="header_top">
+        
+        <div class="clear"></div>		
+        
+        <div class="header_top">
 			<div class="logo">
 				<a href="index.html"><img src="images/logo.png" alt="" /></a>
 			</div>
-			  <div class="cart">
+			  <div class="cart" id="concar">
 			  	   <p>Bienvenido a kallsony's - <span>Carrito:</span><div id="dd" class="wrapper-dropdown-2"> 0 item(s) - $0.00
 			  	   	<ul class="dropdown">
-							<li>Usted no tiene productos en su carro de compras</li>
+							<div id="carrito"><li>Usted no tiene productos en su carro de compras</li></div>
+                            <button id="envioPeticiona" class="myButtonCar" onclick="pagar()"><b>Pagar</b></button>
 					</ul></div></p>
 			 </div>
+
     		<script type="text/javascript">
+                
+                function login1(){
+                    var data = JSON.stringify({
+                      "token": "8xZ+J8awrx4=",
+                      "ordenCiudad": {
+                        "ciudadId": 1
+                      },
+                      "ordenPais": {
+                        "paisId": 1
+                      },
+                      "ordenDireccionEntrega": {
+                        "direccionId": 0,
+                        "direccionDescripcion": "Calle 33"
+                      },
+                      "ordenDetalles": [
+                        {
+                          "detOrdenProductoId": 1,
+                          "detOrdenValorUnitario": 51500,
+                          "detOrdenCantidad": 6
+                        },
+                        {
+                          "detOrdenProductoId": 2,
+                          "detOrdenValorUnitario": 105000,
+                          "detOrdenCantidad": 2
+                        }
+                      ],
+                      "tarjetaCredito": {
+                        "numero": 11229900,
+                        "ano": 2017,
+                        "mes": 12,
+                        "franquicia": "VISA",
+                        "nombre": "ANDRES LOPEZ",
+                        "codigo": 123
+                      }
+                    });
+
+                    var xhr = new XMLHttpRequest();
+                    xhr.withCredentials = true;
+
+                    xhr.addEventListener("readystatechange", function () {
+                      if (this.readyState === 4) {
+                        console.log(this.responseText);
+                      }
+                    });
+
+                    xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/ordenService/ordenC");
+                    xhr.setRequestHeader("content-type", "application/json");
+                    xhr.setRequestHeader("cache-control", "no-cache");
+                    xhr.send(data);                 
+
+                }
+                
                 function DropDown(el) {
         			this.dd = el;
         			this.initEvents();
@@ -182,7 +121,6 @@ span.psw {
         				});	
         			}
         		}
-
         		$(function() {
         			var dd = new DropDown( $('#dd') );
         			$(document).click(function() {
@@ -195,31 +133,6 @@ span.psw {
 
 	 <div class="clear"></div>
   
-
-
-
-    <div id="id01" class="modal">
-      
-      <form class="modal-content animate" action="/action_page.php">
-
-
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-
-    </div>
-
-        <div class="container">
-          <label><b>Usuario</b></label>
-          <input class="text1" type="text" placeholder="Ingrese el usuario" name="uname" required>
-          <label><b>Password</b></label>
-          <input class="text1" type="password" placeholder="Ingrese el password" name="psw" required>
-          <button class="button1" type="submit"><b>Login</b></button>
-        </div>
-
-
-      </form>
-    </div>
-
 
   </div>
 	<div class="header_bottom">
@@ -259,7 +172,6 @@ span.psw {
                         <div id="slider">
                             <div id="mover">
 
-
                                              
                              </div>     
                         </div>
@@ -270,6 +182,7 @@ span.psw {
 		   <div class="clear"></div>
 		</div>
    </div>
+
 
          <div class="main">
             <div class="content">
@@ -289,8 +202,8 @@ span.psw {
 
             </div>
          </div>
-</div>
-   <div class="footer">
+ </div>
+<div class="footer">
    	  <div class="wrap">	
 	     <div class="section group">
 						<div class="social-icons">
@@ -310,24 +223,40 @@ span.psw {
 
         <div class="copy_right">
 				<p>Kallsony´s © Todos los derechos reservados </p>
-		   </div>
-    </div>
+	    </div>
 
+        <div id="id01" class="modal">
+          <form class="modal-content animate">
+        <div class="imgcontainer">
+          <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+        </div>
+            <div class="container">
+              <label><b>Usuario</b></label>
+              <input id="loginuser"class="text1" type="text" placeholder="Ingrese el usuario" required>
+              <label><b>Password</b></label>
+              <input id="loginpass" class="text1" type="password" placeholder="Ingrese el password" required>
+              <button id="envioPeticiona" class="button1" onclick="login()"><b>Login</b></button>
+            </div>
+          </form>
+        </div>
 
-
+</div>
+ 
     <script type="text/javascript">
 		$(document).ready(function() {	
-        	
+            //Carga de variables de entorno
+            load();
+
             sessionStorage.prodLine = "http://kallsonyproducto.azurewebsites.net/kallsony/Productos/Linea/";//Productos*linea paginados
             sessionStorage.prodCamp = "http://kallsonyproducto.azurewebsites.net/kallsony/Productos/Camp/";//productos*campaña paginados
             sessionStorage.prodFind = "";//productos buscados por demanda
-
+            //sessionStorage.prodCar = "";//carrito de compras &nbsp
 
             //Carga Categorias
 			$().UItoTop({ easingType: 'easeOutQuart' });
 			var texto="";
 				$.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Lineas", function(datos){
-					$.each(datos, function(i,item){
+                    $.each(datos, function(i,item){
 						texto+="<li><a href='productline.html?line_id="+datos[i].$id+"'>";
 						texto+=""+datos[i].lin_nombre+"";
 						texto+="</a></li>";
@@ -353,7 +282,7 @@ span.psw {
                             texto1+="<div class='features_list'>";
                             texto1+="<h4>"+datos1[i].cam_descripcion+"</h4>";
                             texto1+="</div>";
-                            texto1+="<a href='productcamp.html?prod_id="+datos1[i].cam_id+"' class='button' >Comprar Ya!!</a>";
+                            texto1+="<a href='productcamp.html?prod_id="+datos1[i].cam_id+"' class='button' >Ingresa Ya!!</a>";
                             texto1+="</div>";
                             texto1+="<div class='clear'></div>"
                             texto1+="</div>";
@@ -388,14 +317,20 @@ span.psw {
                     $("#productos").html(texto2);
               });
 
-            //Ventana modal
-            var modal = document.getElementById('id01');
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function(event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }                
+
+            var texto3="";
+                $.getJSON("http://35.184.218.7:8080/SERVICES_OMS/ordenService/ordenesCliente/8xZ+J8awrx4=", function(datos3){
+                    $.each(datos3, function(i,item){
+                        //alert(datos3); 
+                    });
+                   // texto2+="</div>";
+                    //$("#productos").html(texto2);
+              });
+
+
+
+
+
 
         });
     </script>

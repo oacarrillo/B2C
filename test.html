@@ -12,14 +12,27 @@
 	Hola
 
 	<script>
-	var text1 = '{"employees":[' +
-	'{"firstName":"John","lastName":"Doe" },' +
-	'{"firstName":"Anna","lastName":"Smith" },' +
-	'{"firstName":"Peter","lastName":"Jones" }]}';
-
 	
-	//crear usuario
-	//http://35.184.218.7:8080/SERVICES_OMS/clienteService/clientesC 		post
+	//crear cliente http://35.184.218.7:8080/SERVICES_OMS/clienteService/clientesC 		post
+	var text3 ='{' +
+	'"nombre": "pepito",' +
+	'"apellido": "perez",' +
+	'"documento": "325435",'+
+    '"telefono": "547457",'+
+    '"celular": "31122445",'+
+    '"tipoDocumento": "CEDULA_EXTRANJERIA",'+
+    '"tipoCliente": "PLATINO",'+
+    '"direccion": "cr4545",'+
+    '"correo": "pepito@javeriana.edu.co",'+
+    '"estado": "ACTIVO",'+
+    '"ciudad": {"ciudadId": 1,"ciudadNombre": "BOGOTA","paisId": 1},'+
+    '"pais": {"paisId": 1,"paisNombre": "COLOMBIA"},'+
+    '"tarjeta":{"numero": 565657,"ano": 2017,"mes": 9,"franquicia": "visa","nombre": "pepito","codigo": 2345},'+
+	'"login":{"username": "pepito123","password": 123456,"tipoUsuario": 1,"ownerid": "Cliente"}'+
+	'}';
+
+
+	//http://35.184.218.7:8080/SERVICES_OMS/ordenService/ordenC 	post  - crear orden
 	var text2 = '{' +
 	'"token":"8xZ+J8awrx4=",' +
 	'"ordenCiudad":{"ciudadId":1},' +
@@ -31,14 +44,63 @@
 	'}';
 
 
+
+'{'+
+   '"token":"8xZ+J8awrx4=",'+
+   '"ordenCiudad":{'+
+      '"ciudadId":1'+
+   '},'+
+   '"ordenPais":{'+
+      '"paisId":1'+
+   '},'+
+   '"ordenDireccionEntrega":{'+
+      '"direccionId":0,'+
+      '"direccionDescripcion":"Calle 33"'+
+   '},'+
+   '"ordenDetalles":['+
+      '{'+
+         '"detOrdenProductoId":1,'+
+         '"detOrdenValorUnitario":51500,'+
+         '"detOrdenCantidad":6'+
+      '},'+
+      '{'+
+         '"detOrdenProductoId":2,'+
+         '"detOrdenValorUnitario":105000,'+
+         '"detOrdenCantidad":2'+
+      '}'+
+   '],'+
+   '"tarjetaCredito":{'+
+      '"numero":11229900,'+
+      '"ano":2017,'+
+      '"mes":12,'+
+      '"franquicia":"VISA",'+
+      '"nombre":"ANDRES LOPEZ",'+
+      '"codigo":123'+
+   '}'+
+'}';
+
+
 	//logeo
 	//http://35.184.218.7:8080//SERVICES_OMS/loginService/validarLogin
 	var text = '{' +
 	'"username": "oscarcarrillo","password": 123456'+
 	'}';
 
-	obj = JSON.parse(text);
-	alert(text);
+
+	//REspuesta valida login
+    var text1='{'+
+      '"id": 0,'+
+      '"password": "LvxBN5EW7bg=",'+  
+      '"idUsuario": null,'+
+      '"tipoUsuario": null,'+  
+      '"estado": null,'+
+      '"username": "oscarcarrillo",'+
+      '"ownerid": null,'+
+      '"token": "S8zCNuZWKTc="'+
+    '}';
+
+	obj = JSON.parse(text2);
+	alert(text2);
 	console.log(obj);
 
 
@@ -51,10 +113,42 @@
 
 /*
 
-     {
-      "username": "oscarcarrillo","password": 123456
-     }
-}*/
+{
+   "token":"8xZ+J8awrx4=",
+   "ordenCiudad":{
+      "ciudadId":1
+   },
+   "ordenPais":{
+      "paisId":1
+   },
+   "ordenDireccionEntrega":{
+      "direccionId":0,
+      "direccionDescripcion":"Calle 33"
+   },
+   "ordenDetalles":[
+      {
+         "detOrdenProductoId":1,
+         "detOrdenValorUnitario":51500,
+         "detOrdenCantidad":6
+      },
+      {
+         "detOrdenProductoId":2,
+         "detOrdenValorUnitario":105000,
+         "detOrdenCantidad":2
+      }
+   ],
+   "tarjetaCredito":{
+      "numero":11229900,
+      "ano":2017,
+      "mes":12,
+      "franquicia":"VISA",
+      "nombre":"ANDRES LOPEZ",
+      "codigo":123
+   }
+}
+
+
+*/
 
 	</script>
 </body>
