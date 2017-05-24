@@ -44,42 +44,6 @@
 	'}';
 
 
-
-'{'+
-   '"token":"8xZ+J8awrx4=",'+
-   '"ordenCiudad":{'+
-      '"ciudadId":1'+
-   '},'+
-   '"ordenPais":{'+
-      '"paisId":1'+
-   '},'+
-   '"ordenDireccionEntrega":{'+
-      '"direccionId":0,'+
-      '"direccionDescripcion":"Calle 33"'+
-   '},'+
-   '"ordenDetalles":['+
-      '{'+
-         '"detOrdenProductoId":1,'+
-         '"detOrdenValorUnitario":51500,'+
-         '"detOrdenCantidad":6'+
-      '},'+
-      '{'+
-         '"detOrdenProductoId":2,'+
-         '"detOrdenValorUnitario":105000,'+
-         '"detOrdenCantidad":2'+
-      '}'+
-   '],'+
-   '"tarjetaCredito":{'+
-      '"numero":11229900,'+
-      '"ano":2017,'+
-      '"mes":12,'+
-      '"franquicia":"VISA",'+
-      '"nombre":"ANDRES LOPEZ",'+
-      '"codigo":123'+
-   '}'+
-'}';
-
-
 	//logeo
 	//http://35.184.218.7:8080//SERVICES_OMS/loginService/validarLogin
 	var text = '{' +
@@ -99,9 +63,9 @@
       '"token": "S8zCNuZWKTc="'+
     '}';
 
-	obj = JSON.parse(text2);
-	alert(text2);
-	console.log(obj);
+	//obj = JSON.parse(text2);
+	//alert(text2);
+	//console.log(obj);
 
 
 
@@ -113,42 +77,83 @@
 
 /*
 
-{
-   "token":"8xZ+J8awrx4=",
-   "ordenCiudad":{
-      "ciudadId":1
-   },
-   "ordenPais":{
-      "paisId":1
-   },
-   "ordenDireccionEntrega":{
-      "direccionId":0,
-      "direccionDescripcion":"Calle 33"
-   },
-   "ordenDetalles":[
-      {
-         "detOrdenProductoId":1,
-         "detOrdenValorUnitario":51500,
-         "detOrdenCantidad":6
-      },
-      {
-         "detOrdenProductoId":2,
-         "detOrdenValorUnitario":105000,
-         "detOrdenCantidad":2
-      }
-   ],
-   "tarjetaCredito":{
-      "numero":11229900,
-      "ano":2017,
-      "mes":12,
-      "franquicia":"VISA",
-      "nombre":"ANDRES LOPEZ",
-      "codigo":123
-   }
-}
 
+Json de ValidaLogin
+- Falta saber si el usuario tiene tarjeta de credito registrada
+- No se necesita el password cifrado
 
 */
+
+
+// crear orden
+/*
+var test="8xZ+J8awrx4=";
+
+var data = JSON.stringify({
+  "token": ""+test+"",
+  "ordenCiudad": {
+    "ciudadId": 1
+  },
+  "ordenPais": {
+    "paisId": 1
+  },
+  "ordenDireccionEntrega": {
+    "direccionId": 0,
+    "direccionDescripcion": "Calle 33"
+  },
+  "ordenDetalles": [
+    {
+      "detOrdenProductoId": 1,
+      "detOrdenValorUnitario": 51500,
+      "detOrdenCantidad": 6
+    },
+    {
+      "detOrdenProductoId": 2,
+      "detOrdenValorUnitario": 105000,
+      "detOrdenCantidad": 2
+    }
+  ],
+  "tarjetaCredito": {
+    "numero": 11229900,
+    "ano": 2017,
+    "mes": 12,
+    "franquicia": "VISA",
+    "nombre": "ANDRES LOPEZ",
+    "codigo": 123
+  }
+});
+
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+
+xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/ordenService/ordenC");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.setRequestHeader("cache-control", "no-cache");
+xhr.send(data);
+
+*/
+var user="oscarcarrillo";
+var pass=123456;
+
+var data = JSON.stringify({"username":""+user+"","password":pass});
+var xhr = new XMLHttpRequest();
+xhr.withCredentials = true;
+xhr.addEventListener("readystatechange", function () {
+  if (this.readyState === 4) {
+    console.log(this.responseText);
+  }
+});
+xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/loginService/validarLogin");
+xhr.setRequestHeader("content-type", "application/json");
+xhr.setRequestHeader("cache-control", "no-cache");
+xhr.send(data);
+
 
 	</script>
 </body>

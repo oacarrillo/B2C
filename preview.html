@@ -57,17 +57,17 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<a href="index.html"><img src="images/logo.png" alt="" /></a>
 			</div>
 			  <div class="cart" id="concar">
-			  	   <p>Bienvenido a kallsony's - <span>Carrito:</span><div id="dd" class="wrapper-dropdown-2"> 0 item(s) - $0.00
-			  	   	<ul class="dropdown">
-							<div id="carrito"><li>Usted no tiene productos en su carro de compras</li></div>
-                            <button id="envioPeticiona" class="myButtonCar" onclick="pagar()"><b>Pagar</b></button>
-					</ul></div></p>
+                   <p>Bienvenido a kallsony's - <span>Carrito:</span>
+                       <div id="dd" class="wrapper-dropdown-2"> 
+
+                        </div>
+                    </p>
 			 </div>
 		<script type="text/javascript">
 							
 				//variable de carrito de compras
 				function add(){
-					//El if es para inicializar la valiable del carrito en vacio en la priemra compra
+					//El if es para inicializar la valiable del carrito en vacio antes de la priemra compra
 					if(!sessionStorage.inCar){
 						sessionStorage.prodCar="";
 						sessionStorage.inCar="1";//Solo lo hace una vez
@@ -78,8 +78,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				    else{
 				    	sessionStorage.prodCar=sessionStorage.prodCar+"|"+sessionStorage.carritoTemp+";"+document.getElementById("cantidad").value;	
 				    }
-				    alert(sessionStorage.prodCar);
-					
+					calculoResumenCar();//carga objetos con valores de productos
 				}
 
 				function DropDown(el) {
@@ -268,11 +267,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			//Util - Captura variable por get
 			var prodId = getVar();
 			
+			//Se condiciona carga de variable por get en caso de que se recarge la pagina, la variable no se pierda
+			if(prodId){
+				sessionStorage.prodId=prodId;//Guarda la variable
+			}
+			else{
+				prodId=sessionStorage.prodId;//Si viene vacio carga el valor
+			}
+			
 			//carga categorias
 			var texto="";
 			$.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Lineas", function(datos){
 				$.each(datos, function(i,item){
-				//	alert(datos[i].lin_nombre);
 					texto+="<ul>";
 					texto+="<li><a href='productline.html?line_id="+datos[i].$id+"'>";
 					texto+=""+datos[i].lin_nombre+"";

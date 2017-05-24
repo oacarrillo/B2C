@@ -44,11 +44,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<a href="index.html"><img src="images/logo.png" alt="" /></a>
 			</div>
 			  <div class="cart" id="concar">
-			  	   <p>Bienvenido a kallsony's - <span>Carrito:</span><div id="dd" class="wrapper-dropdown-2"> 0 item(s) - $0.00
-			  	   	<ul class="dropdown">
-							<div id="carrito"><li>Usted no tiene productos en su carro de compras</li></div>
-                            <button id="envioPeticiona" class="myButtonCar" onclick="pagar()"><b>Pagar</b></button>
-					</ul></div></p>
+                   <p>Bienvenido a kallsony's - <span>Carrito:</span>
+                       <div id="dd" class="wrapper-dropdown-2"> 
+
+                        </div>
+                    </p>
 			 </div>
 		<script type="text/javascript">
 
@@ -137,8 +137,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             <div class="content">
             	<div class="content_top">
             		<div class="heading">
-            			<div id="titulo">
-            				<H5>Ofertas de temporada!!!</H5>
+            			<div id="titulo" style="font-size: xx-large; color:#FF0000;">
+            				<h1>Ofertas de temporada!!!</h1>
             			</div>
             		</div>
             		<div class="clear"></div>
@@ -217,6 +217,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 			//Util - Captura variable por get
 			var lineId = getVar();
+
+			//Se condiciona carga de variable por get en caso de que se recarge la pagina, la variable no se pierda
+			if(lineId){
+				sessionStorage.lineId=lineId;//Guarda la variable
+			}
+			else{
+				lineId=sessionStorage.lineId;//Si viene vacio carga el valor
+			}
             
             //Carga 10 Productos, pero solo muestra 8
             var texto2="";

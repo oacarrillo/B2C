@@ -45,67 +45,45 @@ License URL: http://creativecommons.org/licenses/by/3.0/
         <div class="header_top">
 			<div class="logo">
 				<a href="index.html"><img src="images/logo.png" alt="" /></a>
+
 			</div>
 			  <div class="cart" id="concar">
-			  	   <p>Bienvenido a kallsony's - <span>Carrito:</span><div id="dd" class="wrapper-dropdown-2"> 0 item(s) - $0.00
-			  	   	<ul class="dropdown">
-							<div id="carrito"><li>Usted no tiene productos en su carro de compras</li></div>
-                            <button id="envioPeticiona" class="myButtonCar" onclick="pagar()"><b>Pagar</b></button>
-					</ul></div></p>
+                   <p>Bienvenido a kallsony's - <span>Carrito:</span>
+                       <div id="dd" class="wrapper-dropdown-2"> 
+
+                        </div>
+                    </p>
 			 </div>
 
     		<script type="text/javascript">
-                
-                function login1(){
-                    var data = JSON.stringify({
-                      "token": "8xZ+J8awrx4=",
-                      "ordenCiudad": {
-                        "ciudadId": 1
-                      },
-                      "ordenPais": {
-                        "paisId": 1
-                      },
-                      "ordenDireccionEntrega": {
-                        "direccionId": 0,
-                        "direccionDescripcion": "Calle 33"
-                      },
-                      "ordenDetalles": [
-                        {
-                          "detOrdenProductoId": 1,
-                          "detOrdenValorUnitario": 51500,
-                          "detOrdenCantidad": 6
-                        },
-                        {
-                          "detOrdenProductoId": 2,
-                          "detOrdenValorUnitario": 105000,
-                          "detOrdenCantidad": 2
-                        }
-                      ],
-                      "tarjetaCredito": {
-                        "numero": 11229900,
-                        "ano": 2017,
-                        "mes": 12,
-                        "franquicia": "VISA",
-                        "nombre": "ANDRES LOPEZ",
-                        "codigo": 123
-                      }
-                    });
 
+                //Login de usuario
+                function login1() {
+        
+                    var user="oscarcarrillo";
+                    var pass=123456;
+
+                    var data = JSON.stringify({"username":""+user+"","password":pass});
                     var xhr = new XMLHttpRequest();
                     xhr.withCredentials = true;
-
                     xhr.addEventListener("readystatechange", function () {
                       if (this.readyState === 4) {
                         console.log(this.responseText);
+                        var obj = JSON.parse(this.responseText);
+                        if(obj.token="fail"){
+                            sessionStorage.jsonPost=this.responseText;
+                            location.reload();
+                        }else{
+                            alert("Usuario o clave invalida")
+                        }
                       }
                     });
-
-                    xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/ordenService/ordenC");
+                    xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/loginService/validarLogin");
                     xhr.setRequestHeader("content-type", "application/json");
                     xhr.setRequestHeader("cache-control", "no-cache");
-                    xhr.send(data);                 
+                    xhr.send(data);
+                }       
 
-                }
                 
                 function DropDown(el) {
         			this.dd = el;
@@ -235,7 +213,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
               <input id="loginuser"class="text1" type="text" placeholder="Ingrese el usuario" required>
               <label><b>Password</b></label>
               <input id="loginpass" class="text1" type="password" placeholder="Ingrese el password" required>
-              <button id="envioPeticiona" class="button1" onclick="login()"><b>Login</b></button>
+              <button class="button1" onclick="login()"><b>Login</b></button>
             </div>
           </form>
         </div>
@@ -250,7 +228,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             sessionStorage.prodLine = "http://kallsonyproducto.azurewebsites.net/kallsony/Productos/Linea/";//Productos*linea paginados
             sessionStorage.prodCamp = "http://kallsonyproducto.azurewebsites.net/kallsony/Productos/Camp/";//productos*campaña paginados
             sessionStorage.prodFind = "";//productos buscados por demanda
-            //sessionStorage.prodCar = "";//carrito de compras &nbsp
 
             //Carga Categorias
 			$().UItoTop({ easingType: 'easeOutQuart' });
@@ -274,7 +251,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             if(i==0){texto1+="<div id='slide-1' class='slide'>";}//El primer prod tiene id
                             else{texto1+="<div class='slide'>";}//los de mas no tienen id
                             texto1+="<div class='slider-img'>";
-                            texto1+="<a href='preview.html'><img src='"+datos1[i].cam_imagen+"' alt='learn more'/></a>";
+                            texto1+="<a href='productcamp.html?prod_id="+datos1[i].cam_id+"'><img src='"+datos1[i].cam_imagen+"' alt='learn more'/></a>";
                             texto1+="</div>";
                             texto1+="<div class='slider-text'>";
                             texto1+="<h1>Oferta!!!<br></h1>";

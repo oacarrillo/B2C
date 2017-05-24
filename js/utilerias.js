@@ -32,7 +32,13 @@ function getVar(){
  //OAC - Busca productos por campo de paginas
 function buscar(){
     var porId=document.getElementById("find").value;        
-    sessionStorage.prodFind ="http://kallsonyproducto.azurewebsites.net/kallsony/productos/busqueda/descripcion/"+porId;
+    var porId=porId.replace("*","");//remplaza expresion regular
+    if(porId.length>0){
+        sessionStorage.prodFind ="http://kallsonyproducto.azurewebsites.net/kallsony/productos/busqueda/descripcion/"+porId;
+    }
+    else{
+        alert("Por favor ingrese un criterio de busqueda");
+    }
 }
 
 function enviarPost(url,json){
@@ -60,51 +66,39 @@ function enviarPost(url,json){
 function sesion() {
     sessionStorage.jsonPost="";
     sessionStorage.tokenUser="";
+    sessionStorage.numeroProds="0";//cero el numero de productos
+    sessionStorage.valorProds="0";//cero el numero de productos
+    sessionStorage.prodCar="";//vacia carrito de productos
     location.reload();
 }
 
-//Login de usuario
+
 function login() {
-    var user=document.getElementById("loginuser").value;
-    var pass=document.getElementById("loginpass").value;
-    if(user.length>0 && pass.length>0){
-        var text = '{"username": "oscarcarrillo","password": 123456}';
-        var url="http://35.184.218.7:8080/SERVICES_OMS/loginService/validarLogin";
-        //enviarPost(url,text);
-/*
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", url, true);
-        xhr.setRequestHeader("Content-type", "application/json");
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                //var json = JSON.parse(xhr.responseText);
-                var json = xhr.responseText;
-                console.log(json);
-            }
-        };
-        var data = JSON.stringify(text);
-        xhr.send(data);
-*/
-        var text='{'+
-          '"id": 0,'+
-          '"password": "LvxBN5EW7bg=",'+  
-          '"idUsuario": null,'+
-          '"tipoUsuario": null,'+  
-          '"estado": null,'+
-          '"username": "oscarcarrillo",'+
-          '"ownerid": null,'+
-          '"token": "S8zCNuZWKTc="'+
-        '}';
 
-        //console.log(json);
-        sessionStorage.jsonPost=text;
-        location.reload();
-    }
-    else{
-        alert("Por favor ingrese los datos de acceso");       
-    }
+    var user="oscarcarrillo";
+    var pass=123456;
 
- }
+    var data = JSON.stringify({"username":""+user+"","password":pass});
+    var xhr = new XMLHttpRequest();
+    xhr.withCredentials = true;
+    xhr.addEventListener("readystatechange", function () {
+      if (this.readyState === 4) {
+        console.log("msg:"+this.responseText);
+        var obj = JSON.parse(this.responseText);
+        if(obj.token!="fail"){
+            sessionStorage.jsonPost=this.responseText;
+            location.reload();
+        }else{
+            alert("Usuario o clave invalida")
+        }
+      }
+    });
+    xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/loginService/validarLogin");
+    xhr.setRequestHeader("content-type", "application/json");
+    xhr.setRequestHeader("cache-control", "no-cache");
+    xhr.send(data);
+}  
+
 
 //Muestra form login modal
  function showLogin(){
@@ -115,9 +109,6 @@ function login() {
 //carga perfil de cliente al iniciar la pagina
 function load(){
     
-    //$("#lilogin").css("display", "none");
-    //$("#liorden").css("display", "block");
-    console.log(sessionStorage.tokenUser);
     if(sessionStorage.jsonPost){
         console.log("Con sesion");      
         var obj = JSON.parse(sessionStorage.jsonPost);
@@ -129,6 +120,8 @@ function load(){
         $("#divLogin").html(textlogin2);     
         $("#nameusuario").html(obj.username);
         sessionStorage.tokenUser=obj.token;
+        console.log(sessionStorage.tokenUser);
+        console.log(sessionStorage.jsonPost);
     }
     else{
         console.log("Sin sesion");
@@ -148,6 +141,59 @@ function load(){
             modal.style.display = "none";
         }
     }  
+
+    if(!sessionStorage.inProds){
+        sessionStorage.numeroProds="0";
+        sessionStorage.valorProds="0";
+        sessionStorage.inProds="1";//Solo lo hace una vez
+    }
+    //carga valores de items y valor en el carrito
+    if(sessionStorage.prodCar){
+        var text="";
+        var prods = sessionStorage.prodCar.split("|");//separa los productos
+        text+=sessionStorage.numeroProds+" producto(s) - "+number_format(sessionStorage.valorProds)+"&nbsp&nbsp";
+        text+="<button class='myButtonCar' onclick='pagar()'><b>Ir a Pagar</b></button>";
+        text+="<ul class='dropdown'>";
+        text+="<div>";
+        for (i=0; i < prods.length; i++){        
+            prod = prods[i].split(";");
+            text+="<li>"+prod[0]+" - "+number_format(prod[1])+" - "+prod[2]+" item(s)</li>";
+        }
+        text+="</div>";
+        text+="<button id='envioPeticiona' class='myButtonCar' onclick='pagar()'><b>Ir a Pagar</b></button>";
+        text+="</ul>";
+        $("#dd").html(text);
+    }
+}
+
+function calculoResumenCar(){
+    sessionStorage.numeroProds=0;
+    sessionStorage.valorProds=0;
+    var prod;
+    var intTemp=0;
+
+    var prods = sessionStorage.prodCar.split("|");//separa los productos
+    for (var i=0; i < prods.length; i++){
+        prod = prods[i].split(";");//separa un solo producto
+        intTemp=parseInt(sessionStorage.valorProds)+parseInt(prod[1]);
+        sessionStorage.valorProds=intTemp.toString();
+        intTemp=parseInt(sessionStorage.numeroProds)+parseInt(prod[2]);
+        sessionStorage.numeroProds=intTemp.toString();
+    }   
+    var text="";
+    text+=sessionStorage.numeroProds+" producto(s) - "+number_format(sessionStorage.valorProds)+"&nbsp&nbsp";
+    text+="<button class='myButtonCar' onclick='pagar()'><b>Ir a Pagar</b></button>";
+    text+="<ul class='dropdown'>";
+    text+="<div>";
+    for (i=0; i < prods.length; i++){        
+        prod = prods[i].split(";");
+        text+="<li>"+prod[0]+" - "+number_format(prod[1])+" - "+prod[2]+" item(s)</li>";
+    }
+    text+="</div>";
+    text+="<button id='envioPeticiona' class='myButtonCar' onclick='pagar()'><b>Ir a Pagar</b></button>";
+    text+="</ul>";
+    $("#dd").html(text);
+
 
 }
 

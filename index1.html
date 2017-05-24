@@ -21,6 +21,36 @@
 <body>
 
 
+
+
+
+                //var user=document.getElementById("loginuser").value;
+                //var pass=document.getElementById("loginpass").value;
+                    console.log("Hola");
+                    
+                    if(user.length>0 && pass.length>0){
+                        var user="oscarcarrillo";
+                        var pass=123456;
+
+                        var data = JSON.stringify({"username":""+user+"","password":pass});
+                        var xhr = new XMLHttpRequest();
+                        xhr.withCredentials = true;
+                        xhr.addEventListener("readystatechange", function () {
+                          if (this.readyState === 4) {
+                            console.log(this.responseText);
+                          }
+                        });
+                        xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/loginService/validarLogin");
+                        xhr.setRequestHeader("content-type", "application/json");
+                        xhr.setRequestHeader("cache-control", "no-cache");
+                        xhr.send(data);
+                    }
+                    else{
+                        alert("Por favor ingrese los datos de acceso");       
+                    }
+
+
+
                 //console.log(obj); 
 //                $.each(obj, function(i,item){
 //                    console.log(obj.username); 

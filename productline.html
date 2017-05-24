@@ -217,6 +217,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             
 			//Util - Captura variable por get
 			var lineId = getVar();
+
+			//Se condiciona carga de variable por get en caso de que se recarge la pagina, la variable no se pierda
+			if(lineId){
+				sessionStorage.lineId=lineId;//Guarda la variable
+			}
+			else{
+				lineId=sessionStorage.lineId;//Si viene vacio carga el valor
+			}			
             
 			//Toma el nombre de la linea o categoria
 			var texto="";

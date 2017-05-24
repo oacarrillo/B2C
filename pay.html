@@ -6,7 +6,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 -->
 <!DOCTYPE HTML>
 <head>
-<title>KALLSONYS´S - CONTACTO</title>
+<title>KALLSONYS´S - CARRITO DE COMPRAS</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
@@ -45,11 +45,63 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         </div>
                     </p>
 			 </div>
-			  <script type="text/javascript">
+			<script type="text/javascript">
+			
+            function pagar(){
+                var data = JSON.stringify({
+                  "token": ""+sessionStorage.tokenUser+"",
+                  "ordenCiudad": {
+                    "ciudadId": 1
+                  },
+                  "ordenPais": {
+                    "paisId": 1
+                  },
+                  "ordenDireccionEntrega": {
+                    "direccionId": 0,
+                    "direccionDescripcion": "Calle 33"
+                  },
+                  "ordenDetalles": [
+                    {
+                      "detOrdenProductoId": 1,
+                      "detOrdenValorUnitario": 51500,
+                      "detOrdenCantidad": 6
+                    },
+                    {
+                      "detOrdenProductoId": 2,
+                      "detOrdenValorUnitario": 105000,
+                      "detOrdenCantidad": 2
+                    }
+                  ],
+                  "tarjetaCredito": {
+                    "numero": 11229900,
+                    "ano": 2017,
+                    "mes": 12,
+                    "franquicia": "VISA",
+                    "nombre": "ANDRES LOPEZ",
+                    "codigo": 123
+                  }
+                });
+
+                var xhr = new XMLHttpRequest();
+                xhr.withCredentials = true;
+
+                xhr.addEventListener("readystatechange", function () {
+                  if (this.readyState === 4) {
+                    console.log(this.responseText);
+                  }
+                });
+
+                xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/ordenService/ordenC");
+                xhr.setRequestHeader("content-type", "application/json");
+                xhr.setRequestHeader("cache-control", "no-cache");
+                xhr.send(data);                 
+            }
+
 			function DropDown(el) {
 				this.dd = el;
 				this.initEvents();
 			}
+
 			DropDown.prototype = {
 				initEvents : function() {
 					var obj = this;
@@ -100,6 +152,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <div class="content">
     	<div class="section group">
 			<div class="col span_2_of_3">
+			  	
+
+
 			  	<div class="contact-form">
 			  		<h2>Contactenos</h2>
 				    <form method="post" action="contact-post.html">
@@ -124,8 +179,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					  </div>
 				    </form>
 			  	</div>
+
+
+
 			</div>
 			<div class="col span_1_of_3">
+				
+
 				<div class="contact_info">
 	 				<h3>Encuentrenos Aquí</h3>
 				    	  <div class="map">
@@ -141,11 +201,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				   		<p>Email: <span>micorreo.javeriana.edu.co</span></p>
 				   		<p>Follow on: <span>Facebook</span>, <span>Twitter</span></p>
 				</div>
+
+
 			</div>
 		</div>		
          </div> 
     </div>
  </div>
+
+
    <div class="footer">
    	  <div class="wrap">	
 	     <div class="section group">
