@@ -15,6 +15,23 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
 <script type="text/javascript" src="js/utilerias.js"></script>
+<style>
+	table {
+	    font-family: arial, sans-serif;
+	    border-collapse: collapse;
+	    width: 100%;
+	}
+
+	td, th {
+	    border: 1px solid #dddddd;
+	    text-align: left;
+	    padding: 8px;
+	}
+
+	tr:nth-child(even) {
+	    background-color: #dddddd;
+	}
+</style>
 </head>
 <body>
   <div class="wrap">
@@ -97,6 +114,14 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 xhr.send(data);                 
             }
 
+            $(function () {
+			    $(document).on('click', '.borrar', function (event) {
+			        event.preventDefault();
+			        $(this).closest('tr').remove();
+			    });
+			});
+
+
 			function DropDown(el) {
 				this.dd = el;
 				this.initEvents();
@@ -153,56 +178,41 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     	<div class="section group">
 			<div class="col span_2_of_3">
 			  	
+			<h2>Sus productos son:</h2>
 
-
-			  	<div class="contact-form">
-			  		<h2>Contactenos</h2>
-				    <form method="post" action="contact-post.html">
-				    	<div>
-					    	<span><label>Nombre</label></span>
-					    	<span><input name="userName" type="text" class="textbox" ></span>
-					    </div>
-					    <div>
-					    	<span><label>E-mail</label></span>
-					    	<span><input name="userEmail" type="text" class="textbox"></span>
-					    </div>
-					    <div>
-					     	<span><label>Nombre de empresa</label></span>
-					    	<span><input name="userPhone" type="text" class="textbox"></span>
-					    </div>
-					    <div>
-					    	<span><label>Asunto</label></span>
-					    	<span><textarea name="userMsg"> </textarea></span>
-					    </div>
-					   <div>
-					   		<span><input type="submit" value="Enviar"  class="myButton"></span>
+				<div>
+					<table>
+					  <tr>
+					    <th>Producto</th>
+					    <th>Valor</th>
+					    <th>Cantidad</th>
+					    <th>Eliminar</th>
+					  </tr>
+					  <div>
+					  	<tr>
+						    <td>Alfreds Futterkiste</td>
+						    <td>Maria Anders</td>
+						    <td>Germany</td>
+						    <td><input type="button" class="borrar" value="Eliminar" /></td>
+					  	</tr>
 					  </div>
-				    </form>
-			  	</div>
+					</table>
+				</div>
+				<br>
 
-
+				<span><input type="submit" value="Pagar"  class="myButtonCar"></span>
 
 			</div>
 			<div class="col span_1_of_3">
 				
 
 				<div class="contact_info">
-	 				<h3>Encuentrenos Aquí</h3>
+	 				<h3>Resumen de Pago</h3>
 				    	  <div class="map">
-				    	  		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.7971988101776!2d-74.0667621857266!3d4.630239443554948!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a26173614b9%3A0x562eb99d0237f756!2zQ3JhLiA3ICM0My0yLCBCb2dvdMOh!5e0!3m2!1ses!2sco!4v1492121594690" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+				    	  		<iframe> texto aqui </iframe>
 						  </div>
 				</div>
-      			<div class="company_address">
-				     	<h3>Información de la empresa :</h3>
-						    	<p>Carrera 7 # 45 - 02,</p>
-						   		<p>Bogota,</p>
-						   		<p>COLOMBIA</p>
-				   		<p>Telefono:57-1-3208320</p>
-				   		<p>Email: <span>micorreo.javeriana.edu.co</span></p>
-				   		<p>Follow on: <span>Facebook</span>, <span>Twitter</span></p>
-				</div>
-
-
+      	
 			</div>
 		</div>		
          </div> 
@@ -231,20 +241,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				<p>Kallsony´s © Todos los derechos reservados </p>
 		   </div>
 
-		<div id="id01" class="modal">
-	      <form class="modal-content animate">
-	    <div class="imgcontainer">
-	      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-	    </div>
-	        <div class="container">
-	          <label><b>Usuario</b></label>
-	          <input id="loginuser"class="text1" type="text" placeholder="Ingrese el usuario" required>
-	          <label><b>Password</b></label>
-	          <input id="loginpass" class="text1" type="password" placeholder="Ingrese el password" required>
-	          <button id="envioPeticiona" class="button1" onclick="login()"><b>Login</b></button>
-	        </div>
-	      </form>
-	    </div>
+        <div id="id01" class="modal">
+            <div class="modal-content animate">
+                <div class="imgcontainer">
+                    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                </div>
+                <div class="container">
+                    <label><b>Usuario</b></label>
+                    <input id="loginuser" class="text1" type="text" placeholder="Ingrese el usuario" required>
+                    <label><b>Password</b></label>
+                    <input id="loginpass" class="text1" type="password" placeholder="Ingrese el password" required>
+                    <button class="button1" onclick="login()"><b>Login</b></button>
+                </div>
+            </div>
+        </div>
 
     </div>
     <script type="text/javascript">
@@ -252,7 +262,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			$().UItoTop({ easingType: 'easeOutQuart' });
 			
             //Carga de variables de entorno
-            load();			
+            load();		
+
+		    if(sessionStorage.prodCar){
+		        var text="";
+		        var prods = sessionStorage.prodCar.split("|");//separa los productos
+		        text+=sessionStorage.numeroProds+" producto(s) - "+number_format(sessionStorage.valorProds)+"&nbsp&nbsp";
+		        text+="<button class='myButtonCar' onclick='pagar()'><b>Ir a Pagar</b></button>";
+		        text+="<ul class='dropdown'>";
+		        text+="<div>";
+		        for (i=0; i < prods.length; i++){        
+		            prod = prods[i].split(";");
+		            text+="<li>"+prod[0]+" - "+number_format(prod[1])+" - "+prod[2]+" item(s)</li>";
+		        }
+		        text+="</div>";
+		        text+="</ul>";
+		        $("#dd").html(text);
+		    }
+
+
 		});
 	</script>
     <a href="#" id="toTop"><span id="toTopHover"> </span></a>

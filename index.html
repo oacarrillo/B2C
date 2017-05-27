@@ -57,34 +57,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
     		<script type="text/javascript">
 
-                //Login de usuario
-                function login1() {
-        
-                    var user="oscarcarrillo";
-                    var pass=123456;
-
-                    var data = JSON.stringify({"username":""+user+"","password":pass});
-                    var xhr = new XMLHttpRequest();
-                    xhr.withCredentials = true;
-                    xhr.addEventListener("readystatechange", function () {
-                      if (this.readyState === 4) {
-                        console.log(this.responseText);
-                        var obj = JSON.parse(this.responseText);
-                        if(obj.token="fail"){
-                            sessionStorage.jsonPost=this.responseText;
-                            location.reload();
-                        }else{
-                            alert("Usuario o clave invalida")
-                        }
-                      }
-                    });
-                    xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/loginService/validarLogin");
-                    xhr.setRequestHeader("content-type", "application/json");
-                    xhr.setRequestHeader("cache-control", "no-cache");
-                    xhr.send(data);
-                }       
-
-                
                 function DropDown(el) {
         			this.dd = el;
         			this.initEvents();
@@ -204,18 +176,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	    </div>
 
         <div id="id01" class="modal">
-          <form class="modal-content animate">
-        <div class="imgcontainer">
-          <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-        </div>
-            <div class="container">
-              <label><b>Usuario</b></label>
-              <input id="loginuser"class="text1" type="text" placeholder="Ingrese el usuario" required>
-              <label><b>Password</b></label>
-              <input id="loginpass" class="text1" type="password" placeholder="Ingrese el password" required>
-              <button class="button1" onclick="login()"><b>Login</b></button>
+            <div class="modal-content animate">
+                <div class="imgcontainer">
+                    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                </div>
+                <div class="container">
+                    <label><b>Usuario</b></label>
+                    <input id="loginuser" class="text1" type="text" placeholder="Ingrese el usuario" required>
+                    <label><b>Password</b></label>
+                    <input id="loginpass" class="text1" type="password" placeholder="Ingrese el password" required>
+                    <button class="button1" onclick="login()"><b>Login</b></button>
+                </div>
             </div>
-          </form>
         </div>
 
 </div>

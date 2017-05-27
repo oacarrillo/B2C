@@ -41,27 +41,6 @@ function buscar(){
     }
 }
 
-function enviarPost(url,json){
-    alert("Entre");
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-type", "application/json");
-    xhr.onreadystatechange = function () {
-        console.log(xhr.readyState);
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log("entre log");
-            console.log("en str:"+xhr.responseText);
-            var json = JSON.parse(xhr.responseText);
-            console.log(json);
-            //sessionStorage.jsonPost = xhr.responseText;
-            //alert(sessionStorage.jsonPost);
-            //console.log(sessionStorage.jsonPost);
-        }
-    };
-    var data = json;//JSON.stringify({"email": "hey@mail.com", "password": "101010"});
-    xhr.send(data);
-}
-
 //cierra sesion de usuario
 function sesion() {
     sessionStorage.jsonPost="";
@@ -69,34 +48,45 @@ function sesion() {
     sessionStorage.numeroProds="0";//cero el numero de productos
     sessionStorage.valorProds="0";//cero el numero de productos
     sessionStorage.prodCar="";//vacia carrito de productos
-    location.reload();
+    window.location.assign("index.html");
 }
 
 
 function login() {
+    var user=document.getElementById("loginuser").value;
+    var pass=document.getElementById("loginpass").value;
 
-    var user="oscarcarrillo";
-    var pass=123456;
+    //user="oscarcarrillo";
+    //pass=123456;
 
-    var data = JSON.stringify({"username":""+user+"","password":pass});
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-    xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === 4) {
-        console.log("msg:"+this.responseText);
-        var obj = JSON.parse(this.responseText);
-        if(obj.token!="fail"){
-            sessionStorage.jsonPost=this.responseText;
-            location.reload();
-        }else{
-            alert("Usuario o clave invalida")
-        }
-      }
-    });
-    xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/loginService/validarLogin");
-    xhr.setRequestHeader("content-type", "application/json");
-    xhr.setRequestHeader("cache-control", "no-cache");
-    xhr.send(data);
+    if(user.length>0 && pass.length>0){    
+            console.log("user:"+user);
+            console.log("pass:"+pass);        
+            var data = JSON.stringify({"username":""+user+"","password":""+pass+""});
+            var xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+            xhr.addEventListener("readystatechange", function () {
+              if (this.readyState === 4) {
+                //console.log("con:"+this.responseText);
+                var obj = JSON.parse(this.responseText);
+                if(obj.token!="fail"){
+                    sessionStorage.jsonPost=this.responseText;
+                    location.reload();
+                }else{
+                    alert("Usuario o clave invalida")
+                }
+              }
+            });
+            xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/loginService/validarLogin");
+            xhr.setRequestHeader("content-type", "application/json");
+            xhr.setRequestHeader("cache-control", "no-cache");
+            xhr.send(data);
+    }
+    else{
+        alert("Ingrese una usuario y contraseña validos");
+        document.getElementById("loginuser").value="";
+        document.getElementById("loginpass").value="";
+    }
 }  
 
 
@@ -115,13 +105,14 @@ function load(){
         var textlogin2="";
         textlogin2+="<li id='lisesion' style='display: inline'><a href='javascript:sesion();'>Cerrar Sesión</a></li>";
         textlogin2+="<li id='liorden' style='display: inline'><a href='#''>Mis Ordenes</a></li>";
+        textlogin2+="<li id='liperfil' style='display: inline'><a href='profile.html'>Perfil</a></li>";
         $("#concar").css("display", "block");//carrito de compras muestra
         $("#addcar").css("display", "block"); ////agregar al carrito muestra
         $("#divLogin").html(textlogin2);     
         $("#nameusuario").html(obj.username);
         sessionStorage.tokenUser=obj.token;
-        console.log(sessionStorage.tokenUser);
-        console.log(sessionStorage.jsonPost);
+        //console.log(sessionStorage.tokenUser);
+        //console.log(sessionStorage.jsonPost);
     }
     else{
         console.log("Sin sesion");
@@ -160,12 +151,12 @@ function load(){
             text+="<li>"+prod[0]+" - "+number_format(prod[1])+" - "+prod[2]+" item(s)</li>";
         }
         text+="</div>";
-        text+="<button id='envioPeticiona' class='myButtonCar' onclick='pagar()'><b>Ir a Pagar</b></button>";
         text+="</ul>";
         $("#dd").html(text);
     }
 }
 
+//carga los datos del carrito
 function calculoResumenCar(){
     sessionStorage.numeroProds=0;
     sessionStorage.valorProds=0;
@@ -182,7 +173,7 @@ function calculoResumenCar(){
     }   
     var text="";
     text+=sessionStorage.numeroProds+" producto(s) - "+number_format(sessionStorage.valorProds)+"&nbsp&nbsp";
-    text+="<button class='myButtonCar' onclick='pagar()'><b>Ir a Pagar</b></button>";
+    text+="<button class='myButtonCar' onclick='pagePagar()'><b>Ir a Pagar</b></button>";
     text+="<ul class='dropdown'>";
     text+="<div>";
     for (i=0; i < prods.length; i++){        
@@ -190,7 +181,6 @@ function calculoResumenCar(){
         text+="<li>"+prod[0]+" - "+number_format(prod[1])+" - "+prod[2]+" item(s)</li>";
     }
     text+="</div>";
-    text+="<button id='envioPeticiona' class='myButtonCar' onclick='pagar()'><b>Ir a Pagar</b></button>";
     text+="</ul>";
     $("#dd").html(text);
 
