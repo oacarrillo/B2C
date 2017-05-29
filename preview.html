@@ -66,10 +66,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<script type="text/javascript">
 							
 
-				//funcion que abre pagina de pagos
-				function pagePagar(){
-					window.location.assign("pay.html");  
-				}							
+							
 				//variable de carrito de compras
 				function add(){
 					//El if es para inicializar la valiable del carrito en vacio antes de la priemra compra
@@ -78,11 +75,12 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						sessionStorage.inCar="1";//Solo lo hace una vez
 					}
 				    if(sessionStorage.prodCar==""){
-				    	sessionStorage.prodCar=sessionStorage.prodCar+sessionStorage.carritoTemp+";"+document.getElementById("cantidad").value;	
+				    	sessionStorage.prodCar=sessionStorage.prodCar+sessionStorage.carritoTemp+";"+document.getElementById("cantidad").value+";"+sessionStorage.prodId;	
 				    }
 				    else{
-				    	sessionStorage.prodCar=sessionStorage.prodCar+"|"+sessionStorage.carritoTemp+";"+document.getElementById("cantidad").value;	
+				    	sessionStorage.prodCar=sessionStorage.prodCar+"|"+sessionStorage.carritoTemp+";"+document.getElementById("cantidad").value+";"+sessionStorage.prodId;
 				    }
+					//alert(sessionStorage.prodCar);
 					calculoResumenCar();//carga objetos con valores de productos
 				}
 
@@ -204,15 +202,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     		<h3>Otros productos que te pueden interesar</h3>
     		</div>
     		<div class="clear"></div>
-    	</div>
-   			
-
+	    	</div>
     			<div id="otrospro">
 
     			</div>
-
-
-        </div>
+	        </div>
 				<div class="rightsidebar span_3_of_1">
 				<h2>CATEGORIAS</h2>
 				<div id="categorias">

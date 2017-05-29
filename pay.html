@@ -64,56 +64,129 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			 </div>
 			<script type="text/javascript">
 			
+            
+			//construye los productos
+			function jsonProd(prod){
+				var temp0="",temp1="",temp2="",temp3="",temp4="",temp5="",temp6="",temp7="",temp8="",temp9="";
+	            var prods = sessionStorage.prodCar.split("|");  
+	            var tam=prods.length;
+	          	for (var inti=0; inti < prods.length; inti++){
+          			prod = prods[inti].split(";");
+					if(inti==0){temp0 = {"detOrdenProductoId":prod[3],"detOrdenValorUnitario":prod[1],"detOrdenCantidad":prod[2]};}
+					if(inti==1){temp1 = {"detOrdenProductoId":prod[3],"detOrdenValorUnitario":prod[1],"detOrdenCantidad":prod[2]};}
+					if(inti==2){temp2 = {"detOrdenProductoId":prod[3],"detOrdenValorUnitario":prod[1],"detOrdenCantidad":prod[2]};}
+					if(inti==3){temp3 = {"detOrdenProductoId":prod[3],"detOrdenValorUnitario":prod[1],"detOrdenCantidad":prod[2]};}
+					if(inti==4){temp4 = {"detOrdenProductoId":prod[3],"detOrdenValorUnitario":prod[1],"detOrdenCantidad":prod[2]};}
+					if(inti==5){temp5 = {"detOrdenProductoId":prod[3],"detOrdenValorUnitario":prod[1],"detOrdenCantidad":prod[2]};}
+					if(inti==6){temp6 = {"detOrdenProductoId":prod[3],"detOrdenValorUnitario":prod[1],"detOrdenCantidad":prod[2]};}
+					if(inti==7){temp7 = {"detOrdenProductoId":prod[3],"detOrdenValorUnitario":prod[1],"detOrdenCantidad":prod[2]};}
+					if(inti==8){temp8 = {"detOrdenProductoId":prod[3],"detOrdenValorUnitario":prod[1],"detOrdenCantidad":prod[2]};}
+					if(inti==9){temp9 = {"detOrdenProductoId":prod[3],"detOrdenValorUnitario":prod[1],"detOrdenCantidad":prod[2]};}
+				}						
+				if(tam==0){var a=({"ordenDetalles":[temp0]});}
+				if(tam==1){var a=({"ordenDetalles":[temp0,temp1]});}
+				if(tam==2){var a=({"ordenDetalles":[temp0,temp1,temp2]});}
+				if(tam==3){var a=({"ordenDetalles":[temp0,temp1,temp2,temp3]});}
+				if(tam==4){var a=({"ordenDetalles":[temp0,temp1,temp2,temp3,temp4]});}
+				if(tam==5){var a=({"ordenDetalles":[temp0,temp1,temp2,temp3,temp4,temp5]});}
+				if(tam==6){var a=({"ordenDetalles":[temp0,temp1,temp2,temp3,temp4,temp5,temp6]});}
+				if(tam==7){var a=({"ordenDetalles":[temp0,temp1,temp2,temp3,temp4,temp5,temp6,temp7]});}
+				if(tam==8){var a=({"ordenDetalles":[temp0,temp1,temp2,temp3,temp4,temp5,temp6,temp7,temp8]});}
+				if(tam==9){var a=({"ordenDetalles":[temp0,temp1,temp2,temp3,temp4,temp5,temp6,temp7,temp8,temp9]});}
+
+				sessionStorage.datas = JSON.stringify(a);
+				//console.log("datas fin:"+sessionStorage.datas);
+			}
+
+            //llama el servicio de pago
             function pagar(){
-                var data = JSON.stringify({
-                  "token": ""+sessionStorage.tokenUser+"",
-                  "ordenCiudad": {
-                    "ciudadId": 1
-                  },
-                  "ordenPais": {
-                    "paisId": 1
-                  },
-                  "ordenDireccionEntrega": {
-                    "direccionId": 0,
-                    "direccionDescripcion": "Calle 33"
-                  },
-                  "ordenDetalles": [
-                    {
-                      "detOrdenProductoId": 1,
-                      "detOrdenValorUnitario": 51500,
-                      "detOrdenCantidad": 6
-                    },
-                    {
-                      "detOrdenProductoId": 2,
-                      "detOrdenValorUnitario": 105000,
-                      "detOrdenCantidad": 2
-                    }
-                  ],
-                  "tarjetaCredito": {
-                    "numero": 11229900,
-                    "ano": 2017,
-                    "mes": 12,
-                    "franquicia": "VISA",
-                    "nombre": "ANDRES LOPEZ",
-                    "codigo": 123
-                  }
-                });
+	            var prod ="";
+	            var prods = sessionStorage.prodCar.split("|");
+	            var tam=prods.length;
+            	if(tam<=9){
+            			//carga los productos
+			            sessionStorage.datas="";
+		            	jsonProd(prod);
+						var test="calle 33";
+		                var data0 = ({
+			                  "token": ""+sessionStorage.tokenUser+"",
+			                  "ordenCiudad": {
+			                    "ciudadId": 1
+			                  },
+			                  "ordenPais": {
+			                    "paisId": 1
+			                  },
+			                  "ordenDireccionEntrega": {
+			                    "direccionId": 0,
+			                    "direccionDescripcion": ""+test+""
+			                  },
+		          		});
+		          		
+						data0 = JSON.stringify(data0);
+						data0= data0.replace("}}","},");
+						sessionStorage.datas=sessionStorage.datas.replace(',""',"");
+						data1 = sessionStorage.datas;
+		/*
+		                var client=[];
+		                client[0]=document.getElementById("tarjeta").value;
+		                client[1]=document.getElementById("ano").value;
+		                client[2]=document.getElementById("mes").value;
+		                client[3]=document.getElementById("cod").value;
+		                client[4]=document.getElementById("franquicia").value;  
+		                client[5]=document.getElementById("nombretar").value;               
 
-                var xhr = new XMLHttpRequest();
-                xhr.withCredentials = true;
+		                alert(client);
+		*/
+		                var data2 = "";
+		                if(!sessionStorage.tarjetaUser){
+			                data2= JSON.stringify ({
+						   "tarjetaCredito":{
+						      "numero":"11229901",
+						      "ano":"2017",
+						      "mes":"12",
+						      "franquicia":"VISA",
+						      "nombre":"ANDRES LOPEZ",
+						      "codigo":"123"
+							}	                  
+			                });
+		                }
+						//console.log("data0:"+data0); 
+		                //console.log("data1:"+data1);  
+		                //console.log("data2:"+data2);  
+						//console.log(data0+data1+data2);  
+						var data = (data0+data1+data2);
+						data=data.replace("},{","},");
+						//data=data.replace("\"","");
+						console.log(data);  
 
-                xhr.addEventListener("readystatechange", function () {
-                  if (this.readyState === 4) {
-                    console.log(this.responseText);
-                  }
-                });
+		                var xhr = new XMLHttpRequest();
+		                xhr.withCredentials = true;
 
-                xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/ordenService/ordenC");
-                xhr.setRequestHeader("content-type", "application/json");
-                xhr.setRequestHeader("cache-control", "no-cache");
-                xhr.send(data);                 
+		                xhr.addEventListener("readystatechange", function () {
+		                  if (this.readyState === 4) {
+		                    console.log(this.responseText);
+                            //console.log(calcMD5(this.responseText));
+                            if(calcMD5(this.responseText)=="210d15d42728f27be9cc2be9f14e7817"){
+                            	alert("Su pago fue realizado exitosamente, Consulte el estado de sus productos en el menu 'Mis Ordenes'");
+                            	sessionStorage.prodCar="";//Borra los articulos del carrito
+                            	calculoResumenCar();
+                            	window.location.assign("index.html");
+                            }else{
+                                alert("Su pago NO pudo ser procesado. No se desconto ningun valor de su tarjeta de credito");    
+                                window.location.assign("index.html");
+                            }
+		                  }
+		                });
+		                xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/ordenService/ordenC");
+		                xhr.setRequestHeader("content-type", "application/json");
+		                xhr.setRequestHeader("cache-control", "no-cache");
+		                xhr.send(data);  
+            	}else{
+            		alert("Debe ingresar menos de 10 productos");
+            	}               
             }
 
+            //elimina columna de la tabla
             $(function () {
 			    $(document).on('click', '.borrar', function (event) {
 			        event.preventDefault();
@@ -121,6 +194,27 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			    });
 			});
 
+			//Borra un producto de las lista
+			function borrarProd(i){
+				i=i-1;
+				var prods = sessionStorage.prodCar.split("|");//separa los productos
+				//alert(prods[i]);	
+				//prods.splice(i,1);
+				sessionStorage.prodCar="";
+				for (var inti=0; inti < prods.length; inti++){
+				console.log(inti+"-"+i);
+					if(inti!=i){
+						if(sessionStorage.prodCar==""){
+							sessionStorage.prodCar=sessionStorage.prodCar+prods[inti];
+						}else{
+							sessionStorage.prodCar=sessionStorage.prodCar+"|"+prods[inti];
+						}
+					}
+				}
+				console.log("quedo:"+sessionStorage.prodCar);
+				calculoResumenCar();
+				window.location.assign("pay.html");
+			}
 
 			function DropDown(el) {
 				this.dd = el;
@@ -180,27 +274,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			  	
 			<h2>Sus productos son:</h2>
 
-				<div>
-					<table>
-					  <tr>
-					    <th>Producto</th>
-					    <th>Valor</th>
-					    <th>Cantidad</th>
-					    <th>Eliminar</th>
-					  </tr>
-					  <div>
-					  	<tr>
-						    <td>Alfreds Futterkiste</td>
-						    <td>Maria Anders</td>
-						    <td>Germany</td>
-						    <td><input type="button" class="borrar" value="Eliminar" /></td>
-					  	</tr>
-					  </div>
-					</table>
-				</div>
+					<div id="tablaprod">
+
+					</div>
 				<br>
 
-				<span><input type="submit" value="Pagar"  class="myButtonCar"></span>
+				<h2>Datos de Pago:</h2><br>
+				<div id="tarjeta">
+				Su pago sera cargado a la tarjeta de credito registrada
+				</div>
+				
+				<br>
+				<span><input type="submit" value="Pagar" class="myButtonCar" onclick="pagar()"></span>
 
 			</div>
 			<div class="col span_1_of_3">
@@ -208,8 +293,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
 				<div class="contact_info">
 	 				<h3>Resumen de Pago</h3>
-				    	  <div class="map">
-				    	  		<iframe> texto aqui </iframe>
+	    		    	  <div id="resumen">
+				    	  		
 						  </div>
 				</div>
       	
@@ -262,23 +347,72 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			$().UItoTop({ easingType: 'easeOutQuart' });
 			
             //Carga de variables de entorno
+
             load();		
+
+
 
 		    if(sessionStorage.prodCar){
 		        var text="";
+		        var prod="";
 		        var prods = sessionStorage.prodCar.split("|");//separa los productos
-		        text+=sessionStorage.numeroProds+" producto(s) - "+number_format(sessionStorage.valorProds)+"&nbsp&nbsp";
-		        text+="<button class='myButtonCar' onclick='pagar()'><b>Ir a Pagar</b></button>";
-		        text+="<ul class='dropdown'>";
-		        text+="<div>";
+		        text+="<table>";
+		        text+="<tr>";
+		        text+="<th>Producto</th>";
+		        text+="<th>Valor</th>";
+		        text+="<th>Cantidad</th>";
+		        text+="<th>Eliminar</th>";
+		        text+="</tr>";
 		        for (i=0; i < prods.length; i++){        
 		            prod = prods[i].split(";");
-		            text+="<li>"+prod[0]+" - "+number_format(prod[1])+" - "+prod[2]+" item(s)</li>";
+		            text+="<tr>";
+		            text+="<td>"+prod[0]+"</td>";
+		            text+="<td>"+number_format(prod[1])+"</td>";
+		            text+="<td>"+prod[2]+"</td>";
+		            text+="<td><input type='button' class='borrar' value='Eliminar' onclick='borrarProd(i)'/></td>";
+		            text+="</tr>";
 		        }
-		        text+="</div>";
-		        text+="</ul>";
-		        $("#dd").html(text);
+		        text+="</table>";
+		        $("#tablaprod").html(text);
 		    }
+
+		    var text1="";
+		    text1+="<br>";
+		    text1+="<h2>Total de Productos:"+sessionStorage.numeroProds+"</h2>";
+		    text1+="<h2>Valor Total: <font color='red'>$"+number_format(sessionStorage.valorProds)+"</font></h2>";
+		    $("#resumen").html(text1);
+		    
+
+
+            console.log("tar:"+sessionStorage.tarjetaUser);
+            //no carga div de tarjetaas porque ya tiene una registrada
+            if(!sessionStorage.tarjetaUser){
+				var text2="";
+				text2+="<table>";
+				text2+="<tr><td>Tarjeta</td><td><input type='text' id='tarjeta'></td></tr>";
+                text2+="<tr><td>Nombre</td><td><input type='text' id='nombretar'></td></tr>";
+                text2+="<tr><td>Año</td><td><input type='text' id='ano'></td></tr>";
+                text2+="<tr><td>Mes</td><td><input type='text' id='mes'></td></tr>";
+                text2+="<tr><td>Cod</td><td><input type='text' id='cod'></td></tr>";
+                text2+="<tr><td>Franquicia</td><td>";
+                text2+="<select id='franquicia'>";
+                text2+="<option>VISA</option>";
+                text2+="<option>MASTERCARD</option>";
+                text2+="</select>";                                          
+                text2+="</td></tr>";
+                text2+="</table>";
+
+
+				$("#tarjeta").html(text2);
+            }
+		    /*
+                document.getElementById("tarjeta").value="901";
+                document.getElementById("nombretar").value="Valid User";
+                document.getElementById("ano").value="2017";
+                document.getElementById("mes").value="1";
+                document.getElementById("cod").value="123";
+                */
+
 
 
 		});

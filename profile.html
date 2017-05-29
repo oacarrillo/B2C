@@ -63,29 +63,80 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
                 xhr.addEventListener("readystatechange", function () {
                   if (this.readyState === 4) {
-                    console.log(this.responseText);
+                    //console.log(this.responseText);
+                    console.log("con:"+this.responseText);
+                    sessionStorage.userActive=this.responseText;
+                    var cliente = JSON.parse(this.responseText);
+
+                    document.getElementById("usuario").value=cliente.nombre;
+                    document.getElementById("nombre").value=cliente.nombre;
+                    document.getElementById("documento").value=cliente.documento;
+                    document.getElementById("telefono").value=cliente.telefono;
+                    document.getElementById("email").value=cliente.correo;
+                    document.getElementById("apellidos").value=cliente.apellido;
+                    document.getElementById("ciudad").value=cliente.ciudad.ciudadNombre;
+                    document.getElementById("password").value=cliente.password;
+                    document.getElementById("celular").value=cliente.celular;
+                    document.getElementById("tipoDocumento").value=TipoIdCombo(cliente.tipoDocumento);
+                    document.getElementById("pais").value=cliente.pais.paisNombre;
+                    document.getElementById("direccion").value=cliente.direccion.direccionDescripcion;
+
+                    document.getElementById("tarjeta").value=cliente.tarjeta.numero;
+                    document.getElementById("ano").value=cliente.tarjeta.ano;
+                    document.getElementById("mes").value=cliente.tarjeta.mes;
+                    document.getElementById("cod").value=cliente.tarjeta.codigo;
+                    document.getElementById("franquicia").value=cliente.tarjeta.franquicia;
+                    document.getElementById("nombretar").value=cliente.tarjeta.nombre;
+
                   }
                 });
-
                 xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/clienteService/cliente");
                 xhr.setRequestHeader("content-type", "application/json");
                 xhr.setRequestHeader("cache-control", "no-cache");
+                
                 xhr.send(data);
             }
             
             //Actualiza datos cliente desde pantalla
-            function actualizarcliente(){
+            function actualizarCliente(){
+
+                    var client= [];
+                    var datosCliente = JSON.parse(sessionStorage.userActive);
+
+                    client[0]=document.getElementById("usuario").value;
+                    client[1]=document.getElementById("nombre").value;
+                    client[2]=document.getElementById("documento").value;
+                    client[3]=document.getElementById("telefono").value;
+                    client[4]=document.getElementById("email").value;
+                    client[5]=document.getElementById("ciudad").value;
+                    client[6]=document.getElementById("password").value;
+                    client[7]=document.getElementById("apellidos").value;
+                    client[8]=document.getElementById("celular").value;
+                    client[9]=Tipoid(document.getElementById("tipoDocumento").value);
+                    client[10]=document.getElementById("pais").value;
+                    client[11]=document.getElementById("direccion").value;
+
+                    client[12]=document.getElementById("tarjeta").value;
+                    client[13]=document.getElementById("ano").value;
+                    client[14]=document.getElementById("mes").value;
+                    client[15]=document.getElementById("cod").value;
+                    client[16]=document.getElementById("franquicia").value;
+                    client[17]=document.getElementById("nombretar").value;                
+                    client[18]=datosCliente.id;
+
+                var value = $('#password').attr('value');
+                console.log("value:"+value);
 
                 var data = JSON.stringify({
-                  "id": "171",
-                  "nombre": "Oscar",
-                  "apellido": "Carrillo",
-                  "documento": "52456789",
-                  "telefono": "8887744",
-                  "celular": "313456787",
-                  "tipoDocumento": "CEDULA_EXTRANJERIA",
-                  "tipoCliente": "PLATINO",
-                  "correo": "oscar@javeriana.edu.co",
+                  "id": datosCliente.ids,
+                  "nombre": client[1],
+                  "apellido": client[7],
+                  "documento": client[2],
+                  "telefono": client[3],
+                  "celular": client[8],
+                  "tipoDocumento": client[9],
+                  "tipoCliente": datosCliente.tipoCliente,
+                  "correo": client[4],
                   "estado": "ACTIVO",
                   "ciudad": {
                     "ciudadId": 1,
@@ -97,23 +148,25 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     "paisNombre": "COLOMBIA"
                   },
                   "tarjeta": {
-                    "tarjetaCreditoId": 1,
-                    "numero": "28745789874547",
-                    "ano": 2018,
-                    "mes": 12,
-                    "franquicia": "visa",
-                    "nombre": "Oscar Carrillo",
-                    "codigo": 4589
+                    "tarjetaCreditoId": datosCliente.tarjeta.tarjetaCreditoId,
+                    "numero": client[12],
+                    "ano": client[13],
+                    "mes": client[14],
+                    "franquicia": client[16],
+                    "nombre": client[17],
+                    "codigo": client[15]
                   },
                   "login": {
-                    "password": "123456",
-                    "idUsuario": 1,
-                    "tipoUsuario": "ADMINISTRADOR",
-                    "estado": 1,
-                    "username": "oscarcarrillo",
-                    "ownerid": "CLIENTE"
+                    "id":datosCliente.login.id,
+                    "password": datosCliente.login.password,
+                    "idUsuario": datosCliente.login.idUsuario,
+                    "tipoUsuario": datosCliente.login.tipoUsuario,
+                    "estado": datosCliente.login.estado,
+                    "username": datosCliente.login.username,
+                    "ownerid": datosCliente.login.ownerid
                   },
                   "direccion": {
+                    "direccionId":datosCliente.direccion.direccionId,
                     "direccionDescripcion": "Cra 24 # 5 -31"
                   }
                 });
@@ -128,7 +181,9 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/clienteService/clientesA");
                 xhr.setRequestHeader("content-type", "application/json");
                 xhr.setRequestHeader("cache-control", "no-cache");
+                console.log("act:"+data);
                 xhr.send(data);
+
             }
 
 
@@ -208,26 +263,44 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 <div class="section group">
                     <div class="col span_1_of_3">
                         <div >
-                            
                                 <div>
                                     <table>
                                         <tr><td>* Usuario</td><td><input type="text" id="usuario"></td></tr>
                                         <tr><td>* Nombres</td><td><input type="text" id="nombre"></td></tr>
                                         <tr><td>* Documento&nbsp;</td><td><input  type="text" id="documento"></td></tr>
-                                        <tr><td>* Telefono</td><td><input type="password" id="telefono"></td></tr>
+                                        <tr><td>* Telefono</td><td><input type="text" id="telefono"></td></tr>
                                         <tr><td>* Email</td><td><input type="text" id="email"></td></tr>
                                         <tr><td>* Ciudad</td><td>
-                                        <select name="state">
-                                            <option>Bogota</option>
-                                            <option>Medellin</option>
-                                            <option>Cali</option>
+                                        <select id="ciudad">
+                                            <option>BOGOTA</option>
+                                            <option>MEDELLIN</option>
+                                            <option>CALI</option>
                                         </select>
                                         </td></tr>
                                         <tr><td></td><td></td></tr>
                                         <tr><td></td><td></td></tr>
                                     </table>
                                 </div>
-                            
+                                <div id="pagotarjeta">
+                                    <table>
+                                        <tr><td>&nbsp;</td><td>
+                                        <tr><td>&nbsp;</td><td>
+                                        <tr><td>Datos de Pago (Opcional)</td><td>
+                                        <tr><td>&nbsp;</td><td>
+                                        <tr><td>&nbsp;</td><td>
+                                        <tr><td>Numero de tarjeta &nbsp;</td><td><input type="text" id="tarjeta"></td></tr>
+                                        <tr><td>Nombre</td><td><input type="text" id="nombretar"></td></tr>
+                                        <tr><td>Año</td><td><input type="text" id="ano"></td></tr>
+                                        <tr><td>Mes</td><td><input type="text" id="mes"></td></tr>
+                                        <tr><td>Cod</td><td><input type="text" id="cod"></td></tr>
+                                        <tr><td>Franquicia</td><td>
+                                        <select id="franquicia">
+                                            <option>VISA</option>
+                                            <option>MASTERCARD</option>
+                                        </select>                                          
+                                        </td></tr>
+                                    </table>
+                                </div>                                
                         </div>
                     </div>
 
@@ -235,21 +308,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                         <div>
                             <div>
                                 <table>
-                                    <tr><td>* Password</td><td><input type="text" id="uid"></td></tr>
-                                    <tr><td>* Apellidos</td><td><input type="text" id="uid"></td></tr>
+                                    <tr><td>* Password</td><td><input type="password" id="password"></td></tr>
+                                    <tr><td>* Apellidos</td><td><input type="text" id="apellidos"></td></tr>
+                                    <tr><td>* Celular</td><td><input type="text" id="celular"></td></tr>
                                     <tr><td>* Tipo Documento</td><td>
                                     <select id="tipoDocumento">
-                                        <option>Cedula de ciudadania </option>
-                                        <option>Tarjeta de identidad</option>
+                                        <option>Cédula de ciudadania</option>
                                         <option>Registro unico tributario</option>
-                                        <option>Cedula de extranjeria </option>
+                                        <option>Cédula de extranjeria </option>
                                     </select>
                                     </td></tr>
                                     <tr><td>* Pais</td><td>
                                     <select id="pais">
-                                        <option>Colombia</option>
-                                        <option>Ecuador</option>
-                                        <option>Peru</option>
+                                        <option>COLOMBIA</option>
+                                        <option>ECUADOR</option>
+                                        <option>PERU</option>
                                     </select>                                        
                                     <tr><td>* Direccion de Envio&nbsp;</td><td><textarea id="direccion"></textarea></td></tr>
                                     </td></tr>
@@ -260,10 +333,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             <br/>
                         </div>
                     </div>
-                <input type="checkbox" id="acepto"> Acepto los terminos y condiciones.
-                <br/>
-                <input class="button" type="button" value="Registrar" onclick="crearCliente()">
+
                 </div>      
+                
+                
+                <input class="button" type="button" value="Actualizar" onclick="actualizarCliente()">                
             </div> 
          </div>
 </div>
@@ -328,32 +402,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					});
 					$("#lista").html(texto);
                 });    
-
-            //Carga Campañas    
-            var texto1="";
-            var strIma="";
-                $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Campaña", function(datos1){
-                    $.each(datos1, function(i,item){
-                        if(i==1){//para cargar solo un producto de la campaña
-                            if(i==0){texto1+="<div id='slide-1' class='slide'>";}//El primer prod tiene id
-                            else{texto1+="<div class='slide'>";}//los de mas no tienen id
-                            texto1+="<div class='slider-img'>";
-                            texto1+="<a href='preview.html'><img src='"+datos1[i].cam_imagen+"' alt='learn more'/></a>";
-                            texto1+="</div>";
-                            texto1+="<div class='slider-text'>";
-                            texto1+="<h1>Oferta!!!<br></h1>";
-                            texto1+="<h2> Descuento </h2>";
-                            texto1+="<div class='features_list'>";
-                            texto1+="<h4>"+datos1[i].cam_descripcion+"</h4>";
-                            texto1+="</div>";
-                            texto1+="<a href='preview.html?prod_id=1' class='button' >Comprar Ya!!</a>";
-                            texto1+="</div>";
-                            texto1+="<div class='clear'></div>"
-                            texto1+="</div>";
-                        }
-                    });
-                $("#mover").html(texto1);
-		      });
 
             //Carga 10 Productos, pero solo muetra 8
             var texto2="";

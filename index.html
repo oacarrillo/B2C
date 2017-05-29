@@ -216,27 +216,29 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             //Carga Campañas    
             var texto1="";
             var strIma="";
+            var i=0;
                 $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Campaña", function(datos1){
-                    $.each(datos1, function(i,item){
-                        if(i==0){//para cargar solo un producto de la campaña
-                            
+                    
+                    //$.each(datos1, function(i,item){
+                     // console.log(datos1);
+                                                    
                             if(i==0){texto1+="<div id='slide-1' class='slide'>";}//El primer prod tiene id
                             else{texto1+="<div class='slide'>";}//los de mas no tienen id
                             texto1+="<div class='slider-img'>";
-                            texto1+="<a href='productcamp.html?prod_id="+datos1[i].cam_id+"'><img src='"+datos1[i].cam_imagen+"' alt='learn more'/></a>";
+                            texto1+="<a href='productcamp.html?prod_id="+datos1.cam_id+"'><img src='"+datos1.cam_imagen+"' alt='learn more'/></a>";
                             texto1+="</div>";
                             texto1+="<div class='slider-text'>";
                             texto1+="<h1>Oferta!!!<br></h1>";
                             texto1+="<h2> Descuento </h2>";
                             texto1+="<div class='features_list'>";
-                            texto1+="<h4>"+datos1[i].cam_descripcion+"</h4>";
+                            texto1+="<h4>"+datos1.cam_descripcion+"</h4>";
                             texto1+="</div>";
-                            texto1+="<a href='productcamp.html?prod_id="+datos1[i].cam_id+"' class='button' >Ingresa Ya!!</a>";
+                            texto1+="<a href='productcamp.html?prod_id="+datos1.cam_id+"' class='button' >Ingresa Ya!!</a>";
                             texto1+="</div>";
                             texto1+="<div class='clear'></div>"
                             texto1+="</div>";
-                        }
-                    });
+                        
+                    //});
                     $("#mover").html(texto1);
 		      });
 

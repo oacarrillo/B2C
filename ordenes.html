@@ -1,0 +1,295 @@
+<!--A Design by W3layouts
+Author: W3layout
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+<head>
+<title>KALLSONYS´S - CARRITO DE COMPRAS</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<link href="css/style.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="css/login.css" rel="stylesheet" type="text/css" media="all"/>
+<script type="text/javascript" src="js/jquery-1.7.2.min.js"></script> 
+<script type="text/javascript" src="js/move-top.js"></script>
+<script type="text/javascript" src="js/easing.js"></script>
+<script type="text/javascript" src="js/utilerias.js"></script>
+<style>
+	table {
+	    font-family: arial, sans-serif;
+	    border-collapse: collapse;
+	    width: 100%;
+	}
+
+	td, th {
+	    border: 1px solid #dddddd;
+	    text-align: left;
+	    padding: 8px;
+	}
+
+	tr:nth-child(even) {
+	    background-color: #dddddd;
+	}
+</style>
+</head>
+<body>
+  <div class="wrap">
+	<div class="header">
+		<div class="headertop_desc">
+			<div class="call">
+ 				 <p><span>Necesita Ayuda?</span> Llamenos <span class="number">57-1-3208320</span></span></p>
+			</div>
+			<div class="account_desc" id="menusup">
+                <p>Bienvenido, <span id="nameusuario">Por favor ingrese al sistema</span></p>
+				<br>
+                <ul>
+                    <div id="divLogin" style="float: right;">
+
+                    </div>
+				</ul>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="header_top">
+			<div class="logo">
+				<a href="index.html"><img src="images/logo.png" alt="" /></a>
+			</div>
+			  <div class="cart" id="concar">
+                   <p>Bienvenido a kallsony's - <span>Carrito:</span>
+                       <div id="dd" class="wrapper-dropdown-2"> 
+
+                        </div>
+                    </p>
+			 </div>
+			<script type="text/javascript">
+			
+            //elimina columna de la tabla
+            $(function () {
+			    $(document).on('click', '.borrar', function (event) {
+			        event.preventDefault();
+			        $(this).closest('tr').remove();
+			    });
+			});
+
+			//Borra un producto de las lista
+			function detalleOrden(i){
+
+            var text="";
+                $.getJSON("http://35.184.218.7:8080/SERVICES_OMS/ordenService/productosOrden/"+i, function(datos2){
+			        text+="Detalle de la orden "+i;
+			        text+="<br>";
+			        text+="<table>";
+			        text+="<tr>";
+			        text+="<th>Id Producto</th>";
+			        text+="<th>Nombre Producto</th>";
+			        text+="<th>Cantidad</th>";
+			        text+="<th>Valor Unitario</th>";
+			        text+="<th>Valor Total</th>";
+			        text+="</tr>";
+	                $.each(datos2, function(i,item){
+			            prov=datos2[i].proveedor;
+			            if(prov="null"){prov="POR VALIDAR"}
+			            text+="<tr>";
+			            text+="<td>"+datos2[i].detOrdenProductoId+"</td>";
+			            text+="<td>"+datos2[i].nombreProducto+"</td>";
+			            text+="<td>"+datos2[i].detOrdenCantidad+"</td>";
+			            text+="<td>"+datos2[i].detOrdenValorUnitario+"</td>";
+			            text+="<td>"+datos2[i].detOrdenValorTotal+"</td>";
+			            text+="</tr>";                    	
+	                });
+                   	text+="</table>";
+			            text+="<input type='button' value='Cerrar' onclick='borrarDetalle()'/>";
+                    $("#detalleOrden").html(text);
+              	});
+
+			}
+			function borrarDetalle(){
+				$("#detalleOrden").html("");
+			}
+
+			function DropDown(el) {
+				this.dd = el;
+				this.initEvents();
+			}
+
+			DropDown.prototype = {
+				initEvents : function() {
+					var obj = this;
+
+					obj.dd.on('click', function(event){
+						$(this).toggleClass('active');
+						event.stopPropagation();
+					});	
+				}
+			}
+
+			$(function() {
+
+				var dd = new DropDown( $('#dd') );
+
+				$(document).click(function() {
+					// all dropdowns
+					$('.wrapper-dropdown-2').removeClass('active');
+				});
+
+			});
+
+		</script>
+	 <div class="clear"></div>
+  </div>
+	<div class="header_bottom">
+	     	<div class="menu">
+	     		<ul>
+			    	<li><a href="index.html">Inicio</a></li>
+			    	<li><a href="about.html">Nosotros</a></li>
+			    	<li><a href="delivery.html">Envios</a></li>
+			    	<li class="active"><a href="contact.html">Contacto</a></li>
+			    	<div class="clear"></div>
+     			</ul>
+	     	</div>
+	     	<div class="search_box">
+	     		<form action="product.html">
+	     			<input type="text" id="find" value="Buscar" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search';}">
+                    <input type="submit" value="" onclick="buscar()">
+	     		</form>
+	     	</div>
+	     	<div class="clear"></div>
+	     </div>	     	
+   </div>
+
+
+ <div class="main">
+    <div class="content">
+    	<div class="section group">
+			<div class="col span_2_of_3">
+			<h2>Sus ordenes son:</h2>
+					<div id="tablaprod">
+
+					</div>
+					<br>
+					<div id="detalleOrden">
+
+					</div>
+
+			<br>
+			</div>
+			<div class="col span_1_of_3">
+				<div class="contact_info">
+	 				<h3>Tips:</h3>
+					Recuerde que el estado de las ordenes es actualizado en linea
+				</div>
+			</div>
+		</div>		
+         </div> 
+    </div>
+ </div>
+
+
+   <div class="footer">
+   	  <div class="wrap">	
+	     <div class="section group">
+						<div class="social-icons">
+							<h4>Siguenos en</h4>
+					   		  <ul>
+							      <li><a href="#" target="_blank"><img src="images/facebook.png" alt="" /></a></li>
+							      <li><a href="#" target="_blank"><img src="images/twitter.png" alt="" /></a></li>
+							      <li><a href="#" target="_blank"><img src="images/skype.png" alt="" /> </a></li>
+							      <li><a href="#" target="_blank"> <img src="images/dribbble.png" alt="" /></a></li>
+							      <li><a href="#" target="_blank"> <img src="images/linkedin.png" alt="" /></a></li>
+							      <div class="clear"></div>
+						     </ul>
+   	 					</div>
+				</div>
+			</div>			
+        </div>
+        <div class="copy_right">
+				<p>Kallsony´s © Todos los derechos reservados </p>
+		   </div>
+
+        <div id="id01" class="modal">
+            <div class="modal-content animate">
+                <div class="imgcontainer">
+                    <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+                </div>
+                <div class="container">
+                    <label><b>Usuario</b></label>
+                    <input id="loginuser" class="text1" type="text" placeholder="Ingrese el usuario" required>
+                    <label><b>Password</b></label>
+                    <input id="loginpass" class="text1" type="password" placeholder="Ingrese el password" required>
+                    <button class="button1" onclick="login()"><b>Login</b></button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+		$(document).ready(function() {			
+			$().UItoTop({ easingType: 'easeOutQuart' });
+			
+            //Carga de variables de entorno
+            load();		
+
+	/*
+	       var text="";
+	        var prod="";
+	        var prods = sessionStorage.prodCar.split("|");//separa los productos
+	        text+="<table>";
+	        text+="<tr>";
+	        text+="<th>Producto</th>";
+	        text+="<th>Valor</th>";
+	        text+="<th>Cantidad</th>";
+	        text+="<th>Proovedor</th>";
+	        text+="<th>Estado Envio</th>";
+	        text+="</tr>";
+	        for (i=0; i < prods.length; i++){        
+	            prod = prods[i].split(";");
+	            text+="<tr>";
+	            text+="<td>"+prod[0]+"</td>";
+	            text+="<td>"+number_format(prod[1])+"</td>";
+	            text+="<td>"+prod[2]+"</td>";
+	            text+="<td><input type='button' class='borrar' value='Eliminar' onclick='borrarProd(i)'/></td>";
+	            text+="</tr>";
+	        }
+	        text+="</table>";
+	        $("#tablaprod").html(text);
+		    */
+
+            //Carga cosnulta de ordenes
+            var text="";
+            var prov="";
+                $.getJSON("http://35.184.218.7:8080/SERVICES_OMS/ordenService/ordenesCliente/"+sessionStorage.tokenUser, function(datos2){
+                    //console.log(datos2);
+                   //datos2[i].prod_id
+                   //number_format(datos2[i].prod_valor,0)
+			        text+="<table>";
+			        text+="<tr>";
+			        text+="<th>Id Orden</th>";
+			        text+="<th>Fecha Orden</th>";
+			        text+="<th>Estado Orden</th>";
+			        text+="<th>Estado Envio</th>";
+			        text+="<th>Proovedor</th>";
+			        text+="<th>Detalle</th>";
+			        text+="</tr>";
+	                $.each(datos2, function(i,item){
+			            prov=datos2[i].proveedor;
+			            if(prov="null"){prov="POR VALIDAR"}
+			            text+="<tr>";
+			            text+="<td>"+datos2[i].ordenId+"</td>";
+			            text+="<td>"+datos2[i].ordenFechaRegistro+"</td>";
+			            text+="<td>"+datos2[i].ordenEstado+"</td>";
+			            text+="<td>"+datos2[i].estadoEnvio+"</td>";
+			            text+="<td>"+prov+"</td>";
+			            text+="<td><input type='button' value='Detalles' onclick='detalleOrden("+datos2[i].ordenId+")'/></td>";
+			            text+="</tr>";                    	
+	                });
+                   	text+="</table>";
+                    $("#tablaprod").html(text);
+              	});
+
+		});
+	</script>
+    <a href="#" id="toTop"><span id="toTopHover"> </span></a>
+</body>
+</html>
+

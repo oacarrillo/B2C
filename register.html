@@ -53,10 +53,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     		<script type="text/javascript">
 
             function crearCliente(){
-                //document.getElementById("usuario").value;
                 sessionStorage.campos="";//inicializa variable de control de vacios
                 var client= [];
-
                 validateEmpty(document.getElementById("usuario").value);
                 validateEmpty(document.getElementById("nombre").value);
                 validateEmpty(document.getElementById("documento").value);
@@ -69,11 +67,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 validateEmpty(document.getElementById("tipoDocumento").value);
                 validateEmpty(document.getElementById("pais").value);
                 validateEmpty(document.getElementById("direccion").value);
-                
-              
-              console.log(sessionStorage.campos);
-                if(sessionStorage.campos!=1){//valida campos requeridos
 
+                //Aqui van los validadores de campos con validateEmpty
+                console.log(sessionStorage.campos);
+                if(sessionStorage.campos!=1){
+                    //carga todos los datos del formulario n un arreglo    
                     client[0]=document.getElementById("usuario").value;
                     client[1]=document.getElementById("nombre").value;
                     client[2]=document.getElementById("documento").value;
@@ -83,82 +81,145 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     client[6]=document.getElementById("password").value;
                     client[7]=document.getElementById("apellidos").value;
                     client[8]=document.getElementById("celular").value;
-                    client[9]=document.getElementById("tipoDocumento").value;
+                    client[9]=Tipoid(document.getElementById("tipoDocumento").value);
                     client[10]=document.getElementById("pais").value;
                     client[11]=document.getElementById("direccion").value;
-
                     client[12]=document.getElementById("tarjeta").value;
                     client[13]=document.getElementById("ano").value;
                     client[14]=document.getElementById("mes").value;
                     client[15]=document.getElementById("cod").value;
                     client[16]=document.getElementById("franquicia").value;
-                    
-                    if(document.getElementById("acepto").checked==true){//valida check de aceptacion de termonos
+                    client[17]=document.getElementById("nombretar").value;
+
+                    //valida check de aceptacion de terminos
+                    if(document.getElementById("acepto").checked==true){
+                        if(document.getElementById("checkTarjeta").checked==true){//valida tarjeta
+                           console.log("tarjeta true"); 
                            var data = JSON.stringify({
-                          "nombre": ""+client[1]+"",
-                          "apellido": ""+client[7]+"",
-                          "documento": ""+client[2]+"",
-                          "telefono": ""+client[3]+"",
-                          "celular": ""+client[8]+"",
-                          "tipoDocumento": "CEDULA_EXTRANJERIA",
-                          "tipoCliente": "DORADO",//k
-                          "correo": ""+client[4]+"",
-                          "estado": "ACTIVO",//k
-                          "ciudad": {
-                            "ciudadId": 1,
-                            "ciudadNombre": "BOGOTA",
-                            "paisId": 1
-                          },
-                          "pais": {
-                            "paisId": 1,
-                            "paisNombre": "COLOMBIA"
-                          },
-                          "tarjeta": {
-                            "numero": ""+client[12]+"",
-                            "ano": ""+client[13]+"",
-                            "mes": ""+client[14]+"",
-                            "franquicia": ""+client[16]+"",
-                            "nombre": "Oscar Carrillo",
-                            "codigo": ""+client[15]+""
-                          },
-                          "login": {
-                            "password": ""+client[6]+"",
-                            "tipoUsuario": "CLIENTE",//K
-                            "estado": "ACTIVO",//K
-                            "username": ""+client[0]+"",
-                            "ownerid": "CLIENTE"//K
-                          },
-                          "direccion": {
-                            "direccionDescripcion": "Cra 24 # 5 -31"
+                              "nombre": ""+client[1]+"",
+                              "apellido": ""+client[7]+"",
+                              "documento": ""+client[2]+"",
+                              "telefono": ""+client[3]+"",
+                              "celular": ""+client[8]+"",
+                              "tipoDocumento": ""+client[9]+"",
+                              "tipoCliente": "DORADO",//k
+                              "correo": ""+client[4]+"",
+                              "estado": "ACTIVO",//k
+                              "ciudad": {
+                                "ciudadId": 1,
+                                "ciudadNombre": "BOGOTA",
+                                "paisId": 1
+                              },
+                              "pais": {
+                                "paisId": 1,
+                                "paisNombre": "COLOMBIA"
+                              },
+                              "tarjeta": {
+                                "numero": ""+client[12]+"",
+                                "ano": ""+client[13]+"",
+                                "mes": ""+client[14]+"",
+                                "franquicia": ""+client[16]+"",
+                                "nombre": ""+client[17]+"",
+                                "codigo": ""+client[15]+""
+                              },
+                              "login": {
+                                "password": ""+client[6]+"",
+                                "tipoUsuario": "CLIENTE",//K
+                                "estado": "ACTIVO",//K
+                                "username": ""+client[0]+"",
+                                "ownerid": "CLIENTE"//K
+                              },
+                              "direccion": {
+                                "direccionDescripcion": "Cra 24 # 5 -31"
+                              }
+                            });
+
+                        }else{
+                           console.log("tarjeta false"); 
+                           var data = JSON.stringify({
+                              "nombre": ""+client[1]+"",
+                              "apellido": ""+client[7]+"",
+                              "documento": ""+client[2]+"",
+                              "telefono": ""+client[3]+"",
+                              "celular": ""+client[8]+"",
+                              "tipoDocumento": "CEDULA_EXTRANJERIA",
+                              "tipoCliente": "DORADO",//k
+                              "correo": ""+client[4]+"",
+                              "estado": "ACTIVO",//k
+                              "ciudad": {
+                                "ciudadId": 1,
+                                "ciudadNombre": "BOGOTA",
+                                "paisId": 1
+                              },
+                              "pais": {
+                                "paisId": 1,
+                                "paisNombre": "COLOMBIA"
+                              },
+                              "login": {
+                                "password": ""+client[6]+"",
+                                "tipoUsuario": "CLIENTE",//K
+                                "estado": "ACTIVO",//K
+                                "username": ""+client[0]+"",
+                                "ownerid": "CLIENTE"//K
+                              },
+                              "direccion": {
+                                "direccionDescripcion": "Cra 24 # 5 -31"
+                              }
+                            });
+                        }
+                        var xhr = new XMLHttpRequest();
+                        var error=0;
+                        xhr.withCredentials = true;
+                        xhr.addEventListener("readystatechange", function () {
+                          if (this.readyState === 4) {
+                            console.log(this.responseText);
+                            console.log(calcMD5(this.responseText));
+                            if(calcMD5(this.responseText)=="6c71982ddb9cda07a3d90f359b16f219"){
+                                error=1;
+                                alert("Error en la creación del usuario - El cliente ya existe");
+                                window.location.assign("index.html");
+                            }
+                            if(calcMD5(this.responseText)=="b3b304f5346511d1459e82791c6f950b"){
+                                error=1;
+                                alert("Error en la creación del usuario - fail_validacion_TC");
+                                window.location.assign("index.html");
+                            }
+                            else{
+                                if (error==0){
+                                    alert("Su usuario fue creado exitosamente");    
+                                }
+                                window.location.assign("index.html");
+                            }
                           }
-                    });
-                    var xhr = new XMLHttpRequest();
-                    xhr.withCredentials = true;
-                    xhr.addEventListener("readystatechange", function () {
-                      if (this.readyState === 4) {
-                        console.log(this.responseText);
-                        alert("Su usuario fue creado satisfactoriamente");
-                        window.location.assign("index.html");
-                      }
-                    });
-                    xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/clienteService/clientesC");
-                    xhr.setRequestHeader("content-type", "application/json");
-                    xhr.setRequestHeader("cache-control", "no-cache");
-                    xhr.send(data);
+                        });
+                        xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/clienteService/clientesC");
+                        xhr.setRequestHeader("content-type", "application/json");
+                        xhr.setRequestHeader("cache-control", "no-cache");
+                        console.log(data);
+                        xhr.send(data);
+                    }else{
+                        alert("Por favor acepte los terminos y condiciones");
                     }
-                    else{
-                        alert("Por favor acepte los teminos y condiciones");
-                    }
-
+                }else{
+                    alert("Por favor ingrese los datos marcados como requeridos (*)");
                 }
-                else{
 
-                }
+
             }
+
             function validateEmpty(strvalor){
                 var localValor=strvalor.toString();
                 if(localValor.length<1){
                     sessionStorage.campos="1";
+                }
+            }
+
+            //Activa o desactiva div de tarjeta
+            function activarTarjeta(){
+                if(document.getElementById("checkTarjeta").checked==true){
+                    $("#pagotarjeta").css("display", "block");   
+                }else{
+                    $("#pagotarjeta").css("display", "none");   
                 }
             }
 
@@ -225,13 +286,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             </div>
          </div>
 
-
          <div class="main">
             <div class="content">
                 <div class="section group">
                     <div class="col span_1_of_3">
                         <div >
-                            
                                 <div>
                                     <table>
                                         <tr><td>* Usuario</td><td><input type="text" id="usuario"></td></tr>
@@ -243,26 +302,30 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <select id="ciudad">
                                             <option>BOGOTA</option>
                                         </select>
+                                        <tr><td></td><td></td></tr>
+                                    </table>
+
+                                <div id="pagotarjeta">
+                                    <table>
                                         <tr><td>&nbsp;</td><td>
                                         <tr><td>&nbsp;</td><td>
                                         <tr><td>Datos de Pago (Opcional)</td><td>
                                         <tr><td>&nbsp;</td><td>
                                         <tr><td>&nbsp;</td><td>
-                                    <tr><td>Numero de tarjeta &nbsp;</td><td><input type="text" id="tarjeta"></td></tr>
-                                    <tr><td>Año</td><td><input type="text" id="ano"></td></tr>
-                                    <tr><td>Mes</td><td><input type="text" id="mes"></td></tr>
-                                    <tr><td>Cod</td><td><input type="text" id="cod"></td></tr>
-                                    <tr><td>Franquicia</td><td>
-                                    <select id="franquicia">
-                                        <option>VISA</option>
-                                        <option>MASTERCARD</option>
-                                    </select>                                          
+                                        <tr><td>Numero de tarjeta &nbsp;</td><td><input type="text" id="tarjeta"></td></tr>
+                                        <tr><td>Nombre</td><td><input type="text" id="nombretar"></td></tr>
+                                        <tr><td>Año</td><td><input type="text" id="ano"></td></tr>
+                                        <tr><td>Mes</td><td><input type="text" id="mes"></td></tr>
+                                        <tr><td>Cod</td><td><input type="text" id="cod"></td></tr>
+                                        <tr><td>Franquicia</td><td>
+                                        <select id="franquicia">
+                                            <option>VISA</option>
+                                            <option>MASTERCARD</option>
+                                        </select>                                          
                                         </td></tr>
-                                        <tr><td></td><td></td></tr>
-                                        
                                     </table>
                                 </div>
-                            
+                            </div>
                         </div>
                     </div>
 
@@ -294,14 +357,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     </div>
 
                 </div>      
+                <input type="checkbox" id="checkTarjeta" onclick="activarTarjeta()"> Desea ingresar los datos de una tarjeta de credito.
+                <br/>
                 <input type="checkbox" id="acepto"> Acepto los terminos y condiciones.
                 <br/>
                 <input class="button" type="button" value="Registrar" onclick="crearCliente()">
             </div> 
          </div>
-
-
-
 </div>
 
 
@@ -349,28 +411,35 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script type="text/javascript">
 		$(document).ready(function() {	
 
-                document.getElementById("usuario").value="oscar2";
-                document.getElementById("nombre").value="oscar2";
-                document.getElementById("documento").value="1234561";
-                document.getElementById("telefono").value="12345678";
-                document.getElementById("email").value="test@test.com";
-                document.getElementById("ciudad").value="BOGOTA";
-                document.getElementById("password").value="123";
-                document.getElementById("apellidos").value="carrillo";
-                document.getElementById("celular").value="80098765";
-                document.getElementById("tipoDocumento").value="CEDULA_EXTRANJERIA";
-                document.getElementById("pais").value="COLOMBIA";
-                document.getElementById("direccion").value="calle 1 cra 2";
-                document.getElementById("tarjeta").value="1234123412341234";
-                document.getElementById("ano").value=2012;
-                document.getElementById("mes").value=01;
-                document.getElementById("cod").value=123;
-                document.getElementById("franquicia").value="VISA";
-
-
-            //Carga de variables de entorno
+            document.getElementById("usuario").value="oscar10";
+            document.getElementById("nombre").value="oscar10";
+            document.getElementById("documento").value="1234562";
+            document.getElementById("telefono").value="12345678";
+            document.getElementById("email").value="test@test.com";
+            document.getElementById("ciudad").value="BOGOTA";
+            document.getElementById("password").value="123";
+            document.getElementById("apellidos").value="carrillo";
+            document.getElementById("celular").value="80098765";
+            document.getElementById("tipoDocumento").value="CEDULA_EXTRANJERIA";
+            document.getElementById("pais").value="COLOMBIA";
+            document.getElementById("direccion").value="calle 1 cra 2";
+          
+          /*  
+            document.getElementById("tarjeta").value="1234123412341";
+            document.getElementById("ano").value=2012;
+            document.getElementById("mes").value=01;
+            document.getElementById("cod").value=123;
+            document.getElementById("franquicia").value="VISA";
+            document.getElementById("nombretar").value="User valid target";
+                */
+ 
             load();
             
+            //load local
+            $("#pagotarjeta").css("display", "none");
+
+            
+
             //Carga Categorias
 			$().UItoTop({ easingType: 'easeOutQuart' });
 			var texto="";
