@@ -314,8 +314,31 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <tr><td>&nbsp;</td><td>
                                         <tr><td>Numero de tarjeta &nbsp;</td><td><input type="text" id="tarjeta"></td></tr>
                                         <tr><td>Nombre</td><td><input type="text" id="nombretar"></td></tr>
-                                        <tr><td>Año</td><td><input type="text" id="ano"></td></tr>
-                                        <tr><td>Mes</td><td><input type="text" id="mes"></td></tr>
+                                        <tr><td>Año</td><td>
+                                        <select id='ano'>
+                                            <option>2017</option>
+                                            <option>2018</option>
+                                            <option>2019</option>
+                                            <option>2020</option>
+                                            <option>2021</option>
+                                            <option>2022</option>
+                                            <option>2023</option>
+                                        </select>
+                                        <tr><td>Mes</td><td>
+                                        <select id='mes'>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                            <option>6</option>
+                                            <option>7</option>
+                                            <option>8</option>
+                                            <option>9</option>
+                                            <option>10</option>
+                                            <option>11</option>
+                                            <option>12</option>
+                                        </select>
                                         <tr><td>Cod</td><td><input type="text" id="cod"></td></tr>
                                         <tr><td>Franquicia</td><td>
                                         <select id="franquicia">
@@ -411,6 +434,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     <script type="text/javascript">
 		$(document).ready(function() {	
 
+/*
             document.getElementById("usuario").value="oscar10";
             document.getElementById("nombre").value="oscar10";
             document.getElementById("documento").value="1234562";
@@ -423,7 +447,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             document.getElementById("tipoDocumento").value="CEDULA_EXTRANJERIA";
             document.getElementById("pais").value="COLOMBIA";
             document.getElementById("direccion").value="calle 1 cra 2";
-          
+  */        
           /*  
             document.getElementById("tarjeta").value="1234123412341";
             document.getElementById("ano").value=2012;
@@ -451,32 +475,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					});
 					$("#lista").html(texto);
                 });    
-
-            //Carga Campañas    
-            var texto1="";
-            var strIma="";
-                $.getJSON("http://kallsonyproducto.azurewebsites.net/kallsony/Campaña", function(datos1){
-                    $.each(datos1, function(i,item){
-                        if(i==1){//para cargar solo un producto de la campaña
-                            if(i==0){texto1+="<div id='slide-1' class='slide'>";}//El primer prod tiene id
-                            else{texto1+="<div class='slide'>";}//los de mas no tienen id
-                            texto1+="<div class='slider-img'>";
-                            texto1+="<a href='preview.html'><img src='"+datos1[i].cam_imagen+"' alt='learn more'/></a>";
-                            texto1+="</div>";
-                            texto1+="<div class='slider-text'>";
-                            texto1+="<h1>Oferta!!!<br></h1>";
-                            texto1+="<h2> Descuento </h2>";
-                            texto1+="<div class='features_list'>";
-                            texto1+="<h4>"+datos1[i].cam_descripcion+"</h4>";
-                            texto1+="</div>";
-                            texto1+="<a href='preview.html?prod_id=1' class='button' >Comprar Ya!!</a>";
-                            texto1+="</div>";
-                            texto1+="<div class='clear'></div>"
-                            texto1+="</div>";
-                        }
-                    });
-                $("#mover").html(texto1);
-		      });
 
             //Carga 10 Productos, pero solo muetra 8
             var texto2="";

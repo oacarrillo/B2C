@@ -126,38 +126,39 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 						data0= data0.replace("}}","},");
 						sessionStorage.datas=sessionStorage.datas.replace(',""',"");
 						data1 = sessionStorage.datas;
-		/*
+		
+		                var data2 = "";
+		                if(sessionStorage.tarjetaUser=="false"){
+
 		                var client=[];
-		                client[0]=document.getElementById("tarjeta").value;
+		                client[0]=document.getElementById("campo").value;
 		                client[1]=document.getElementById("ano").value;
 		                client[2]=document.getElementById("mes").value;
 		                client[3]=document.getElementById("cod").value;
 		                client[4]=document.getElementById("franquicia").value;  
-		                client[5]=document.getElementById("nombretar").value;               
+		                client[5]=document.getElementById("nombretar").value;  
 
-		                alert(client);
-		*/
-		                var data2 = "";
-		                if(!sessionStorage.tarjetaUser){
+			                console.log(sessionStorage.tarjetaUser+" entre tarjeta");
 			                data2= JSON.stringify ({
 						   "tarjetaCredito":{
-						      "numero":"11229901",
-						      "ano":"2017",
-						      "mes":"12",
-						      "franquicia":"VISA",
-						      "nombre":"ANDRES LOPEZ",
-						      "codigo":"123"
+						      "numero":client[0],
+						      "ano":client[1],
+						      "mes":client[2],
+						      "franquicia":client[4],
+						      "nombre":client[5],
+						      "codigo":client[3]
 							}	                  
 			                });
 		                }
-						//console.log("data0:"+data0); 
-		                //console.log("data1:"+data1);  
-		                //console.log("data2:"+data2);  
-						//console.log(data0+data1+data2);  
+
+						console.log(data2);
+
 						var data = (data0+data1+data2);
 						data=data.replace("},{","},");
-						//data=data.replace("\"","");
-						console.log(data);  
+						if(data2!=""){
+							data=data.replace('}{"tarjeta',',"tarjeta');
+						}
+						console.log("datafin"+data);  
 
 		                var xhr = new XMLHttpRequest();
 		                xhr.withCredentials = true;
@@ -180,6 +181,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		                xhr.open("POST", "http://35.184.218.7:8080/SERVICES_OMS/ordenService/ordenC");
 		                xhr.setRequestHeader("content-type", "application/json");
 		                xhr.setRequestHeader("cache-control", "no-cache");
+		                //console.log(data);
 		                xhr.send(data);  
             	}else{
             		alert("Debe ingresar menos de 10 productos");
@@ -386,13 +388,36 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 
             console.log("tar:"+sessionStorage.tarjetaUser);
             //no carga div de tarjetaas porque ya tiene una registrada
-            if(!sessionStorage.tarjetaUser){
+            if(sessionStorage.tarjetaUser=="false"){
 				var text2="";
 				text2+="<table>";
-				text2+="<tr><td>Tarjeta</td><td><input type='text' id='tarjeta'></td></tr>";
                 text2+="<tr><td>Nombre</td><td><input type='text' id='nombretar'></td></tr>";
-                text2+="<tr><td>Año</td><td><input type='text' id='ano'></td></tr>";
-                text2+="<tr><td>Mes</td><td><input type='text' id='mes'></td></tr>";
+				text2+="<tr><td>Numero</td><td><input type='text' id='campo'></td></tr>";
+                text2+="<tr><td>Año</td><td>";
+                text2+="<select id='ano'>";
+                text2+="<option>2017</option>";
+                text2+="<option>2018</option>";
+                text2+="<option>2019</option>";
+                text2+="<option>2020</option>";
+                text2+="<option>2021</option>";
+                text2+="<option>2022</option>";
+                text2+="<option>2023</option>";
+                text2+="</select>";  
+                text2+="<tr><td>Mes</td><td>";
+                text2+="<select id='mes'>";
+                text2+="<option>1</option>";
+                text2+="<option>2</option>";
+                text2+="<option>3</option>";
+                text2+="<option>4</option>";
+                text2+="<option>5</option>";
+                text2+="<option>6</option>";
+                text2+="<option>7</option>";
+                text2+="<option>8</option>";
+                text2+="<option>9</option>";
+                text2+="<option>10</option>";
+                text2+="<option>11</option>";
+                text2+="<option>12</option>";
+                text2+="</select>";  
                 text2+="<tr><td>Cod</td><td><input type='text' id='cod'></td></tr>";
                 text2+="<tr><td>Franquicia</td><td>";
                 text2+="<select id='franquicia'>";
@@ -401,19 +426,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                 text2+="</select>";                                          
                 text2+="</td></tr>";
                 text2+="</table>";
-
-
 				$("#tarjeta").html(text2);
             }
-		    /*
-                document.getElementById("tarjeta").value="901";
-                document.getElementById("nombretar").value="Valid User";
-                document.getElementById("ano").value="2017";
-                document.getElementById("mes").value="1";
-                document.getElementById("cod").value="123";
-                */
-
-
 
 		});
 	</script>
