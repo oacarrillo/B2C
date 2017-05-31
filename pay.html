@@ -107,21 +107,43 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             			//carga los productos
 			            sessionStorage.datas="";
 		            	jsonProd(prod);
-						var test="calle 33";
-		                var data0 = ({
-			                  "token": ""+sessionStorage.tokenUser+"",
-			                  "ordenCiudad": {
-			                    "ciudadId": 1
-			                  },
-			                  "ordenPais": {
-			                    "paisId": 1
-			                  },
-			                  "ordenDireccionEntrega": {
-			                    "direccionId": 0,
-			                    "direccionDescripcion": ""+test+""
-			                  },
-		          		});
+						
+						var dire="calle 1";//document.getElementById("newdireccion").value;
+		                
+						if(document.getElementById("dir").checked==true){
+			                var data0 = ({
+				                  "token": ""+sessionStorage.tokenUser+"",
+				                  "ordenCiudad": {
+				                    "ciudadId": 1
+				                  },
+				                  "ordenPais": {
+				                    "paisId": 1
+				                  },
+				                  "ordenDireccionEntrega": {
+				                    "direccionId": 0,
+				                    "direccionDescripcion": ""+dire+""
+				                  },
+			          		});
+			            }
 		          		
+			            if(document.getElementById("dir").checked==false){	
+			                var data0 = ({
+				                  "token": ""+sessionStorage.tokenUser+"",
+				                  "ordenCiudad": {
+				                    "ciudadId": 1
+				                  },
+				                  "ordenPais": {
+				                    "paisId": 1
+				                  },
+				                  "ordenDireccionEntrega": {
+				                    "direccionId": 0,
+				                    "direccionDescripcion": ""+dire+""
+				                  },
+			          		});
+		            	}
+		          		
+
+
 						data0 = JSON.stringify(data0);
 						data0= data0.replace("}}","},");
 						sessionStorage.datas=sessionStorage.datas.replace(',""',"");
@@ -173,7 +195,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                             	calculoResumenCar();
                             	window.location.assign("index.html");
                             }else{
-                                alert("Su pago NO pudo ser procesado. No se desconto ningun valor de su tarjeta de credito");    
+                                alert("Su pago NO pudo ser procesado. No se desconto ningun valor de su tarjeta de credito. Valide los datos de su tarjeta");    
                                 window.location.assign("index.html");
                             }
 		                  }
@@ -242,8 +264,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					// all dropdowns
 					$('.wrapper-dropdown-2').removeClass('active');
 				});
-
 			});
+
+			function funDireccion(){
+				if(document.getElementById("dir").checked==true){
+					$("#direccion").css("display", "block");
+				}else{
+					$("#direccion").css("display", "none");
+				}
+
+			}
+
+
 
 		</script>
 	 <div class="clear"></div>
@@ -286,6 +318,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				Su pago sera cargado a la tarjeta de credito registrada
 				</div>
 				
+				<br>
+				<input type="checkbox" id="dir" onclick="funDireccion()"> ¿Registrar una nueva direccion de envio?
+				<br>
+				<div id="direccion">
+					<br>
+					<h2>Direccion de Envio:</h2><br>
+					<tr><td></td><td><textarea id="newdireccion"></textarea></td></tr>
+				</div>
+				
+
+
+
 				<br>
 				<span><input type="submit" value="Pagar" class="myButtonCar" onclick="pagar()"></span>
 
@@ -351,8 +395,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             //Carga de variables de entorno
 
             load();		
-
-
+			$("#direccion").css("display", "none");//direccion de compras oculta
 
 		    if(sessionStorage.prodCar){
 		        var text="";

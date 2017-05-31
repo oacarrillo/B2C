@@ -95,7 +95,64 @@ function login() {
     $("#id01").css("display", "block");
 }
 
+function funCiudad(){
+    
+    var pais=document.getElementById("pais").value;
+    sessionStorage.pais=pais;
+    codPais(pais);
+    if(pais=="BRAZIL"){pais="3";}
+    if(pais=="USA"){pais="2";}
+    if(pais=="COLOMBIA"){pais="1";}
 
+    
+    var texto4="";
+    $.getJSON("http://35.184.218.7:8080/SERVICES_OMS/geoService/ciudades/"+pais, function(datos4){
+
+        texto4+="<tr><td>* Ciudad&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>";
+        texto4+="<select id='ciudad' onchange='funNombreCiudad()'>";
+        texto4+="<option></option>";
+        $.each(datos4, function(i,item){
+            texto4+="<option>"+datos4[i].ciudadNombre+"</option>";
+        });
+        texto4+="</select>"
+       
+        $("#ciudades").html(texto4);
+  }); 
+}
+
+function funNombreCiudad(){
+    sessionStorage.ciudad=document.getElementById("ciudad").value;
+    codCiudad(sessionStorage.ciudad);
+
+    console.log("pais:"+sessionStorage.pais);
+    console.log("ciudad:"+sessionStorage.ciudad);
+    console.log("codpais:"+sessionStorage.codPais);
+    console.log("codciudad:"+sessionStorage.codCiudad);    
+}
+
+function codPais(pais){
+    if(pais=="BRAZIL"){sessionStorage.codPais="3";}
+    if(pais=="USA"){sessionStorage.codPais="2";}
+    if(pais=="COLOMBIA"){sessionStorage.codPais="1";}
+}
+
+function codCiudad(ciudad){
+    if(ciudad=="ARMENIA"){sessionStorage.codCiudad="27";}
+    if(ciudad=="BARRANQUILLA"){sessionStorage.codCiudad="23";}
+    if(ciudad=="BOGOTA"){sessionStorage.codCiudad="1";}
+    if(ciudad=="CALI"){sessionStorage.codCiudad="24";}
+    if(ciudad=="CÚCUTA"){sessionStorage.codCiudad="25";}
+    if(ciudad=="MEDELLIN"){sessionStorage.codCiudad="22";}
+    if(ciudad=="POPAYAN"){sessionStorage.codCiudad="26";}
+    if(ciudad=="FLORIDA"){sessionStorage.codCiudad="28";}
+    if(ciudad=="NEW YORK"){sessionStorage.codCiudad="29";}
+    if(ciudad=="TEXAS"){sessionStorage.codCiudad="30";}
+    if(ciudad=="WASHINGTON"){sessionStorage.codCiudad="21";}
+    if(ciudad=="BELLO HORIZONTE"){sessionStorage.codCiudad="34";}
+    if(ciudad=="RIO DE JANEIRO"){sessionStorage.codCiudad="32";}
+    if(ciudad=="SALVADOR"){sessionStorage.codCiudad="33";}
+    if(ciudad=="SAO PAULO"){sessionStorage.codCiudad="31";}
+}
 //carga perfil de cliente al iniciar la pagina
 function load(){
     

@@ -230,30 +230,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
             //Carga de variables de entorno
             load();		
 
-	/*
-	       var text="";
-	        var prod="";
-	        var prods = sessionStorage.prodCar.split("|");//separa los productos
-	        text+="<table>";
-	        text+="<tr>";
-	        text+="<th>Producto</th>";
-	        text+="<th>Valor</th>";
-	        text+="<th>Cantidad</th>";
-	        text+="<th>Proovedor</th>";
-	        text+="<th>Estado Envio</th>";
-	        text+="</tr>";
-	        for (i=0; i < prods.length; i++){        
-	            prod = prods[i].split(";");
-	            text+="<tr>";
-	            text+="<td>"+prod[0]+"</td>";
-	            text+="<td>"+number_format(prod[1])+"</td>";
-	            text+="<td>"+prod[2]+"</td>";
-	            text+="<td><input type='button' class='borrar' value='Eliminar' onclick='borrarProd(i)'/></td>";
-	            text+="</tr>";
-	        }
-	        text+="</table>";
-	        $("#tablaprod").html(text);
-		    */
 
             //Carga cosnulta de ordenes
             var text="";
@@ -272,8 +248,10 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 			        text+="<th>Detalle</th>";
 			        text+="</tr>";
 	                $.each(datos2, function(i,item){
-			            prov=datos2[i].proveedor;
-			            if(prov="null"){prov="POR VALIDAR"}
+			            prov=datos2[i].empresaMensajeria;
+			            //prov=calcMD5(prov);
+			            console.log("men:"+prov);
+			            if(prov==null){prov="POR VALIDAR";}
 			            text+="<tr>";
 			            text+="<td>"+datos2[i].ordenId+"</td>";
 			            text+="<td>"+datos2[i].ordenFechaRegistro+"</td>";

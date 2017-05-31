@@ -106,13 +106,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                               "correo": ""+client[4]+"",
                               "estado": "ACTIVO",//k
                               "ciudad": {
-                                "ciudadId": 1,
-                                "ciudadNombre": "BOGOTA",
-                                "paisId": 1
+                                "ciudadId": sessionStorage.codCiudad,
+                                "ciudadNombre": sessionStorage.ciudad,
+                                "paisId": sessionStorage.codPais
                               },
                               "pais": {
-                                "paisId": 1,
-                                "paisNombre": "COLOMBIA"
+                                "paisId": sessionStorage.codPais,
+                                "paisNombre": sessionStorage.pais
                               },
                               "tarjeta": {
                                 "numero": ""+client[12]+"",
@@ -130,7 +130,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 "ownerid": "CLIENTE"//K
                               },
                               "direccion": {
-                                "direccionDescripcion": "Cra 24 # 5 -31"
+                                "direccionDescripcion": client[11]
                               }
                             });
 
@@ -142,18 +142,18 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                               "documento": ""+client[2]+"",
                               "telefono": ""+client[3]+"",
                               "celular": ""+client[8]+"",
-                              "tipoDocumento": "CEDULA_EXTRANJERIA",
+                              "tipoDocumento": ""+client[9]+"",
                               "tipoCliente": "DORADO",//k
                               "correo": ""+client[4]+"",
                               "estado": "ACTIVO",//k
                               "ciudad": {
-                                "ciudadId": 1,
-                                "ciudadNombre": "BOGOTA",
-                                "paisId": 1
+                                "ciudadId": sessionStorage.codCiudad,
+                                "ciudadNombre": sessionStorage.ciudad,
+                                "paisId": sessionStorage.codPais
                               },
                               "pais": {
-                                "paisId": 1,
-                                "paisNombre": "COLOMBIA"
+                                "paisId": sessionStorage.codPais,
+                                "paisNombre": sessionStorage.pais
                               },
                               "login": {
                                 "password": ""+client[6]+"",
@@ -163,7 +163,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                 "ownerid": "CLIENTE"//K
                               },
                               "direccion": {
-                                "direccionDescripcion": "Cra 24 # 5 -31"
+                                "direccionDescripcion": client[11]
                               }
                             });
                         }
@@ -213,6 +213,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                     sessionStorage.campos="1";
                 }
             }
+
+
 
             //Activa o desactiva div de tarjeta
             function activarTarjeta(){
@@ -298,12 +300,20 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <tr><td>* Documento&nbsp;</td><td><input  type="text" id="documento"></td></tr>
                                         <tr><td>* Telefono</td><td><input type="text" id="telefono"></td></tr>
                                         <tr><td>* Email</td><td><input type="text" id="email"></td></tr>
-                                        <tr><td>* Ciudad</td><td>
-                                        <select id="ciudad">
-                                            <option>BOGOTA</option>
-                                        </select>
+
                                         <tr><td></td><td></td></tr>
                                     </table>
+                                    <table>
+                                        <div id="paises">
+
+                                        </div>
+                                    </table>        
+                                    <table>
+                                        <div id="ciudades">
+
+                                        </div>
+                                    </table>                                     
+
 
                                 <div id="pagotarjeta">
                                     <table>
@@ -366,14 +376,11 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                                         <option>Cédula de extranjeria </option>
                                     </select>
                                     </td></tr>
-                                    <tr><td>* Pais</td><td>
-                                    <select id="pais">
-                                        <option>COLOMBIA</option>
-                                    </select>                                        
                                     <tr><td>* Direccion de Envio&nbsp;</td><td><textarea id="direccion"></textarea></td></tr>
                                     </td></tr>
                                     <tr><td></td><td></td></tr>
                                 </table>
+
                             </div>
                             <br/>
                         </div>
@@ -502,6 +509,24 @@ License URL: http://creativecommons.org/licenses/by/3.0/
                    // texto2+="</div>";
                     $("#productos").html(texto2);
               });
+
+            //Carga paises
+            var texto3="";
+                $.getJSON("http://35.184.218.7:8080/SERVICES_OMS/geoService/paises", function(datos3){
+  
+                    texto3+="<tr><td>* Pais&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td><td>";
+                    texto3+="<select id='pais' onchange='funCiudad()'>";
+                    texto3+="<option></option>";
+                    $.each(datos3, function(i,item){
+                        texto3+="<option d1="+datos3[i].paisId+" d2="+datos3[i].paisNombre+">"+datos3[i].paisNombre+"</option>";
+                    });
+                    texto3+="</select>"
+                   
+                    $("#paises").html(texto3);
+              });
+
+               
+
 
         });
     </script>
